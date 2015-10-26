@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		29B7E3701BDE18B20034040B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B7E36F1BDE18B20034040B /* AppDelegate.swift */; };
-		29B7E3721BDE18B20034040B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B7E3711BDE18B20034040B /* ViewController.swift */; };
-		29B7E3751BDE18B20034040B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B7E3731BDE18B20034040B /* Main.storyboard */; };
 		29B7E3771BDE18B20034040B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B7E3761BDE18B20034040B /* Assets.xcassets */; };
 		29B7E37A1BDE18B20034040B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B7E3781BDE18B20034040B /* LaunchScreen.storyboard */; };
 		F788F9B67381C899510A5ED7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68D01968941926BD9397C49A /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -18,8 +16,6 @@
 /* Begin PBXFileReference section */
 		29B7E36C1BDE18B20034040B /* InfinityScrolling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinityScrolling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B7E36F1BDE18B20034040B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		29B7E3711BDE18B20034040B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		29B7E3741BDE18B20034040B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		29B7E3761BDE18B20034040B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29B7E3791BDE18B20034040B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29B7E37B1BDE18B20034040B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -62,8 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				29B7E36F1BDE18B20034040B /* AppDelegate.swift */,
-				29B7E3711BDE18B20034040B /* ViewController.swift */,
-				29B7E3731BDE18B20034040B /* Main.storyboard */,
 				29B7E3761BDE18B20034040B /* Assets.xcassets */,
 				29B7E3781BDE18B20034040B /* LaunchScreen.storyboard */,
 				29B7E37B1BDE18B20034040B /* Info.plist */,
@@ -150,7 +144,6 @@
 			files = (
 				29B7E37A1BDE18B20034040B /* LaunchScreen.storyboard in Resources */,
 				29B7E3771BDE18B20034040B /* Assets.xcassets in Resources */,
-				29B7E3751BDE18B20034040B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,7 +202,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29B7E3721BDE18B20034040B /* ViewController.swift in Sources */,
 				29B7E3701BDE18B20034040B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,14 +209,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		29B7E3731BDE18B20034040B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				29B7E3741BDE18B20034040B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		29B7E3781BDE18B20034040B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -325,6 +309,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = InfinityScrolling/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RamonGilabert.InfinityScrolling;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -337,6 +322,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = InfinityScrolling/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RamonGilabert.InfinityScrolling;
 				PRODUCT_NAME = "$(TARGET_NAME)";

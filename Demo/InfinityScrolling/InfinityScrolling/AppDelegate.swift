@@ -18,13 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
   let faker = Faker()
-
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    window = UIWindow()
+    window = UIWindow(frame: UIScreen.mainScreen().bounds)
     window?.rootViewController = navigationController
-    window?.makeKeyWindow()
+    window?.makeKeyAndVisible()
     
     return true
   }
