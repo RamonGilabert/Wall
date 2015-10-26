@@ -6,6 +6,8 @@ public class PostAuthorView: UIView {
   public lazy var avatarImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
+    imageView.contentMode = .ScaleAspectFill
+    imageView.clipsToBounds = true
 
     return imageView
     }()

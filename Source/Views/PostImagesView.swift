@@ -7,6 +7,8 @@ public class PostImagesView: UIView {
     let imageView = UIImageView()
     imageView.frame = CGRect(x: 10, y: 60,
       width: UIScreen.mainScreen().bounds.width - 20, height: 274)
+    imageView.contentMode = .ScaleAspectFill
+    imageView.clipsToBounds = true
 
     return imageView
     }()

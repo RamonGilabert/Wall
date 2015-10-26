@@ -6,11 +6,15 @@ public class PostTableViewCell: UITableViewCell {
 
   public lazy var authorView: PostAuthorView = {
     let view = PostAuthorView()
+    view.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60)
+
     return view
     }()
 
   public lazy var postImagesView: PostImagesView = {
     let view = PostImagesView()
+    view.frame = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 274)
+
     return view
     }()
 
@@ -21,11 +25,15 @@ public class PostTableViewCell: UITableViewCell {
 
   public lazy var informationView: PostInformationBarView = {
     let view = PostInformationBarView()
+    view.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 56)
+
     return view
     }()
 
   public lazy var actionBarView: PostActionBarView = {
     let view = PostActionBarView()
+    view.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
+    
     return view
     }()
 
