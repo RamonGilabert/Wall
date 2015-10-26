@@ -1,7 +1,9 @@
 PODS:
+  - Kingfisher (1.7.0)
   - Wall (0.1.0)
 
 DEPENDENCIES:
+  - Kingfisher
   - Wall (from `../../`)
 
 EXTERNAL SOURCES:
@@ -9,6 +11,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
+  Kingfisher: 906bf9821bd32d06d4aaecc60431857e70ccabaa
   Wall: c667f333b5833f1329626fde4ef276f9c380a5af
 
 COCOAPODS: 0.39.0.beta.4
