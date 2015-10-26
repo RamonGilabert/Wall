@@ -19,7 +19,7 @@ public class PostImagesView: UIView {
 
   // MARK: - Setup
 
-  public func configureView(images: [UIImage]) {
+  public func configureView(images: [NSURL]) {
 
   }
 

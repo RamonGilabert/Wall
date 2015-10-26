@@ -10,11 +10,11 @@ public class Post {
   public var likeCount = 0
   public var seenCount = 0
   public var commentCount = 0
-  public var images = [UIImage]()
+  public var images = [NSURL]()
   public var author: Author?
 
   public init(text: String = "", publishDate: NSDate, author: Author? = nil,
-    attachments: [UIImage] = []) {
+    attachments: [NSURL] = []) {
       self.text = text
       self.publishDate = publishDate
       self.author = author

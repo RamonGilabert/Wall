@@ -17,17 +17,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    
     return true
   }
 
   func generatePosts(from: Int, to: Int) -> [Post] {
     var posts = [Post]()
+
     for i in from...to {
-      let user = User(
-        name: faker.name.name(),
-        avatar: Image("http://lorempixel.com/75/75?type=avatar&id=\(i)"))
-      var attachments = [AttachmentConvertible]()
-      var comments = [PostConvertible]()
+      var author = Author(name: "")
+
+      if let imageURL = NSURL(string: "http://lorempixel.com/75/75?type=avatar&id=\(i)") {
+        author = Author(name: faker.name.name(),
+          avatar: imageURL)
+      }
+
+      var attachments = [NSURL]()
       var attachmentCount = 0
       var likes = 0
       var commentCount = 0
@@ -51,34 +56,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
 
       for x in 0..<attachmentCount {
-        attachments.append(Image("http://lorempixel.com/250/250/?type=attachment&id=\(i)\(x)"))
+        if let imageURL = NSURL(string: "http://lorempixel.com/250/250/?type=attachment&id=\(i)\(x)") {
+          attachments.append(imageURL)
+        }
       }
 
       let sencenceCount = Int(arc4random_uniform(8) + 1)
       let post = Post(
         text: faker.lorem.sentences(amount: sencenceCount),
         publishDate: NSDate(timeIntervalSinceNow: -Double(arc4random_uniform(60000))),
-        author: user,
+        author: author,
         attachments: attachments
       )
 
       post.likeCount = likes
       post.seenCount = seen
       post.commentCount = commentCount
-
-      for x in 0..<commentCount {
-        let commentUser = User(
-          name: faker.name.name(),
-          avatar: Image("http://lorempixel.com/75/75/?type=avatar&id=\(i)\(x)"))
-        let comment = Post(
-          text: faker.lorem.sentences(amount: sencenceCount),
-          publishDate: NSDate(timeIntervalSinceNow: -4),
-          author: commentUser
-        )
-        comments.append(comment)
-      }
-      post.comments = comments
-
       posts.append(post)
     }
     
