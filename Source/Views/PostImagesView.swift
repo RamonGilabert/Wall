@@ -1,9 +1,13 @@
 import UIKit
+import Kingfisher
 
 public class PostImagesView: UIView {
 
   public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
+    imageView.frame = CGRect(x: 10, y: 60,
+      width: UIScreen.mainScreen().bounds.width - 20, height: 274)
+
     return imageView
     }()
 
@@ -20,12 +24,8 @@ public class PostImagesView: UIView {
   // MARK: - Setup
 
   public func configureView(images: [NSURL]) {
-
-  }
-
-  // MARK: - Setup frames
-
-  public func setupFrames() {
-
+    if let image = images.first {
+      imageView.kf_setImageWithURL(image)
+    }
   }
 }
