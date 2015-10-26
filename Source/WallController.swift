@@ -29,7 +29,12 @@ public class WallController: UIViewController {
 extension WallController: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 80
+    let post = posts[indexPath.row]
+    let imageHeight: CGFloat = post.images.isEmpty ? 0 : 274
+    let textHeight: CGFloat = 34 + 12
+    let totalHeight: CGFloat = imageHeight + 60 + 56 + 44 + textHeight
+
+    return totalHeight
   }
 }
 
