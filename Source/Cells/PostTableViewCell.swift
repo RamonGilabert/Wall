@@ -20,6 +20,9 @@ public class PostTableViewCell: UITableViewCell {
 
   public lazy var postText: UILabel = {
     let label = UILabel()
+    label.font = UIFont.systemFontOfSize(14)
+    label.numberOfLines = 0
+
     return label
     }()
 
@@ -60,7 +63,7 @@ public class PostTableViewCell: UITableViewCell {
     postText.text = post.text
     postText.frame.size.width = UIScreen.mainScreen().bounds.width - 20
     postText.sizeToFit()
-    postText.frame = CGRect(x: 10, y: CGRectGetMaxY(postImagesView.frame),
+    postText.frame = CGRect(x: 10, y: CGRectGetMaxY(postImagesView.frame) + 12,
       width: postText.frame.width, height: postText.frame.height)
 
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postText.frame))
