@@ -1,0 +1,14 @@
+PODS:
+  - Wall (0.1.0)
+
+DEPENDENCIES:
+  - Wall (from `../../`)
+
+EXTERNAL SOURCES:
+  Wall:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  Wall: c667f333b5833f1329626fde4ef276f9c380a5af
+
+COCOAPODS: 0.39.0.beta.4
