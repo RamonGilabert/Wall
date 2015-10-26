@@ -35,7 +35,6 @@ public class PostTableViewCell: UITableViewCell {
   public lazy var actionBarView: PostActionBarView = {
     let view = PostActionBarView()
     view.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
-    view.backgroundColor = UIColor.blackColor()
 
     return view
     }()
