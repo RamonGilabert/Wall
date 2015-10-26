@@ -1,14 +1,21 @@
 import UIKit
+import Kingfisher
 
 public class PostAuthorView: UIView {
 
   public lazy var avatarImageView: UIImageView = {
     let imageView = UIImageView()
+    imageView.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
+
     return imageView
     }()
 
   public lazy var authorName: UILabel = {
     let label = UILabel()
+    label.font = UIFont.boldSystemFontOfSize(14)
+    label.frame = CGRect(x: 60, y: 14,
+      width: UIScreen.mainScreen().bounds.width - 70, height: 20)
+
     return label
     }()
 
@@ -25,12 +32,10 @@ public class PostAuthorView: UIView {
   // MARK: - Setup
 
   public func configureView(author: Author) {
+    if let avatarURL = author.avatar {
+      avatarImageView.kf_setImageWithURL(avatarURL)
+    }
 
-  }
-
-  // MARK: - Setup frames
-
-  public func setupFrames() {
-
+    authorName.text = author.name
   }
 }
