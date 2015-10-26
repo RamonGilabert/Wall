@@ -4,16 +4,25 @@ public class PostInformationBarView: UIView {
 
   public lazy var likesLabel: UILabel = {
     let label = UILabel()
+    label.font = UIFont.systemFontOfSize(12)
+    label.textColor = UIColor.lightGrayColor()
+
     return label
     }()
 
   public lazy var commentsLabel: UILabel = {
     let label = UILabel()
+    label.font = UIFont.systemFontOfSize(12)
+    label.textColor = UIColor.lightGrayColor()
+
     return label
     }()
 
   public lazy var seenLabel: UILabel = {
     let label = UILabel()
+    label.font = UIFont.italicSystemFontOfSize(12)
+    label.textColor = UIColor.lightGrayColor()
+
     return label
     }()
 
@@ -30,7 +39,15 @@ public class PostInformationBarView: UIView {
   // MARK: - Setup
 
   public func configureView(likes: Int, comments: Int, seen: Int) {
+    likesLabel.text = "\(likes) likes"
+    commentsLabel.text = "\(comments) comments"
+    seenLabel.text = "Seen by \(seen)"
 
+    [likesLabel, commentsLabel, seenLabel].forEach { $0.sizeToFit() }
+
+    likesLabel.frame.origin = CGPoint(x: 20, y: 18)
+    commentsLabel.frame.origin = CGPoint(x: CGRectGetMaxX(likesLabel.frame) + 10, y: 18)
+    seenLabel.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenLabel.frame.width - 20, y: 18)
   }
 
   // MARK: - Setup frames

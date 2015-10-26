@@ -13,13 +13,15 @@ public class PostTableViewCell: UITableViewCell {
 
   public lazy var postImagesView: PostImagesView = {
     let view = PostImagesView()
-    view.frame = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 274)
+    view.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 274)
 
     return view
     }()
 
   public lazy var postTextView: PostTextView = {
     let view = PostTextView()
+    view.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 0)
+
     return view
     }()
 
@@ -33,7 +35,8 @@ public class PostTableViewCell: UITableViewCell {
   public lazy var actionBarView: PostActionBarView = {
     let view = PostActionBarView()
     view.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
-    
+    view.backgroundColor = UIColor.blackColor()
+
     return view
     }()
 
@@ -41,6 +44,8 @@ public class PostTableViewCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
     [authorView, postImagesView, postTextView, informationView, actionBarView].forEach { addSubview($0) }
+
+    selectionStyle = .None
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -55,5 +60,11 @@ public class PostTableViewCell: UITableViewCell {
     postTextView.configureView(post.text)
     informationView.configureView(post.likeCount, comments: post.commentCount, seen: post.seenCount)
     actionBarView.configureView(post.liked)
+
+    postTextView.text.sizeToFit()
+
+    postTextView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postImagesView.frame) + 60)
+    informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postTextView.frame))
+    actionBarView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(informationView.frame))
   }
 }

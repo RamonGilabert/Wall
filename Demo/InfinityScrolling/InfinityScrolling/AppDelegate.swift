@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   lazy var wallController: WallController = { [unowned self] in
     let controller = WallController()
     controller.posts = self.generatePosts(1, to: 50)
+    controller.title = "Infinity Scrolling".uppercaseString
 
     return controller
     }()
@@ -40,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
 
       var attachments = [NSURL]()
-      var attachmentCount = 0
+      var attachmentCount = 1
       var likes = 0
       var commentCount = 0
       var seen = 0
