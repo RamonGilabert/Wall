@@ -8,6 +8,10 @@ public class WallController: UIViewController {
       forCellReuseIdentifier: PostTableViewCell.reusableIdentifier)
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.frame = CGRect(x: 0, y: 0,
+      width: UIScreen.mainScreen().bounds.width,
+      height: UIScreen.mainScreen().bounds.height)
+    tableView.separatorStyle = .None
 
     return tableView
     }()
@@ -16,6 +20,9 @@ public class WallController: UIViewController {
 
   public override func viewDidLoad() {
     super.viewDidLoad()
+
+    view.addSubview(tableView)
+    view.backgroundColor = UIColor.whiteColor()
   }
 }
 
@@ -35,7 +42,7 @@ extension WallController: UITableViewDataSource {
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.reusableIdentifier)
       as? PostTableViewCell else { return PostTableViewCell() }
-    
+
     let post = posts[indexPath.row]
 
     cell.configureCell(post)

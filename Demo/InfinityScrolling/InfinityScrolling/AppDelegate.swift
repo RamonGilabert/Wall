@@ -5,6 +5,11 @@ import Fakery
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+  lazy var navigationController: UINavigationController = { [unowned self] in
+    let controller = UINavigationController(rootViewController: self.wallController)
+    return controller
+    }()
+
   lazy var wallController: WallController = { [unowned self] in
     let controller = WallController()
     controller.posts = self.generatePosts(1, to: 50)
@@ -17,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    window = UIWindow()
+    window?.rootViewController = navigationController
+    window?.makeKeyWindow()
     
     return true
   }
