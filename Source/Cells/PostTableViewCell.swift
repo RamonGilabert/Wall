@@ -13,16 +13,14 @@ public class PostTableViewCell: UITableViewCell {
 
   public lazy var postImagesView: PostImagesView = {
     let view = PostImagesView()
-    view.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 274)
+    view.frame = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 274)
 
     return view
     }()
 
-  public lazy var postTextView: PostTextView = {
-    let view = PostTextView()
-    view.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 0)
-
-    return view
+  public lazy var postText: UILabel = {
+    let label = UILabel()
+    return label
     }()
 
   public lazy var informationView: PostInformationBarView = {
@@ -42,7 +40,7 @@ public class PostTableViewCell: UITableViewCell {
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [authorView, postImagesView, postTextView, informationView, actionBarView].forEach { addSubview($0) }
+    [authorView, postImagesView, postText, informationView, actionBarView].forEach { addSubview($0) }
 
     selectionStyle = .None
   }
@@ -56,14 +54,16 @@ public class PostTableViewCell: UITableViewCell {
 
     authorView.configureView(author)
     postImagesView.configureView(post.images)
-    postTextView.configureView(post.text)
     informationView.configureView(post.likeCount, comments: post.commentCount, seen: post.seenCount)
     actionBarView.configureView(post.liked)
 
-    postTextView.text.sizeToFit()
+    postText.text = post.text
+    postText.frame.size.width = UIScreen.mainScreen().bounds.width - 20
+    postText.sizeToFit()
+    postText.frame = CGRect(x: 10, y: CGRectGetMaxY(postImagesView.frame),
+      width: postText.frame.width, height: postText.frame.height)
 
-    postTextView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postImagesView.frame) + 60)
-    informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postTextView.frame))
+    informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postText.frame))
     actionBarView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(informationView.frame))
   }
 }

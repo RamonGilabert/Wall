@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var wallController: WallController = { [unowned self] in
     let controller = WallController()
-    controller.posts = self.generatePosts(1, to: 50)
+    controller.posts = self.generatePosts(1, to: 200)
     controller.title = "Infinity Scrolling".uppercaseString
 
     return controller
@@ -45,22 +45,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       var likes = 0
       var commentCount = 0
       var seen = 0
+      var liked = true
 
       if i % 4 == 0 {
         attachmentCount = 4
         commentCount = 3
         likes = 3
         seen = 4
+        liked = false
       } else if i % 3 == 0 {
         attachmentCount = 2
         commentCount = 1
         likes = 1
         seen = 2
+        liked = true
       } else if i % 2 == 0 {
         attachmentCount = 1
         commentCount = 4
         likes = 4
         seen = 6
+        liked = false
       }
 
       for x in 0..<attachmentCount {
@@ -80,6 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       post.likeCount = likes
       post.seenCount = seen
       post.commentCount = commentCount
+      post.liked = liked
       posts.append(post)
     }
     

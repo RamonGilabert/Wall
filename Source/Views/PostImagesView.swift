@@ -5,7 +5,7 @@ public class PostImagesView: UIView {
 
   public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.frame = CGRect(x: 10, y: 60,
+    imageView.frame = CGRect(x: 10, y: 0,
       width: UIScreen.mainScreen().bounds.width - 20, height: 274)
     imageView.contentMode = .ScaleAspectFill
     imageView.clipsToBounds = true
