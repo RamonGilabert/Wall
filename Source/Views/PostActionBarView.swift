@@ -1,5 +1,5 @@
 import UIKit
 
-class WallActionBarView: UIView {
+class PostActionBarView: UIView {
 
 }
