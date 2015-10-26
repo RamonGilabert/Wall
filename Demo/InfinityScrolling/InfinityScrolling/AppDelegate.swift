@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  InfinityScrollint
+//  InfinityScrolling
 //
 //  Created by Ramon Gilabert Llop on 10/26/15.
 //  Copyright © 2015 Ramon Gilabert Llop. All rights reserved.
