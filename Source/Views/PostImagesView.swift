@@ -17,6 +17,12 @@ class PostImagesView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // MARK: - Setup
+
+  func configureView(images: [UIImage]) {
+
+  }
+
   // MARK: - Setup frames
 
   func setupFrames() {

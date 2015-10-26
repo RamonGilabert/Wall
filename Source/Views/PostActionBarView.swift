@@ -32,6 +32,12 @@ class PostActionBarView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // MARK: - Setup
+
+  func configureView(liked: Bool) {
+    
+  }
+
   // MARK: - Setup frames
 
   func setupFrames() {

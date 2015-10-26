@@ -1,13 +1,8 @@
 import UIKit
 
-class PostAuthorView: UIView {
+class PostTextView: UIView {
 
-  lazy var avatarImageView: UIImageView = {
-    let imageView = UIImageView()
-    return imageView
-    }()
-
-  lazy var authorName: UILabel = {
+  lazy var text: UILabel = {
     let label = UILabel()
     return label
     }()
@@ -15,7 +10,7 @@ class PostAuthorView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [avatarImageView, authorName].forEach { addSubview($0) }
+    addSubview(text)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -24,13 +19,13 @@ class PostAuthorView: UIView {
 
   // MARK: - Setup
 
-  func configureView(author: Author) {
+  func configureView(text: String) {
 
   }
 
   // MARK: - Setup frames
 
   func setupFrames() {
-
+    
   }
 }

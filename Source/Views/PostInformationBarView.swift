@@ -27,6 +27,12 @@ class PostInformationBarView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // MARK: - Setup
+
+  func configureView(likes: Int, comments: Int, seen: Int) {
+
+  }
+
   // MARK: - Setup frames
 
   func setupFrames() {
