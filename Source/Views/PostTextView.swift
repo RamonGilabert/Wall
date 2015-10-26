@@ -1,31 +1,31 @@
 import UIKit
 
-class PostTextView: UIView {
+public class PostTextView: UIView {
 
-  lazy var text: UILabel = {
+  public lazy var text: UILabel = {
     let label = UILabel()
     return label
     }()
 
-  override init(frame: CGRect) {
+  public override init(frame: CGRect) {
     super.init(frame: frame)
 
     addSubview(text)
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - Setup
 
-  func configureView(text: String) {
+  public func configureView(text: String) {
 
   }
 
   // MARK: - Setup frames
 
-  func setupFrames() {
+  public func setupFrames() {
     
   }
 }

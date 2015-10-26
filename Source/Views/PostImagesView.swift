@@ -1,31 +1,31 @@
 import UIKit
 
-class PostImagesView: UIView {
+public class PostImagesView: UIView {
 
-  lazy var imageView: UIImageView = {
+  public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     return imageView
     }()
 
-  override init(frame: CGRect) {
+  public override init(frame: CGRect) {
     super.init(frame: frame)
 
     addSubview(imageView)
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - Setup
 
-  func configureView(images: [UIImage]) {
+  public func configureView(images: [UIImage]) {
 
   }
 
   // MARK: - Setup frames
 
-  func setupFrames() {
+  public func setupFrames() {
 
   }
 }

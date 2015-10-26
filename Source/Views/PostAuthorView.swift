@@ -1,36 +1,36 @@
 import UIKit
 
-class PostAuthorView: UIView {
+public class PostAuthorView: UIView {
 
-  lazy var avatarImageView: UIImageView = {
+  public lazy var avatarImageView: UIImageView = {
     let imageView = UIImageView()
     return imageView
     }()
 
-  lazy var authorName: UILabel = {
+  public lazy var authorName: UILabel = {
     let label = UILabel()
     return label
     }()
 
-  override init(frame: CGRect) {
+  public override init(frame: CGRect) {
     super.init(frame: frame)
 
     [avatarImageView, authorName].forEach { addSubview($0) }
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - Setup
 
-  func configureView(author: Author) {
+  public func configureView(author: Author) {
 
   }
 
   // MARK: - Setup frames
 
-  func setupFrames() {
+  public func setupFrames() {
 
   }
 }

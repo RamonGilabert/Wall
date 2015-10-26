@@ -1,46 +1,46 @@
 import UIKit
 
-class PostActionBarView: UIView {
+public class PostActionBarView: UIView {
 
-  lazy var topSeparator: UIView = {
+  public lazy var topSeparator: UIView = {
     let view = UIView()
     return view
     }()
 
-  lazy var likeButton: UIButton = {
+  public lazy var likeButton: UIButton = {
     let button = UIButton()
     return button
     }()
 
-  lazy var commentButton: UIButton = {
+  public lazy var commentButton: UIButton = {
     let button = UIButton()
     return button
     }()
 
-  lazy var bottomSeparator: UIView = {
+  public lazy var bottomSeparator: UIView = {
     let view = UIView()
     return view
     }()
 
-  override init(frame: CGRect) {
+  public override init(frame: CGRect) {
     super.init(frame: frame)
 
     [topSeparator, likeButton, commentButton, bottomSeparator].forEach { addSubview($0) }
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - Setup
 
-  func configureView(liked: Bool) {
+  public func configureView(liked: Bool) {
     
   }
 
   // MARK: - Setup frames
 
-  func setupFrames() {
+  public func setupFrames() {
 
   }
 }

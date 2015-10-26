@@ -1,8 +1,8 @@
 import UIKit
 
-class WallController: UIViewController {
+public class WallController: UIViewController {
 
-  lazy var tableView: UITableView = { [unowned self] in
+  public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
     tableView.registerClass(PostTableViewCell.self,
       forCellReuseIdentifier: PostTableViewCell.reusableIdentifier)
@@ -12,27 +12,27 @@ class WallController: UIViewController {
     return tableView
     }()
 
-  var posts = [Post]()
+  public var posts = [Post]()
 
-  override func viewDidLoad() {
+  public override func viewDidLoad() {
     super.viewDidLoad()
   }
 }
 
 extension WallController: UITableViewDelegate {
 
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     return 80
   }
 }
 
 extension WallController: UITableViewDataSource {
 
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return posts.count
   }
 
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.reusableIdentifier)
       as? PostTableViewCell else { return PostTableViewCell() }
     
