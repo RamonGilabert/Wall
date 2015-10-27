@@ -51,8 +51,8 @@ public class PostTableViewCell: UITableViewCell {
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [authorView, postImagesView, postText,
-      informationView, actionBarView, bottomSeparator].forEach { addSubview($0) }
+    [bottomSeparator, authorView, postImagesView, postText,
+      informationView, actionBarView].forEach { addSubview($0) }
 
     selectionStyle = .None
   }

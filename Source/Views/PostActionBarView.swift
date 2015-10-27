@@ -35,6 +35,13 @@ public class PostActionBarView: UIView {
     super.init(frame: frame)
 
     [topSeparator, likeButton, commentButton].forEach { addSubview($0) }
+
+    backgroundColor = UIColor.whiteColor()
+    
+    layer.shadowColor = UIColor.blackColor().CGColor
+    layer.shadowOffset = CGSize(width: 0, height: 1)
+    layer.shadowOpacity = 0.1
+    layer.shadowRadius = 1
   }
 
   public required init?(coder aDecoder: NSCoder) {

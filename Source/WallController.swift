@@ -12,8 +12,17 @@ public class WallController: UIViewController {
       width: UIScreen.mainScreen().bounds.width,
       height: UIScreen.mainScreen().bounds.height)
     tableView.separatorStyle = .None
+    tableView.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
 
     return tableView
+    }()
+
+  public lazy var topSeparator: UIView = {
+    let view = UIView()
+    view.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
+    view.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
+
+    return view
     }()
 
   public var posts = [Post]()
@@ -21,8 +30,14 @@ public class WallController: UIViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.addSubview(tableView)
+    [topSeparator, tableView].forEach { view.addSubview($0) }
+
     view.backgroundColor = UIColor.whiteColor()
+
+    if let navigationController = navigationController {
+      tableView.contentInset.top = navigationController.navigationBar.frame.height
+        + UIApplication.sharedApplication().statusBarFrame.height + 20
+    }
   }
 }
 
