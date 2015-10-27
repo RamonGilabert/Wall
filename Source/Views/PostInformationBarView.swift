@@ -29,7 +29,11 @@ public class PostInformationBarView: UIView {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [likesLabel, commentsLabel, seenLabel].forEach { addSubview($0) }
+    [likesLabel, commentsLabel, seenLabel].forEach {
+      addSubview($0)
+      $0.layer.drawsAsynchronously = true
+      $0.opaque = true
+    }
   }
 
   public required init?(coder aDecoder: NSCoder) {

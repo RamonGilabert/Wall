@@ -24,7 +24,11 @@ public class PostAuthorView: UIView {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [avatarImageView, authorName].forEach { addSubview($0) }
+    [avatarImageView, authorName].forEach {
+      addSubview($0)
+      $0.layer.drawsAsynchronously = true
+      $0.opaque = true
+    }
   }
 
   public required init?(coder aDecoder: NSCoder) {

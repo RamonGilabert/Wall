@@ -17,6 +17,8 @@ public class PostImagesView: UIView {
     super.init(frame: frame)
 
     addSubview(imageView)
+    imageView.layer.drawsAsynchronously = true
+    imageView.opaque = true
   }
 
   public required init?(coder aDecoder: NSCoder) {

@@ -34,7 +34,11 @@ public class PostActionBarView: UIView {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [topSeparator, likeButton, commentButton].forEach { addSubview($0) }
+    [topSeparator, likeButton, commentButton].forEach {
+      addSubview($0)
+      $0.layer.drawsAsynchronously = true
+      $0.opaque = true
+    }
 
     backgroundColor = UIColor.whiteColor()
     
