@@ -39,7 +39,7 @@ extension WallController: UITableViewDelegate {
 
     let imageHeight: CGFloat = post.images.isEmpty ? 0 : 274
     let textHeight: CGFloat = label.frame.height + 12
-    let totalHeight: CGFloat = imageHeight + 60 + 56 + 44 + textHeight
+    let totalHeight: CGFloat = imageHeight + 60 + 56 + 44 + 20 + textHeight
 
     return totalHeight
   }

@@ -31,18 +31,10 @@ public class PostActionBarView: UIView {
     return button
     }()
 
-  public lazy var bottomSeparator: UIView = {
-    let view = UIView()
-    view.backgroundColor = UIColor.grayColor()
-    view.frame = CGRect(x: 10, y: 43.5, width: UIScreen.mainScreen().bounds.width - 20, height: 0.5)
-
-    return view
-    }()
-
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [topSeparator, likeButton, commentButton, bottomSeparator].forEach { addSubview($0) }
+    [topSeparator, likeButton, commentButton].forEach { addSubview($0) }
   }
 
   public required init?(coder aDecoder: NSCoder) {

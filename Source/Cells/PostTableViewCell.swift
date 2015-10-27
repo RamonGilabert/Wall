@@ -40,10 +40,19 @@ public class PostTableViewCell: UITableViewCell {
     return view
     }()
 
+  public lazy var bottomSeparator: UIView = {
+    let view = UIView()
+    view.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
+    view.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
+
+    return view
+    }()
+
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [authorView, postImagesView, postText, informationView, actionBarView].forEach { addSubview($0) }
+    [authorView, postImagesView, postText,
+      informationView, actionBarView, bottomSeparator].forEach { addSubview($0) }
 
     selectionStyle = .None
   }
@@ -68,5 +77,6 @@ public class PostTableViewCell: UITableViewCell {
 
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postText.frame))
     actionBarView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(informationView.frame))
+    bottomSeparator.frame.origin.y = CGRectGetMaxY(actionBarView.frame)
   }
 }
