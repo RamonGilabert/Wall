@@ -45,16 +45,13 @@ extension WallController: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     let post = posts[indexPath.row]
-    let label = UILabel()
-    label.font = UIFont.systemFontOfSize(14)
-    label.numberOfLines = 0
-    label.frame.size.width = UIScreen.mainScreen().bounds.width - 20
-    label.text = post.text
-    label.sizeToFit()
+    let postText = post.text as NSString
+    let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 20,
+      height: CGFloat.max), options: .UsesLineFragmentOrigin,
+      attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
 
     let imageHeight: CGFloat = post.images.isEmpty ? 0 : 274
-    let textHeight: CGFloat = label.frame.height + 12
-    let totalHeight: CGFloat = imageHeight + 60 + 56 + 44 + 20 + textHeight
+    let totalHeight: CGFloat = imageHeight + 60 + 56 + 44 + 20 + 12 + textFrame.height
 
     return totalHeight
   }
