@@ -37,6 +37,7 @@ public class WallController: UIViewController {
     if let navigationController = navigationController {
       tableView.contentInset.top = navigationController.navigationBar.frame.height
         + UIApplication.sharedApplication().statusBarFrame.height + 20
+      tableView.scrollIndicatorInsets.top = tableView.contentInset.top
     }
   }
 }
