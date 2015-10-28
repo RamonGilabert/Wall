@@ -36,7 +36,6 @@ public class PostActionBarView: UIView {
 
     [topSeparator, likeButton, commentButton].forEach {
       addSubview($0)
-      $0.layer.drawsAsynchronously = true
       $0.opaque = true
     }
 

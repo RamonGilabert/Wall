@@ -31,7 +31,6 @@ public class PostInformationBarView: UIView {
 
     [likesLabel, commentsLabel, seenLabel].forEach {
       addSubview($0)
-      $0.layer.drawsAsynchronously = true
       $0.opaque = true
     }
   }

@@ -13,7 +13,6 @@ public class WallController: UIViewController {
       height: UIScreen.mainScreen().bounds.height)
     tableView.separatorStyle = .None
     tableView.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
-    tableView.layer.drawsAsynchronously = true
     tableView.opaque = true
 
     return tableView
@@ -23,7 +22,6 @@ public class WallController: UIViewController {
     let view = UIView()
     view.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
     view.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
-    view.layer.drawsAsynchronously = true
     view.opaque = true
 
     return view

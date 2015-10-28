@@ -26,7 +26,6 @@ public class PostAuthorView: UIView {
 
     [avatarImageView, authorName].forEach {
       addSubview($0)
-      $0.layer.drawsAsynchronously = true
       $0.opaque = true
     }
   }

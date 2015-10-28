@@ -54,11 +54,9 @@ public class PostTableViewCell: UITableViewCell {
     [bottomSeparator, authorView, postImagesView, postText,
       informationView, actionBarView].forEach {
         addSubview($0)
-        $0.layer.drawsAsynchronously = true
         $0.opaque = true
     }
 
-    layer.drawsAsynchronously = true
     opaque = true
     selectionStyle = .None
   }
