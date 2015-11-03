@@ -32,6 +32,7 @@ public class PostInformationBarView: UIView {
     [likesLabel, commentsLabel, seenLabel].forEach {
       addSubview($0)
       $0.opaque = true
+      $0.backgroundColor = UIColor.whiteColor()
     }
 
     backgroundColor = UIColor.whiteColor()

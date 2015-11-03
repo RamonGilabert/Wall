@@ -7,6 +7,8 @@ public class PostAuthorView: UIView {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
     imageView.clipsToBounds = true
+    imageView.opaque = true
+    imageView.backgroundColor = UIColor.whiteColor()
 
     return imageView
     }()
