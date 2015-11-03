@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'Source/**/*'
 
-  s.dependency 'Kingfisher'
+  s.dependency 'SDWebImage'
 
   s.frameworks = 'Foundation'
 end

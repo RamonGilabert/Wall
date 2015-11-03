@@ -1,5 +1,5 @@
 import UIKit
-import Kingfisher
+import SDWebImage
 
 public class PostImagesView: UIView {
 
@@ -36,8 +36,7 @@ public class PostImagesView: UIView {
 
   public func configureView(images: [NSURL]) {
     if let image = images.first {
-      imageView.kf_setImageWithURL(image, placeholderImage: nil,
-        optionsInfo: [.Options(.BackgroundDecode), .Options(.BackgroundCallback)])
+      imageView.sd_setImageWithURL(image)
     }
   }
 }

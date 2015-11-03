@@ -1,5 +1,5 @@
 import UIKit
-import Kingfisher
+import SDWebImage
 
 public class PostAuthorView: UIView {
 
@@ -48,8 +48,7 @@ public class PostAuthorView: UIView {
 
   public func configureView(author: Author) {
     if let avatarURL = author.avatar {
-      avatarImageView.kf_setImageWithURL(avatarURL, placeholderImage: nil,
-        optionsInfo: [.Options(.BackgroundDecode), .Options(.BackgroundCallback)])
+      avatarImageView.sd_setImageWithURL(avatarURL)
     }
 
     authorName.text = author.name
