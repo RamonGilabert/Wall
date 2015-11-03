@@ -2,11 +2,12 @@ import UIKit
 
 public class PostActionBarView: UIView {
 
-  public lazy var topSeparator: UIView = {
-    let view = UIView()
-    view.backgroundColor = UIColor.grayColor()
+  public lazy var topSeparator: CALayer = {
+    let layer = CALayer()
+    layer.backgroundColor = UIColor.grayColor().CGColor
+    layer.opaque = true
 
-    return view
+    return layer
     }()
 
   public lazy var likeButton: UIButton = { [unowned self] in
@@ -32,11 +33,13 @@ public class PostActionBarView: UIView {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [topSeparator, likeButton, commentButton].forEach {
+    [likeButton, commentButton].forEach {
       addSubview($0)
       $0.opaque = true
+      $0.backgroundColor = UIColor.whiteColor()
     }
 
+    layer.addSublayer(topSeparator)
     backgroundColor = UIColor.whiteColor()
   }
 

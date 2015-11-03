@@ -24,6 +24,7 @@ public class PostAuthorView: UIView {
     [avatarImageView, authorName].forEach {
       addSubview($0)
       $0.opaque = true
+      $0.backgroundColor = UIColor.whiteColor()
     }
 
     backgroundColor = UIColor.whiteColor()

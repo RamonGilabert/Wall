@@ -33,11 +33,12 @@ public class PostTableViewCell: UITableViewCell {
     return view
     }()
 
-  public lazy var bottomSeparator: UIView = {
-    let view = UIView()
-    view.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
+  public lazy var bottomSeparator: CALayer = {
+    let layer = CALayer()
+    layer.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1).CGColor
+    layer.opaque = true
 
-    return view
+    return layer
     }()
 
   public var post: Post?
@@ -45,12 +46,13 @@ public class PostTableViewCell: UITableViewCell {
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [bottomSeparator, authorView, postImagesView, postText,
+    [authorView, postImagesView, postText,
       informationView, actionBarView].forEach {
         addSubview($0)
         $0.opaque = true
     }
 
+    layer.addSublayer(bottomSeparator)
     opaque = true
     selectionStyle = .None
   }

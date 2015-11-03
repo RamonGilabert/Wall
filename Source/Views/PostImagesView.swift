@@ -7,6 +7,7 @@ public class PostImagesView: UIView {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
     imageView.clipsToBounds = true
+    imageView.backgroundColor = UIColor.lightGrayColor()
 
     return imageView
     }()
