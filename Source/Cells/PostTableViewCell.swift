@@ -11,7 +11,6 @@ public class PostTableViewCell: UITableViewCell {
 
   public lazy var postImagesView: PostImagesView = {
     let view = PostImagesView()
-
     return view
     }()
 
@@ -50,6 +49,7 @@ public class PostTableViewCell: UITableViewCell {
       informationView, actionBarView].forEach {
         addSubview($0)
         $0.opaque = true
+        $0.backgroundColor = UIColor.whiteColor()
     }
 
     layer.addSublayer(bottomSeparator)
