@@ -5,7 +5,6 @@ public class PostActionBarView: UIView {
   public lazy var topSeparator: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor.grayColor()
-    view.frame = CGRect(x: 10, y: 0, width: UIScreen.mainScreen().bounds.width - 20, height: 0.5)
 
     return view
     }()
@@ -14,7 +13,6 @@ public class PostActionBarView: UIView {
     let button = UIButton()
     button.setTitle("Like", forState: .Normal)
     button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
-    button.frame = CGRect(x: 10, y: 0.5, width: UIScreen.mainScreen().bounds.width / 2 - 20, height: 43)
     button.addTarget(self, action: "likeButtonDidPress", forControlEvents: .TouchUpInside)
 
     return button
@@ -40,6 +38,16 @@ public class PostActionBarView: UIView {
     }
 
     backgroundColor = UIColor.whiteColor()
+  }
+
+  public override func drawRect(rect: CGRect) {
+    super.drawRect(rect)
+
+    let totalWidth = UIScreen.mainScreen().bounds.width
+
+    topSeparator.frame = CGRect(x: 10, y: 0, width: totalWidth - 20, height: 0.5)
+    likeButton.frame = CGRect(x: 10, y: 0.5, width: totalWidth / 2 - 20, height: 43)
+    commentButton.frame = CGRect(x: totalWidth / 2, y: 0.5, width: totalWidth / 2 - 20, height: 43)
   }
 
   public required init?(coder aDecoder: NSCoder) {

@@ -5,7 +5,6 @@ public class PostAuthorView: UIView {
 
   public lazy var avatarImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
     imageView.contentMode = .ScaleAspectFill
     imageView.clipsToBounds = true
 
@@ -15,8 +14,6 @@ public class PostAuthorView: UIView {
   public lazy var authorName: UILabel = {
     let label = UILabel()
     label.font = UIFont.boldSystemFontOfSize(14)
-    label.frame = CGRect(x: 60, y: 14,
-      width: UIScreen.mainScreen().bounds.width - 70, height: 20)
 
     return label
     }()
@@ -28,6 +25,16 @@ public class PostAuthorView: UIView {
       addSubview($0)
       $0.opaque = true
     }
+
+    backgroundColor = UIColor.whiteColor()
+  }
+
+  public override func drawRect(rect: CGRect) {
+    super.drawRect(rect)
+
+    avatarImageView.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
+    authorName.frame = CGRect(x: 60, y: 14,
+      width: UIScreen.mainScreen().bounds.width - 70, height: 20)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -38,7 +45,8 @@ public class PostAuthorView: UIView {
 
   public func configureView(author: Author) {
     if let avatarURL = author.avatar {
-      avatarImageView.kf_setImageWithURL(avatarURL)
+      avatarImageView.kf_setImageWithURL(avatarURL, placeholderImage: nil,
+        optionsInfo: [.Options(.BackgroundDecode), .Options(.BackgroundCallback)])
     }
 
     authorName.text = author.name

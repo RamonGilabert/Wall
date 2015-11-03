@@ -35,6 +35,7 @@ public class WallController: UIViewController {
     [topSeparator, tableView].forEach { view.addSubview($0) }
 
     view.backgroundColor = UIColor.whiteColor()
+    view.layer.opaque = true
 
     if let navigationController = navigationController {
       tableView.contentInset.top = navigationController.navigationBar.frame.height

@@ -5,8 +5,6 @@ public class PostImagesView: UIView {
 
   public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.frame = CGRect(x: 10, y: 0,
-      width: UIScreen.mainScreen().bounds.width - 20, height: 274)
     imageView.contentMode = .ScaleAspectFill
     imageView.clipsToBounds = true
 
@@ -18,6 +16,15 @@ public class PostImagesView: UIView {
 
     addSubview(imageView)
     imageView.opaque = true
+
+    backgroundColor = UIColor.whiteColor()
+  }
+
+  public override func drawRect(rect: CGRect) {
+    super.drawRect(rect)
+
+    imageView.frame = CGRect(x: 10, y: 0,
+      width: UIScreen.mainScreen().bounds.width - 20, height: 274)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -28,7 +35,8 @@ public class PostImagesView: UIView {
 
   public func configureView(images: [NSURL]) {
     if let image = images.first {
-      imageView.kf_setImageWithURL(image)
+      imageView.kf_setImageWithURL(image, placeholderImage: nil,
+        optionsInfo: [.Options(.BackgroundDecode), .Options(.BackgroundCallback)])
     }
   }
 }
