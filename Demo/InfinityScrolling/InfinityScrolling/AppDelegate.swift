@@ -33,59 +33,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var posts = [Post]()
 
     for i in from...to {
-      var author = Author(name: "")
+      autoreleasepool({
+        var author = Author(name: "")
 
-      if let imageURL = NSURL(string: "http://lorempixel.com/75/75?type=avatar&id=\(i)") {
-        author = Author(name: faker.name.name(),
-          avatar: imageURL)
-      }
-
-      var attachments = [NSURL]()
-      var attachmentCount = 1
-      var likes = 0
-      var commentCount = 0
-      var seen = 0
-      var liked = true
-
-      if i % 4 == 0 {
-        attachmentCount = 4
-        commentCount = 3
-        likes = 3
-        seen = 4
-        liked = false
-      } else if i % 3 == 0 {
-        attachmentCount = 2
-        commentCount = 1
-        likes = 1
-        seen = 2
-        liked = true
-      } else if i % 2 == 0 {
-        attachmentCount = 1
-        commentCount = 4
-        likes = 4
-        seen = 6
-        liked = false
-      }
-
-      for x in 0..<attachmentCount {
-        if let imageURL = NSURL(string: "http://lorempixel.com/250/250/?type=attachment&id=\(i)\(x)") {
-          attachments.append(imageURL)
+        if let imageURL = NSURL(string: "http://lorempixel.com/75/75?type=avatar&id=\(i)") {
+          author = Author(name: faker.name.name(),
+            avatar: imageURL)
         }
-      }
 
-      let sencenceCount = Int(arc4random_uniform(8) + 1)
-      let post = Post(
-        text: faker.lorem.sentences(amount: sencenceCount),
-        publishDate: NSDate(timeIntervalSinceNow: -Double(arc4random_uniform(60000))),
-        author: author,
-        attachments: attachments
-      )
+        var attachments = [NSURL]()
+        var attachmentCount = 1
+        var likes = 0
+        var commentCount = 0
+        var seen = 0
+        var liked = true
 
-      post.likeCount = likes
-      post.seenCount = seen
-      post.commentCount = commentCount
-      post.liked = liked
-      posts.append(post)
+        if i % 4 == 0 {
+          attachmentCount = 4
+          commentCount = 3
+          likes = 3
+          seen = 4
+          liked = false
+        } else if i % 3 == 0 {
+          attachmentCount = 2
+          commentCount = 1
+          likes = 1
+          seen = 2
+          liked = true
+        } else if i % 2 == 0 {
+          attachmentCount = 1
+          commentCount = 4
+          likes = 4
+          seen = 6
+          liked = false
+        }
+
+        for x in 0..<attachmentCount {
+          if let imageURL = NSURL(string: "http://lorempixel.com/250/250/?type=attachment&id=\(i)\(x)") {
+            attachments.append(imageURL)
+          }
+        }
+
+        let sencenceCount = Int(arc4random_uniform(8) + 1)
+        let post = Post(
+          text: faker.lorem.sentences(amount: sencenceCount),
+          publishDate: NSDate(timeIntervalSinceNow: -Double(arc4random_uniform(60000))),
+          author: author,
+          attachments: attachments
+        )
+
+        post.likeCount = likes
+        post.seenCount = seen
+        post.commentCount = commentCount
+        post.liked = liked
+        posts.append(post)
+      })
     }
     
     return posts

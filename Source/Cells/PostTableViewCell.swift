@@ -6,14 +6,11 @@ public class PostTableViewCell: UITableViewCell {
 
   public lazy var authorView: PostAuthorView = {
     let view = PostAuthorView()
-    view.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60)
-
     return view
     }()
 
   public lazy var postImagesView: PostImagesView = {
     let view = PostImagesView()
-    view.frame = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 274)
 
     return view
     }()
@@ -28,25 +25,22 @@ public class PostTableViewCell: UITableViewCell {
 
   public lazy var informationView: PostInformationBarView = {
     let view = PostInformationBarView()
-    view.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 56)
-
     return view
     }()
 
   public lazy var actionBarView: PostActionBarView = {
     let view = PostActionBarView()
-    view.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
-
     return view
     }()
 
   public lazy var bottomSeparator: UIView = {
     let view = UIView()
-    view.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
     view.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
 
     return view
     }()
+
+  public var post: Post?
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -65,8 +59,16 @@ public class PostTableViewCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configureCell(post: Post) {
-    guard let author = post.author else { return }
+  public override func drawRect(rect: CGRect) {
+    super.drawRect(rect)
+
+    authorView.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60)
+    postImagesView.frame = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 274)
+    informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 56)
+    actionBarView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
+    bottomSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
+
+    guard let post = post, author = post.author else { return }
 
     authorView.configureView(author)
     postImagesView.configureView(post.images)
@@ -82,5 +84,9 @@ public class PostTableViewCell: UITableViewCell {
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postText.frame))
     actionBarView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(informationView.frame))
     bottomSeparator.frame.origin.y = CGRectGetMaxY(actionBarView.frame)
+  }
+
+  public func configureCell(post: Post) {
+    self.post = post
   }
 }

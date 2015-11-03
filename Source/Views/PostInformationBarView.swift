@@ -33,6 +33,18 @@ public class PostInformationBarView: UIView {
       addSubview($0)
       $0.opaque = true
     }
+
+    backgroundColor = UIColor.whiteColor()
+  }
+
+  public override func drawRect(rect: CGRect) {
+    super.drawRect(rect)
+
+    [likesLabel, commentsLabel, seenLabel].forEach { $0.sizeToFit() }
+
+    likesLabel.frame.origin = CGPoint(x: 20, y: 18)
+    commentsLabel.frame.origin = CGPoint(x: CGRectGetMaxX(likesLabel.frame) + 10, y: 18)
+    seenLabel.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenLabel.frame.width - 20, y: 18)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -45,12 +57,6 @@ public class PostInformationBarView: UIView {
     likesLabel.text = "\(likes) likes"
     commentsLabel.text = "\(comments) comments"
     seenLabel.text = "Seen by \(seen)"
-
-    [likesLabel, commentsLabel, seenLabel].forEach { $0.sizeToFit() }
-
-    likesLabel.frame.origin = CGPoint(x: 20, y: 18)
-    commentsLabel.frame.origin = CGPoint(x: CGRectGetMaxX(likesLabel.frame) + 10, y: 18)
-    seenLabel.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenLabel.frame.width - 20, y: 18)
   }
 
   // MARK: - Setup frames
