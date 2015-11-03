@@ -1,13 +1,13 @@
 PODS:
   - Fakery (1.0.0):
     - SwiftyJSON (~> 2.3.0)
-  - Kingfisher (1.7.0)
+  - Kingfisher (1.7.1)
   - SwiftyJSON (2.3.0)
-  - Wall (0.1.0)
+  - Wall (0.1.0):
+    - Kingfisher
 
 DEPENDENCIES:
   - Fakery
-  - Kingfisher
   - Wall (from `../../`)
 
 EXTERNAL SOURCES:
@@ -16,8 +16,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Fakery: a8c99f35643a6fe396ee30a14fbcd466dbd098dd
-  Kingfisher: 906bf9821bd32d06d4aaecc60431857e70ccabaa
+  Kingfisher: c65d078cfc202639f2b6ddd49f09f742cef8781a
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
-  Wall: c667f333b5833f1329626fde4ef276f9c380a5af
+  Wall: c132e1b7f910b105b48c089535a20c129505274f
 
 COCOAPODS: 0.39.0.beta.4
