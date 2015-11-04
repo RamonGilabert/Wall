@@ -78,9 +78,9 @@ public class PostTableViewCell: UITableViewCell {
     actionBarView.configureView(post.liked)
 
     postText.text = post.text
-    postText.frame.size.width = UIScreen.mainScreen().bounds.width - 20
+    postText.frame.size.width = UIScreen.mainScreen().bounds.width - 40
     postText.sizeToFit()
-    postText.frame = CGRect(x: 10, y: CGRectGetMaxY(postImagesView.frame) + 12,
+    postText.frame = CGRect(x: 20, y: CGRectGetMaxY(postImagesView.frame) + 12,
       width: postText.frame.width, height: postText.frame.height)
 
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postText.frame))

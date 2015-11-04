@@ -50,7 +50,7 @@ extension WallController: UITableViewDelegate {
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     let post = posts[indexPath.row]
     let postText = post.text as NSString
-    let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 20,
+    let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 40,
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
       attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
 
