@@ -12,8 +12,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var wallController: WallController = { [unowned self] in
     let controller = WallController()
-    controller.posts = self.generatePosts(1, to: 30)
+    controller.posts = self.generatePosts(0, to: 10)
     controller.title = "Infinity Scrolling".uppercaseString
+    controller.delegate = self
 
     return controller
     }()
@@ -94,3 +95,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
+extension AppDelegate: WallControllerDelegate {
+
+  func shouldFetchMoreInformation() {
+    let posts = generatePosts(0, to: 10)
+    wallController.appendPosts(posts)
+  }
+}

@@ -59,6 +59,7 @@ public class WallController: UIViewController {
 
     posts += newPosts
     tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+    fetching = false
   }
 }
 
@@ -77,8 +78,11 @@ extension WallController: UITableViewDelegate {
     return totalHeight
   }
 
-  public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-    if posts.count - indexPath.row <= 7 && !fetching {
+  public func scrollViewDidScroll(scrollView: UIScrollView) {
+    let currentOffset = scrollView.contentOffset.y
+    let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+
+    if maximumOffset - currentOffset <= 40 {
       delegate?.shouldFetchMoreInformation()
       fetching = true
     }
