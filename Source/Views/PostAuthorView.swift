@@ -7,11 +7,13 @@ public class PostAuthorView: UIView {
     public static let avatarOffset: CGFloat = 10
     public static let avatarSize: CGFloat = 40
     public static let nameOffset: CGFloat = Dimensions.avatarOffset * 2 + Dimensions.avatarSize
-    public static let nameTopOffset: CGFloat = 14
+    public static let nameTopOffset: CGFloat = 12
+    public static let dateTopOffset: CGFloat = 30
   }
 
   public lazy var avatarImageView: UIImageView = {
     let imageView = UIImageView()
+    imageView.layer.cornerRadius = Dimensions.avatarSize / 2
     imageView.contentMode = .ScaleAspectFill
     imageView.clipsToBounds = true
     imageView.opaque = true
@@ -27,10 +29,18 @@ public class PostAuthorView: UIView {
     return label
     }()
 
+  public lazy var dateLabel: UILabel = {
+    let label = UILabel()
+    label.textColor = UIColor.lightGrayColor()
+    label.font = UIFont.systemFontOfSize(12)
+
+    return label
+    }()
+
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [avatarImageView, authorName].forEach {
+    [avatarImageView, authorName, dateLabel].forEach {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = UIColor.whiteColor()
@@ -46,6 +56,8 @@ public class PostAuthorView: UIView {
       width: Dimensions.avatarSize, height: Dimensions.avatarSize)
     authorName.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.nameTopOffset,
       width: UIScreen.mainScreen().bounds.width - 70, height: 20)
+    dateLabel.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.dateTopOffset,
+      width: UIScreen.mainScreen().bounds.width - 70, height: 17)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -54,11 +66,12 @@ public class PostAuthorView: UIView {
 
   // MARK: - Setup
 
-  public func configureView(author: Author) {
+  public func configureView(author: Author, date: String) {
     if let avatarURL = author.avatar {
       avatarImageView.sd_setImageWithURL(avatarURL)
     }
 
     authorName.text = author.name
+    dateLabel.text = date
   }
 }

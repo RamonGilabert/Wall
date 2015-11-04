@@ -3,7 +3,7 @@ import UIKit
 public class Post {
 
   public var id = 0
-  public var publishDate = NSDate()
+  public var publishDate = ""
   public var text = ""
   public var liked = false
   public var seen = false
@@ -13,7 +13,7 @@ public class Post {
   public var images = [NSURL]()
   public var author: Author?
 
-  public init(text: String = "", publishDate: NSDate, author: Author? = nil,
+  public init(text: String = "", publishDate: String, author: Author? = nil,
     attachments: [NSURL] = []) {
       self.text = text
       self.publishDate = publishDate

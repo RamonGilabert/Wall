@@ -5,6 +5,7 @@ public protocol WallControllerDelegate: class {
   func shouldFetchMoreInformation()
   func likeButtonDidPress(post: Post)
   func commentsButtonDidPress(post: Post)
+  func shouldRefreshPosts(refreshControl: UIRefreshControl)
 }
 
 public class WallController: UIViewController {
@@ -42,6 +43,13 @@ public class WallController: UIViewController {
     return activityIndicator
     }()
 
+  public lazy var refreshControl: UIRefreshControl = {
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: "handleRefreshControl:", forControlEvents: .ValueChanged)
+
+    return refreshControl
+    }()
+
   public weak var delegate: WallControllerDelegate?
   public var posts = [Post]()
   public var fetching = true
@@ -50,7 +58,9 @@ public class WallController: UIViewController {
     super.viewDidLoad()
 
     [topSeparator, tableView].forEach { view.addSubview($0) }
-    tableView.addSubview(loadingIndicator)
+    [refreshControl, loadingIndicator].forEach { tableView.addSubview($0) }
+    tableView.sendSubviewToBack(refreshControl)
+    refreshControl.subviews.first?.frame.origin.y = -5
 
     view.backgroundColor = UIColor.whiteColor()
     view.layer.opaque = true
@@ -68,6 +78,8 @@ public class WallController: UIViewController {
     fetching = false
   }
 
+  // MARK: - Configuration
+
   public func appendPosts(newPosts: [Post]) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
       var indexPaths = [NSIndexPath]()
@@ -84,6 +96,13 @@ public class WallController: UIViewController {
         self.loadingIndicator.stopAnimating()
       }
     }
+  }
+
+  // MARK: - Refresh control
+
+  public func handleRefreshControl(refreshControl: UIRefreshControl) {
+    tableView.reloadData()
+    delegate?.shouldRefreshPosts(refreshControl)
   }
 }
 
@@ -123,7 +142,7 @@ extension WallController: UITableViewDelegate {
     let currentOffset = scrollView.contentOffset.y
     let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-    if maximumOffset - currentOffset <= 200 && !fetching {
+    if maximumOffset - currentOffset <= 1200 && !fetching {
       delegate?.shouldFetchMoreInformation()
       loadingIndicator.frame.origin.y = tableView.contentSize.height - 10
       loadingIndicator.startAnimating()

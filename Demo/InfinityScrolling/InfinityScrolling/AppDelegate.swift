@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let sencenceCount = Int(arc4random_uniform(8) + 1)
         let post = Post(
           text: faker.lorem.sentences(amount: sencenceCount),
-          publishDate: NSDate(timeIntervalSinceNow: -Double(arc4random_uniform(60000))),
+          publishDate: "3 hours ago",
           author: author,
           attachments: attachments
         )
@@ -112,5 +112,12 @@ extension AppDelegate: WallControllerDelegate {
 
   func commentsButtonDidPress(post: Post) {
 
+  }
+
+  func shouldRefreshPosts(refreshControl: UIRefreshControl) {
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2.5 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      refreshControl.endRefreshing()
+    }
   }
 }
