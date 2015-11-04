@@ -8,37 +8,39 @@ public class PostInformationBarView: UIView {
     public static let interitemOffset: CGFloat = 10
   }
 
-  public lazy var likesLabel: UILabel = {
-    let label = UILabel()
-    label.font = UIFont.systemFontOfSize(12)
-    label.textColor = UIColor.lightGrayColor()
+  public lazy var likeButton: UIButton = {
+    let button = UIButton()
+    button.titleLabel?.font = UIFont.systemFontOfSize(12)
+    button.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
 
-    return label
+    return button
     }()
 
-  public lazy var commentsLabel: UILabel = {
-    let label = UILabel()
-    label.font = UIFont.systemFontOfSize(12)
-    label.textColor = UIColor.lightGrayColor()
+  public lazy var commentButton: UIButton = {
+    let button = UIButton()
+    button.titleLabel?.font = UIFont.systemFontOfSize(12)
+    button.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
 
-    return label
+    return button
     }()
 
-  public lazy var seenLabel: UILabel = {
-    let label = UILabel()
-    label.font = UIFont.italicSystemFontOfSize(12)
-    label.textColor = UIColor.lightGrayColor()
+  public lazy var seenButton: UIButton = {
+    let button = UIButton()
+    button.titleLabel?.font = UIFont.italicSystemFontOfSize(12)
+    button.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
 
-    return label
+    return button
     }()
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [likesLabel, commentsLabel, seenLabel].forEach {
+    [likeButton, commentButton, seenButton].forEach {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = UIColor.whiteColor()
+      $0.subviews.first?.opaque = true
+      $0.subviews.first?.backgroundColor = UIColor.whiteColor()
     }
 
     backgroundColor = UIColor.whiteColor()
@@ -57,22 +59,22 @@ public class PostInformationBarView: UIView {
   }
 
   public func configureLikes(likes: Int) {
-    likesLabel.text = "\(likes) likes"
-    likesLabel.sizeToFit()
-    likesLabel.frame.origin = CGPoint(x: Dimensions.offset, y: Dimensions.topOffset)
+    likeButton.setTitle("\(likes) likes", forState: .Normal)
+    likeButton.sizeToFit()
+    likeButton.frame.origin = CGPoint(x: Dimensions.offset, y: Dimensions.topOffset)
   }
 
   public func configureComments(comments: Int) {
-    commentsLabel.text = "\(comments) comments"
-    commentsLabel.sizeToFit()
-    commentsLabel.frame.origin = CGPoint(x: CGRectGetMaxX(likesLabel.frame) + Dimensions.interitemOffset,
+    commentButton.setTitle("\(comments) comments", forState: .Normal)
+    commentButton.sizeToFit()
+    commentButton.frame.origin = CGPoint(x: CGRectGetMaxX(likeButton.frame) + Dimensions.interitemOffset,
       y: Dimensions.topOffset)
   }
 
   public func configureSeen(seen: Int) {
-    seenLabel.text = "Seen by \(seen)"
-    seenLabel.sizeToFit()
-    seenLabel.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenLabel.frame.width - Dimensions.offset,
+    seenButton.setTitle("Seen by \(seen)", forState: .Normal)
+    seenButton.sizeToFit()
+    seenButton.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenButton.frame.width - Dimensions.offset,
       y: Dimensions.topOffset)
   }
 }
