@@ -52,7 +52,7 @@ public class PostActionBarView: UIView {
 
     topSeparator.frame = CGRect(x: 10, y: 0, width: totalWidth - 20, height: 0.5)
     likeButton.frame = CGRect(x: 10, y: 0.5, width: totalWidth / 2 - 20, height: 43)
-    commentButton.frame = CGRect(x: totalWidth / 2, y: 0.5, width: totalWidth / 2 - 20, height: 43)
+    commentButton.frame = CGRect(x: totalWidth / 2, y: 0.5, width: totalWidth / 2 - 10, height: 43)
   }
 
   public required init?(coder aDecoder: NSCoder) {
