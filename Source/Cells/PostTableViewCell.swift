@@ -64,16 +64,26 @@ public class PostTableViewCell: UITableViewCell {
   public override func drawRect(rect: CGRect) {
     super.drawRect(rect)
 
+    guard let post = post, author = post.author else { return }
+
+    var imageHeight: CGFloat = 0
+    var imageTop: CGFloat = 50
+    if !post.images.isEmpty {
+      imageHeight = 274
+      imageTop = 60
+      postImagesView.configureView(post.images)
+      postImagesView.alpha = 1
+    } else {
+      postImagesView.alpha = 0
+    }
+
     authorView.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60)
-    postImagesView.frame = CGRect(x: 0, y: 60, width: UIScreen.mainScreen().bounds.width, height: 274)
+    postImagesView.frame = CGRect(x: 0, y: imageTop, width: UIScreen.mainScreen().bounds.width, height: imageHeight)
     informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 56)
     actionBarView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
     bottomSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
 
-    guard let post = post, author = post.author else { return }
-
     authorView.configureView(author)
-    postImagesView.configureView(post.images)
     informationView.configureView(post.likeCount, comments: post.commentCount, seen: post.seenCount)
     actionBarView.configureView(post.liked)
 

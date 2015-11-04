@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         var attachments = [NSURL]()
-        var attachmentCount = 1
+        var attachmentCount = 0
         var likes = 0
         var commentCount = 0
         var seen = 0

@@ -44,19 +44,6 @@ public class PostInformationBarView: UIView {
     backgroundColor = UIColor.whiteColor()
   }
 
-  public override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
-
-    [likesLabel, commentsLabel, seenLabel].forEach { $0.sizeToFit() }
-
-    likesLabel.frame.origin = CGPoint(x: Dimensions.offset,
-      y: Dimensions.topOffset)
-    commentsLabel.frame.origin = CGPoint(x: CGRectGetMaxX(likesLabel.frame) + Dimensions.interitemOffset,
-      y: Dimensions.topOffset)
-    seenLabel.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenLabel.frame.width - Dimensions.offset,
-      y: Dimensions.topOffset)
-  }
-
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -67,6 +54,15 @@ public class PostInformationBarView: UIView {
     likesLabel.text = "\(likes) likes"
     commentsLabel.text = "\(comments) comments"
     seenLabel.text = "Seen by \(seen)"
+
+    [likesLabel, commentsLabel, seenLabel].forEach { $0.sizeToFit() }
+
+    likesLabel.frame.origin = CGPoint(x: Dimensions.offset,
+      y: Dimensions.topOffset)
+    commentsLabel.frame.origin = CGPoint(x: CGRectGetMaxX(likesLabel.frame) + Dimensions.interitemOffset,
+      y: Dimensions.topOffset)
+    seenLabel.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenLabel.frame.width - Dimensions.offset,
+      y: Dimensions.topOffset)
   }
 
   // MARK: - Setup frames

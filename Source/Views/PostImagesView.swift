@@ -27,14 +27,6 @@ public class PostImagesView: UIView {
     backgroundColor = UIColor.whiteColor()
   }
 
-  public override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
-
-    imageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
-      width: UIScreen.mainScreen().bounds.width - Dimensions.totalOffset,
-      height: Dimensions.height)
-  }
-
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -45,5 +37,9 @@ public class PostImagesView: UIView {
     if let image = images.first {
       imageView.sd_setImageWithURL(image)
     }
+
+    imageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
+      width: UIScreen.mainScreen().bounds.width - Dimensions.totalOffset,
+      height: Dimensions.height)
   }
 }

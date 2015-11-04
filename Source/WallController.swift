@@ -72,8 +72,14 @@ extension WallController: UITableViewDelegate {
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
       attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
 
-    let imageHeight: CGFloat = post.images.isEmpty ? 0 : 274
-    let totalHeight: CGFloat = imageHeight + 60 + 56 + 44 + 20 + 12 + textFrame.height
+    var imageHeight: CGFloat = 274
+    var imageTop: CGFloat = 60
+    if post.images.isEmpty {
+      imageHeight = 0
+      imageTop = 50
+    }
+
+    let totalHeight: CGFloat = imageHeight + imageTop + 56 + 44 + 20 + 12 + textFrame.height
 
     return totalHeight
   }
