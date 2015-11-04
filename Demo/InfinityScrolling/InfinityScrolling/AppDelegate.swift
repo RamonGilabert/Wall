@@ -98,7 +98,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: WallControllerDelegate {
 
   func shouldFetchMoreInformation() {
-    let posts = generatePosts(0, to: 10)
-    wallController.appendPosts(posts)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
+      let posts = self.generatePosts(0, to: 10)
+      dispatch_async(dispatch_get_main_queue()) {
+        self.wallController.appendPosts(posts)
+      }
+    }
   }
 }

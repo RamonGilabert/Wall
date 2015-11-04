@@ -34,7 +34,7 @@ public class WallController: UIViewController {
 
   public weak var delegate: WallControllerDelegate?
   public var posts = [Post]()
-  public var fetching = false
+  public var fetching = true
 
   public override func viewDidLoad() {
     super.viewDidLoad()
@@ -51,15 +51,27 @@ public class WallController: UIViewController {
     }
   }
 
-  public func appendPosts(newPosts: [Post]) {
-    var indexPaths = [NSIndexPath]()
-    for (index, _) in newPosts.enumerate() {
-      indexPaths.append(NSIndexPath(forRow: posts.count + index, inSection: 0))
-    }
+  public override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
 
-    posts += newPosts
-    tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
     fetching = false
+  }
+
+  public func appendPosts(newPosts: [Post]) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
+      var indexPaths = [NSIndexPath]()
+      for (index, _) in newPosts.enumerate() {
+        indexPaths.append(NSIndexPath(forRow: self.posts.count + index, inSection: 0))
+      }
+      self.posts += newPosts
+
+      dispatch_async(dispatch_get_main_queue()) {
+        self.tableView.beginUpdates()
+        self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+        self.tableView.endUpdates()
+        self.fetching = false
+      }
+    }
   }
 }
 
@@ -88,7 +100,7 @@ extension WallController: UITableViewDelegate {
     let currentOffset = scrollView.contentOffset.y
     let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-    if maximumOffset - currentOffset <= 40 {
+    if maximumOffset - currentOffset <= 40 && !fetching {
       delegate?.shouldFetchMoreInformation()
       fetching = true
     }
