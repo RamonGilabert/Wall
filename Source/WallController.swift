@@ -1,5 +1,10 @@
 import UIKit
 
+public protocol WallControllerDelegate: class {
+
+  func shouldFetchMoreInformation()
+}
+
 public class WallController: UIViewController {
 
   public lazy var tableView: UITableView = { [unowned self] in
@@ -27,7 +32,9 @@ public class WallController: UIViewController {
     return view
     }()
 
+  public weak var delegate: WallControllerDelegate?
   public var posts = [Post]()
+  public var fetching = false
 
   public override func viewDidLoad() {
     super.viewDidLoad()
@@ -42,6 +49,16 @@ public class WallController: UIViewController {
         + UIApplication.sharedApplication().statusBarFrame.height + 20
       tableView.scrollIndicatorInsets.top = tableView.contentInset.top - 20
     }
+  }
+
+  public func appendPosts(newPosts: [Post]) {
+    var indexPaths = [NSIndexPath]()
+    for (index, _) in newPosts.enumerate() {
+      indexPaths.append(NSIndexPath(forRow: posts.count + index, inSection: 0))
+    }
+
+    posts += newPosts
+    tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
   }
 }
 
@@ -58,6 +75,13 @@ extension WallController: UITableViewDelegate {
     let totalHeight: CGFloat = imageHeight + 60 + 56 + 44 + 20 + 12 + textFrame.height
 
     return totalHeight
+  }
+
+  public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    if posts.count - indexPath.row <= 7 && !fetching {
+      delegate?.shouldFetchMoreInformation()
+      fetching = true
+    }
   }
 }
 
