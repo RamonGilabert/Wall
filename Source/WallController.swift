@@ -3,9 +3,16 @@ import UIKit
 public protocol WallControllerDelegate: class {
 
   func shouldFetchMoreInformation()
-  func likeButtonDidPress(post: Post)
-  func commentsButtonDidPress(post: Post)
+  func likeButtonDidPress(postID: Int)
+  func commentsButtonDidPress(postID: Int)
   func shouldRefreshPosts(refreshControl: UIRefreshControl)
+}
+
+public protocol WallControllerInformationDelegate: class {
+
+  func likesInformationDidPress(postID: Int)
+  func commentsInformationDidPress(postID: Int)
+  func seenInformationDidPress(postID: Int)
 }
 
 public class WallController: UIViewController {
@@ -51,6 +58,7 @@ public class WallController: UIViewController {
     }()
 
   public weak var delegate: WallControllerDelegate?
+  public weak var informationDelegate: WallControllerInformationDelegate?
   public var posts = [Post]()
   public var fetching = true
 
@@ -89,11 +97,11 @@ public class WallController: UIViewController {
       self.posts += newPosts
 
       dispatch_async(dispatch_get_main_queue()) {
+        self.loadingIndicator.stopAnimating()
         self.tableView.beginUpdates()
         self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
         self.tableView.endUpdates()
         self.fetching = false
-        self.loadingIndicator.stopAnimating()
       }
     }
   }
@@ -108,12 +116,24 @@ public class WallController: UIViewController {
 
 extension WallController: PostTableViewCellDelegate {
 
-  public func likesDidUpdate(post: Post, liked: Bool) {
-    delegate?.likeButtonDidPress(post)
+  public func likesDidUpdate(postID: Int, liked: Bool) {
+    delegate?.likeButtonDidPress(postID)
   }
 
-  public func commentButtonDidPress(post: Post) {
-    delegate?.commentsButtonDidPress(post)
+  public func commentButtonDidPress(postID: Int) {
+    delegate?.commentsButtonDidPress(postID)
+  }
+
+  public func likesInformationDidPress(postID: Int) {
+    informationDelegate?.likesInformationDidPress(postID)
+  }
+
+  public func commentInformationDidPress(postID: Int) {
+    informationDelegate?.commentsInformationDidPress(postID)
+  }
+
+  public func seenInformationDidPress(postID: Int) {
+    informationDelegate?.seenInformationDidPress(postID)
   }
 }
 

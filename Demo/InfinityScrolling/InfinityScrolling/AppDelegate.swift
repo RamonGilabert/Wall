@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controller.posts = self.generatePosts(0, to: 10)
     controller.title = "Infinity Scrolling".uppercaseString
     controller.delegate = self
+    controller.informationDelegate = self
 
     return controller
     }()
@@ -106,11 +107,11 @@ extension AppDelegate: WallControllerDelegate {
     }
   }
 
-  func likeButtonDidPress(post: Post) {
+  func likeButtonDidPress(postID: Int) {
 
   }
 
-  func commentsButtonDidPress(post: Post) {
+  func commentsButtonDidPress(postID: Int) {
 
   }
 
@@ -119,5 +120,20 @@ extension AppDelegate: WallControllerDelegate {
     dispatch_after(delayTime, dispatch_get_main_queue()) {
       refreshControl.endRefreshing()
     }
+  }
+}
+
+extension AppDelegate: WallControllerInformationDelegate {
+
+  func likesInformationDidPress(postID: Int) {
+    print("Likes")
+  }
+
+  func commentsInformationDidPress(postID: Int) {
+    print("Comments")
+  }
+
+  func seenInformationDidPress(postID: Int) {
+    print("Seen")
   }
 }

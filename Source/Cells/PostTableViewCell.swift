@@ -2,8 +2,11 @@ import UIKit
 
 public protocol PostTableViewCellDelegate: class {
 
-  func likesDidUpdate(post: Post, liked: Bool)
-  func commentButtonDidPress(post: Post)
+  func likesDidUpdate(postID: Int, liked: Bool)
+  func commentButtonDidPress(postID: Int)
+  func likesInformationDidPress(postID: Int)
+  func commentInformationDidPress(postID: Int)
+  func seenInformationDidPress(postID: Int)
 }
 
 public class PostTableViewCell: UITableViewCell {
@@ -28,8 +31,10 @@ public class PostTableViewCell: UITableViewCell {
     return label
     }()
 
-  public lazy var informationView: PostInformationBarView = {
+  public lazy var informationView: PostInformationBarView = { [unowned self] in
     let view = PostInformationBarView()
+    view.delegate = self
+
     return view
     }()
 
@@ -112,6 +117,24 @@ public class PostTableViewCell: UITableViewCell {
   }
 }
 
+extension PostTableViewCell: PostInformationBarViewDelegate {
+
+  public func likesInformationButtonDidPress() {
+    guard let post = post else { return }
+    delegate?.likesInformationDidPress(post.id)
+  }
+
+  public func commentInformationButtonDidPress() {
+    guard let post = post else { return }
+    delegate?.commentInformationDidPress(post.id)
+  }
+
+  public func seenInformationButtonDidPress() {
+    guard let post = post else { return }
+    delegate?.seenInformationDidPress(post.id)
+  }
+}
+
 extension PostTableViewCell: PostActionBarViewDelegate {
 
   public func likeButtonDidPress(liked: Bool) {
@@ -121,11 +144,11 @@ extension PostTableViewCell: PostActionBarViewDelegate {
     post.likeCount += liked ? 1 : -1
 
     informationView.configureLikes(post.likeCount)
-    delegate?.likesDidUpdate(post, liked: liked)
+    delegate?.likesDidUpdate(post.id, liked: liked)
   }
 
   public func commentButtonDidPress() {
     guard let post = post else { return }
-    delegate?.commentButtonDidPress(post)
+    delegate?.commentButtonDidPress(post.id)
   }
 }
