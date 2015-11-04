@@ -49,9 +49,9 @@ public class PostInformationBarView: UIView {
 
     [likesLabel, commentsLabel, seenLabel].forEach { $0.sizeToFit() }
 
-    likesLabel.frame.origin = CGPoint(x: 24, y: 18)
-    commentsLabel.frame.origin = CGPoint(x: CGRectGetMaxX(likesLabel.frame) + 10, y: 18)
-    seenLabel.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenLabel.frame.width - 24, y: 18)
+    likesLabel.frame = CGRect(x: Dimensions.offset, y: Dimensions.topOffset, width: likesLabel.frame.width, height: likesLabel.frame.height)
+    commentsLabel.frame.origin = CGPoint(x: CGRectGetMaxX(likesLabel.frame) + Dimensions.interitemOffset, y: Dimensions.topOffset)
+    seenLabel.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenLabel.frame.width - Dimensions.offset, y: Dimensions.topOffset)
   }
 
   public required init?(coder aDecoder: NSCoder) {
