@@ -3,6 +3,13 @@ import SDWebImage
 
 public class PostAuthorView: UIView {
 
+  public struct Dimensions {
+    public static let avatarOffset: CGFloat = 10
+    public static let avatarSize: CGFloat = 40
+    public static let nameOffset: CGFloat = Dimensions.avatarOffset * 2 + Dimensions.avatarSize
+    public static let nameTopOffset: CGFloat = 14
+  }
+
   public lazy var avatarImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
@@ -35,8 +42,9 @@ public class PostAuthorView: UIView {
   public override func drawRect(rect: CGRect) {
     super.drawRect(rect)
 
-    avatarImageView.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
-    authorName.frame = CGRect(x: 60, y: 14,
+    avatarImageView.frame = CGRect(x: Dimensions.avatarOffset, y: Dimensions.avatarOffset,
+      width: Dimensions.avatarSize, height: Dimensions.avatarSize)
+    authorName.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.nameTopOffset,
       width: UIScreen.mainScreen().bounds.width - 70, height: 20)
   }
 

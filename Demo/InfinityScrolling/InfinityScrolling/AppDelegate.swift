@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var wallController: WallController = { [unowned self] in
     let controller = WallController()
-    controller.posts = self.generatePosts(1, to: 100)
+    controller.posts = self.generatePosts(1, to: 30)
     controller.title = "Infinity Scrolling".uppercaseString
 
     return controller
