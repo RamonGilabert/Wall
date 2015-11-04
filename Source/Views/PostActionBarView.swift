@@ -2,6 +2,11 @@ import UIKit
 
 public class PostActionBarView: UIView {
 
+  public struct Dimensions {
+    public static let generalOffset: CGFloat = 10
+    public static let separatorHeight: CGFloat = 0.5
+  }
+
   public lazy var topSeparator: CALayer = {
     let layer = CALayer()
     layer.backgroundColor = UIColor.grayColor().CGColor
@@ -50,9 +55,12 @@ public class PostActionBarView: UIView {
 
     let totalWidth = UIScreen.mainScreen().bounds.width
 
-    topSeparator.frame = CGRect(x: 10, y: 0, width: totalWidth - 20, height: 0.5)
-    likeButton.frame = CGRect(x: 10, y: 0.5, width: totalWidth / 2 - 20, height: 43)
-    commentButton.frame = CGRect(x: totalWidth / 2, y: 0.5, width: totalWidth / 2 - 10, height: 43)
+    topSeparator.frame = CGRect(x: Dimensions.generalOffset, y: 0,
+      width: totalWidth - Dimensions.generalOffset, height: Dimensions.separatorHeight)
+    likeButton.frame = CGRect(x: Dimensions.generalOffset, y: Dimensions.separatorHeight,
+      width: totalWidth / 2 - Dimensions.generalOffset, height: 43)
+    commentButton.frame = CGRect(x: totalWidth / 2, y: Dimensions.separatorHeight,
+      width: totalWidth / 2 - Dimensions.generalOffset, height: 43)
   }
 
   public required init?(coder aDecoder: NSCoder) {
