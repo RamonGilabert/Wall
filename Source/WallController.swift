@@ -32,6 +32,14 @@ public class WallController: UIViewController {
     return view
     }()
 
+  public lazy var loadingIndicator: UIActivityIndicatorView = {
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
+    activityIndicator.frame.origin.x = (UIScreen.mainScreen().bounds.width - 20) / 2
+    activityIndicator.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
+
+    return activityIndicator
+    }()
+
   public weak var delegate: WallControllerDelegate?
   public var posts = [Post]()
   public var fetching = true
@@ -40,6 +48,7 @@ public class WallController: UIViewController {
     super.viewDidLoad()
 
     [topSeparator, tableView].forEach { view.addSubview($0) }
+    tableView.addSubview(loadingIndicator)
 
     view.backgroundColor = UIColor.whiteColor()
     view.layer.opaque = true
@@ -47,13 +56,13 @@ public class WallController: UIViewController {
     if let navigationController = navigationController {
       tableView.contentInset.top = navigationController.navigationBar.frame.height
         + UIApplication.sharedApplication().statusBarFrame.height + 20
+      tableView.contentInset.bottom = 20
       tableView.scrollIndicatorInsets.top = tableView.contentInset.top - 20
     }
   }
 
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-
     fetching = false
   }
 
@@ -70,6 +79,7 @@ public class WallController: UIViewController {
         self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
         self.tableView.endUpdates()
         self.fetching = false
+        self.loadingIndicator.stopAnimating()
       }
     }
   }
@@ -100,8 +110,10 @@ extension WallController: UITableViewDelegate {
     let currentOffset = scrollView.contentOffset.y
     let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-    if maximumOffset - currentOffset <= 40 && !fetching {
+    if maximumOffset - currentOffset <= 200 && !fetching {
       delegate?.shouldFetchMoreInformation()
+      loadingIndicator.frame.origin.y = tableView.contentSize.height - 10
+      loadingIndicator.startAnimating()
       fetching = true
     }
   }
