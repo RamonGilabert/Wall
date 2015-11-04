@@ -51,23 +51,28 @@ public class PostInformationBarView: UIView {
   // MARK: - Setup
 
   public func configureView(likes: Int, comments: Int, seen: Int) {
+    configureLikes(likes)
+    configureComments(comments)
+    configureSeen(seen)
+  }
+
+  public func configureLikes(likes: Int) {
     likesLabel.text = "\(likes) likes"
+    likesLabel.sizeToFit()
+    likesLabel.frame.origin = CGPoint(x: Dimensions.offset, y: Dimensions.topOffset)
+  }
+
+  public func configureComments(comments: Int) {
     commentsLabel.text = "\(comments) comments"
-    seenLabel.text = "Seen by \(seen)"
-
-    [likesLabel, commentsLabel, seenLabel].forEach { $0.sizeToFit() }
-
-    likesLabel.frame.origin = CGPoint(x: Dimensions.offset,
-      y: Dimensions.topOffset)
+    commentsLabel.sizeToFit()
     commentsLabel.frame.origin = CGPoint(x: CGRectGetMaxX(likesLabel.frame) + Dimensions.interitemOffset,
-      y: Dimensions.topOffset)
-    seenLabel.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenLabel.frame.width - Dimensions.offset,
       y: Dimensions.topOffset)
   }
 
-  // MARK: - Setup frames
-
-  public func setupFrames() {
-
+  public func configureSeen(seen: Int) {
+    seenLabel.text = "Seen by \(seen)"
+    seenLabel.sizeToFit()
+    seenLabel.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenLabel.frame.width - Dimensions.offset,
+      y: Dimensions.topOffset)
   }
 }

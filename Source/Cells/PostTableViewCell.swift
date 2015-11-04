@@ -1,5 +1,11 @@
 import UIKit
 
+public protocol PostTableViewCellDelegate: class {
+
+  func likesDidUpdate(post: Post, liked: Bool)
+  func commentButtonDidPress(post: Post)
+}
+
 public class PostTableViewCell: UITableViewCell {
 
   public static let reusableIdentifier = "PostTableViewCell"
@@ -27,8 +33,10 @@ public class PostTableViewCell: UITableViewCell {
     return view
     }()
 
-  public lazy var actionBarView: PostActionBarView = {
+  public lazy var actionBarView: PostActionBarView = { [unowned self] in
     let view = PostActionBarView()
+    view.delegate = self
+
     return view
     }()
 
@@ -40,6 +48,7 @@ public class PostTableViewCell: UITableViewCell {
     return layer
     }()
 
+  public weak var delegate: PostTableViewCellDelegate?
   public var post: Post?
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -100,5 +109,23 @@ public class PostTableViewCell: UITableViewCell {
 
   public func configureCell(post: Post) {
     self.post = post
+  }
+}
+
+extension PostTableViewCell: PostActionBarViewDelegate {
+
+  public func likeButtonDidPress(liked: Bool) {
+    guard let post = post else { return }
+
+    post.liked = liked
+    post.likeCount += liked ? 1 : -1
+
+    informationView.configureLikes(post.likeCount)
+    delegate?.likesDidUpdate(post, liked: liked)
+  }
+
+  public func commentButtonDidPress() {
+    guard let post = post else { return }
+    delegate?.commentButtonDidPress(post)
   }
 }

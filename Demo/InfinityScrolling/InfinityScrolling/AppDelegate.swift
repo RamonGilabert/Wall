@@ -98,14 +98,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: WallControllerDelegate {
 
   func shouldFetchMoreInformation() {
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
-      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
-        let posts = self.generatePosts(0, to: 10)
-        dispatch_async(dispatch_get_main_queue()) {
-          self.wallController.appendPosts(posts)
-        }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
+      let posts = self.generatePosts(0, to: 10)
+      dispatch_async(dispatch_get_main_queue()) {
+        self.wallController.appendPosts(posts)
       }
     }
+  }
+
+  func likeButtonDidPress(post: Post) {
+
+  }
+
+  func commentsButtonDidPress(post: Post) {
+
   }
 }

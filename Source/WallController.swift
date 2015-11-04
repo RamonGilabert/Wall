@@ -3,6 +3,8 @@ import UIKit
 public protocol WallControllerDelegate: class {
 
   func shouldFetchMoreInformation()
+  func likeButtonDidPress(post: Post)
+  func commentsButtonDidPress(post: Post)
 }
 
 public class WallController: UIViewController {
@@ -85,6 +87,17 @@ public class WallController: UIViewController {
   }
 }
 
+extension WallController: PostTableViewCellDelegate {
+
+  public func likesDidUpdate(post: Post, liked: Bool) {
+    delegate?.likeButtonDidPress(post)
+  }
+
+  public func commentButtonDidPress(post: Post) {
+    delegate?.commentsButtonDidPress(post)
+  }
+}
+
 extension WallController: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -132,6 +145,7 @@ extension WallController: UITableViewDataSource {
     let post = posts[indexPath.row]
 
     cell.configureCell(post)
+    cell.delegate = self
 
     return cell
   }

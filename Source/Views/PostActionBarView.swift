@@ -1,5 +1,11 @@
 import UIKit
 
+public protocol PostActionBarViewDelegate: class {
+
+  func likeButtonDidPress(liked: Bool)
+  func commentButtonDidPress()
+}
+
 public class PostActionBarView: UIView {
 
   public struct Dimensions {
@@ -26,16 +32,19 @@ public class PostActionBarView: UIView {
     return button
     }()
 
-  public lazy var commentButton: UIButton = {
+  public lazy var commentButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
     button.setTitle("Comment", forState: .Normal)
     button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
+    button.addTarget(self, action: "commentButtonDidPress", forControlEvents: .TouchUpInside)
     button.setTitleColor(UIColor.grayColor(), forState: .Normal)
     button.subviews.first?.opaque = true
     button.subviews.first?.backgroundColor = UIColor.whiteColor()
 
     return button
     }()
+
+  public weak var delegate: PostActionBarViewDelegate?
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
@@ -79,8 +88,9 @@ public class PostActionBarView: UIView {
   public func likeButtonDidPress() {
     let color = likeButton.titleColorForState(.Normal) == UIColor.redColor()
       ? UIColor.grayColor() : UIColor.redColor()
+    let liked = color == UIColor.redColor()
 
-    if color == UIColor.redColor() {
+    if liked {
       UIView.animateWithDuration(0.1, animations: {
         self.likeButton.transform = CGAffineTransformMakeScale(1.35, 1.35)
         }, completion: { _ in
@@ -90,6 +100,11 @@ public class PostActionBarView: UIView {
       })
     }
 
+    delegate?.likeButtonDidPress(liked)
     likeButton.setTitleColor(color, forState: .Normal)
+  }
+
+  public func commentButtonDidPress() {
+    delegate?.commentButtonDidPress()
   }
 }
