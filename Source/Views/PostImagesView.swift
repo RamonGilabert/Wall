@@ -3,6 +3,12 @@ import SDWebImage
 
 public class PostImagesView: UIView {
 
+  public struct Dimensions {
+    public static let containerOffset: CGFloat = 10
+    public static let totalOffset: CGFloat = 20
+    public static let height: CGFloat = 274
+  }
+
   public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
@@ -24,8 +30,9 @@ public class PostImagesView: UIView {
   public override func drawRect(rect: CGRect) {
     super.drawRect(rect)
 
-    imageView.frame = CGRect(x: 10, y: 0,
-      width: UIScreen.mainScreen().bounds.width - 20, height: 274)
+    imageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
+      width: UIScreen.mainScreen().bounds.width - Dimensions.totalOffset,
+      height: Dimensions.height)
   }
 
   public required init?(coder aDecoder: NSCoder) {
