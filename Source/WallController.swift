@@ -12,8 +12,6 @@ public class WallController: UIViewController {
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
-    tableView.registerClass(PostTableViewCell.self,
-      forCellReuseIdentifier: PostTableViewCell.reusableIdentifier)
     tableView.delegate = self
     tableView.dataSource = self
     tableView.frame = CGRect(x: 0, y: 0,
@@ -67,6 +65,9 @@ public class WallController: UIViewController {
     tableView.sendSubviewToBack(refreshControl)
     refreshControl.subviews.first?.frame.origin.y = -5
 
+    registerCell(PostTableViewCell.self,
+      reusableIdentifier: PostTableViewCell.reusableIdentifier)
+
     view.backgroundColor = UIColor.whiteColor()
     view.layer.opaque = true
 
@@ -84,6 +85,11 @@ public class WallController: UIViewController {
   }
 
   // MARK: - Configuration
+
+  public func registerCell<T: UITableViewCell>(cellClass: T.Type, reusableIdentifier: String) {
+    tableView.registerClass(cellClass,
+      forCellReuseIdentifier: reusableIdentifier)
+  }
 
   public func initializePosts(newPosts: [PostConvertible]) {
     posts = []
