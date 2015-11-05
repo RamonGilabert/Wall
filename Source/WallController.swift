@@ -8,8 +8,6 @@ public protocol WallControllerDelegate: class {
 
 public class WallController: UIViewController {
 
-  public static var cells = [String: UITableViewCell.Type]()
-
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
     tableView.delegate = self
@@ -86,7 +84,7 @@ public class WallController: UIViewController {
 
   // MARK: - Configuration
 
-  public func registerCell<T: UITableViewCell>(cellClass: T.Type, reusableIdentifier: String) {
+  public func registerCell<T: WallTableViewCell>(cellClass: T.Type, reusableIdentifier: String) {
     tableView.registerClass(cellClass,
       forCellReuseIdentifier: reusableIdentifier)
   }
@@ -188,15 +186,23 @@ extension WallController: UITableViewDataSource {
   }
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.reusableIdentifier)
-      as? PostTableViewCell else { return PostTableViewCell() }
-
     let post = posts[indexPath.row]
+    var wallCell: WallTableViewCell?
+
+    if let reusableIdentifier = post.reusableIdentifier,
+      registeredCell = tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) as? WallTableViewCell {
+        wallCell = registeredCell
+    } else if let postCell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.reusableIdentifier) as? PostTableViewCell {
+      postCell.actionDelegate = actionDelegate
+      postCell.informationDelegate = informationDelegate
+      wallCell = postCell
+    }
+
+    guard let cell = wallCell else { return PostTableViewCell() }
 
     cell.configureCell(post)
     cell.delegate = self
-    cell.actionDelegate = actionDelegate
-    cell.informationDelegate = informationDelegate
+
 
     return cell
   }
