@@ -21,8 +21,9 @@ public class Post {
 
   // MARK: - Initialization
 
-  public init(text: String = "", publishDate: String,
+  public init(id: Int, text: String = "", publishDate: String,
     author: Author? = nil, media: [Media] = []) {
+      self.id = id
       self.text = text
       self.publishDate = publishDate
       self.author = author

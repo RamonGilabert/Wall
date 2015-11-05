@@ -61,8 +61,8 @@ public class WallController: UIViewController {
 
   public weak var delegate: WallControllerDelegate?
   public weak var informationDelegate: WallControllerInformationDelegate?
-  public var posts = [Post]()
   public var fetching = true
+  private var posts = [Post]()
 
   // MARK: - View Lifecycle
 
@@ -92,11 +92,20 @@ public class WallController: UIViewController {
 
   // MARK: - Configuration
 
+  public func initializePosts(newPosts: [PostConvertible]) {
+    posts = []
+    newPosts.forEach {
+      posts.append($0.wallModel)
+    }
+  }
+
   public func appendPosts(newPosts: [PostConvertible]) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
       var indexPaths = [NSIndexPath]()
+      let count = self.posts.count
+
       for (index, post) in newPosts.enumerate() {
-        indexPaths.append(NSIndexPath(forRow: self.posts.count + index, inSection: 0))
+        indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
         self.posts.append(post.wallModel)
       }
 
