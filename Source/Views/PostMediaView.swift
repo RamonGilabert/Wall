@@ -9,11 +9,32 @@ public class PostMediaView: UIView {
     public static let height: CGFloat = 274
   }
 
-  public lazy var imageView: UIImageView = {
+  public lazy var firstImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
     imageView.clipsToBounds = true
     imageView.backgroundColor = UIColor.lightGrayColor()
+    imageView.opaque = true
+
+    return imageView
+    }()
+
+  public lazy var secondImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .ScaleAspectFill
+    imageView.clipsToBounds = true
+    imageView.backgroundColor = UIColor.lightGrayColor()
+    imageView.opaque = true
+
+    return imageView
+    }()
+
+  public lazy var thirdImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .ScaleAspectFill
+    imageView.clipsToBounds = true
+    imageView.backgroundColor = UIColor.lightGrayColor()
+    imageView.opaque = true
 
     return imageView
     }()
@@ -22,9 +43,6 @@ public class PostMediaView: UIView {
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
-
-    addSubview(imageView)
-    imageView.opaque = true
 
     backgroundColor = UIColor.whiteColor()
   }
@@ -36,12 +54,43 @@ public class PostMediaView: UIView {
   // MARK: - Setup
 
   public func configureView(media: [Media]) {
-    if let mediaItem = media.first, image = mediaItem.thumbnail {
-      imageView.sd_setImageWithURL(image)
-    }
+    [firstImageView, secondImageView, thirdImageView].forEach { $0.removeFromSuperview() }
+    
+    switch media.count {
+    case 1:
+      addSubview(firstImageView)
+      firstImageView.sd_setImageWithURL(media[0].thumbnail)
+      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
+        width: UIScreen.mainScreen().bounds.width - Dimensions.totalOffset,
+        height: Dimensions.height)
+    case 2:
+      [firstImageView, secondImageView].forEach { addSubview($0) }
+      firstImageView.sd_setImageWithURL(media[0].thumbnail)
+      secondImageView.sd_setImageWithURL(media[1].thumbnail)
+      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
+        width: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) / 2 - 5,
+        height: Dimensions.height)
 
-    imageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
-      width: UIScreen.mainScreen().bounds.width - Dimensions.totalOffset,
-      height: Dimensions.height)
+      secondImageView.frame = CGRect(x: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) / 2 + 5 + Dimensions.containerOffset, y: 0,
+        width: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) / 2 - 5,
+        height: Dimensions.height)
+    default:
+      [firstImageView, secondImageView, thirdImageView].forEach { addSubview($0) }
+      firstImageView.sd_setImageWithURL(media[0].thumbnail)
+      secondImageView.sd_setImageWithURL(media[1].thumbnail)
+      thirdImageView.sd_setImageWithURL(media[2].thumbnail)
+
+      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
+        width: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) * 2 / 3 - 5,
+        height: Dimensions.height)
+
+      secondImageView.frame = CGRect(x: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) * 2 / 3 + 5 + Dimensions.containerOffset, y: 0,
+        width: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) / 3 - 5,
+        height: Dimensions.height / 2 - 5)
+
+      thirdImageView.frame = CGRect(x: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) * 2 / 3 + 5 + Dimensions.containerOffset, y: Dimensions.height / 2 + 5,
+        width: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) / 3 - 5,
+        height: Dimensions.height / 2 - 5)
+    }
   }
 }

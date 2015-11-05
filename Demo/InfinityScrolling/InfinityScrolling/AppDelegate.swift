@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var liked = true
 
         if i % 4 == 0 {
-          mediaCount = 4
+          mediaCount = 3
           commentCount = 3
           likes = 3
           seen = 4
