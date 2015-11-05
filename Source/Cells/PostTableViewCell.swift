@@ -2,10 +2,19 @@ import UIKit
 
 public protocol PostTableViewCellDelegate: class {
 
-  func likesDidUpdate(postID: Int, liked: Bool)
-  func commentButtonDidPress(postID: Int)
+  func updateCellSize(postID: Int)
+}
+
+public protocol PostActionDelegate: class {
+
+  func likeButtonDidPress(postID: Int)
+  func commentsButtonDidPress(postID: Int)
+}
+
+public protocol PostInformationDelegate: class {
+
   func likesInformationDidPress(postID: Int)
-  func commentInformationDidPress(postID: Int)
+  func commentsInformationDidPress(postID: Int)
   func seenInformationDidPress(postID: Int)
   func authorDidTap(postID: Int)
 }
@@ -26,12 +35,21 @@ public class PostTableViewCell: UITableViewCell {
     return view
     }()
 
-  public lazy var postText: UILabel = {
-    let label = UILabel()
-    label.font = UIFont.systemFontOfSize(14)
-    label.numberOfLines = 0
+  public lazy var postText: UITextView = { [unowned self] in
+    let textView = UITextView()
+    textView.font = UIFont.systemFontOfSize(14)
+    textView.dataDetectorTypes = .Link
+    textView.editable = false
+    textView.scrollEnabled = false
+    textView.delegate = self
+    textView.textContainer.lineFragmentPadding = 0
+    textView.textContainerInset = UIEdgeInsetsZero
+    textView.linkTextAttributes = [
+      NSForegroundColorAttributeName: UIColor.redColor(),
+      NSUnderlineColorAttributeName: UIColor.redColor(),
+      NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
 
-    return label
+    return textView
     }()
 
   public lazy var informationView: PostInformationBarView = { [unowned self] in
@@ -57,6 +75,8 @@ public class PostTableViewCell: UITableViewCell {
     }()
 
   public weak var delegate: PostTableViewCellDelegate?
+  public weak var actionDelegate: PostActionDelegate?
+  public weak var informationDelegate: PostInformationDelegate?
   public var post: Post?
 
   // MARK: - Initialization
@@ -98,9 +118,14 @@ public class PostTableViewCell: UITableViewCell {
       postMediaView.alpha = 0
     }
 
+    var informationHeight: CGFloat = 56
+    if post.likeCount == 0 && post.commentCount == 0 {
+      informationHeight = 16
+    }
+
     authorView.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60)
     postMediaView.frame = CGRect(x: 0, y: imageTop, width: UIScreen.mainScreen().bounds.width, height: imageHeight)
-    informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 56)
+    informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: informationHeight)
     actionBarView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
     bottomSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
 
@@ -124,23 +149,32 @@ public class PostTableViewCell: UITableViewCell {
   }
 }
 
+// MARK: - UITextViewDelegate
+
+extension PostTableViewCell: UITextViewDelegate {
+
+  public func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+    return true
+  }
+}
+
 // MARK: - PostInformationBarViewDelegate
 
 extension PostTableViewCell: PostInformationBarViewDelegate {
 
   public func likesInformationButtonDidPress() {
     guard let post = post else { return }
-    delegate?.likesInformationDidPress(post.id)
+    informationDelegate?.likesInformationDidPress(post.id)
   }
 
   public func commentInformationButtonDidPress() {
     guard let post = post else { return }
-    delegate?.commentInformationDidPress(post.id)
+    informationDelegate?.commentsInformationDidPress(post.id)
   }
 
   public func seenInformationButtonDidPress() {
     guard let post = post else { return }
-    delegate?.seenInformationDidPress(post.id)
+    informationDelegate?.seenInformationDidPress(post.id)
   }
 }
 
@@ -155,12 +189,14 @@ extension PostTableViewCell: PostActionBarViewDelegate {
     post.likeCount += liked ? 1 : -1
 
     informationView.configureLikes(post.likeCount)
-    delegate?.likesDidUpdate(post.id, liked: liked)
+    informationView.configureComments(post.commentCount)
+    delegate?.updateCellSize(post.id)
+    actionDelegate?.likeButtonDidPress(post.id)
   }
 
   public func commentButtonDidPress() {
     guard let post = post else { return }
-    delegate?.commentButtonDidPress(post.id)
+    actionDelegate?.commentsButtonDidPress(post.id)
   }
 }
 
@@ -170,6 +206,6 @@ extension PostTableViewCell: PostAuthorViewDelegate {
 
   public func authorDidTap() {
     guard let post = post else { return }
-    delegate?.authorDidTap(post.id)
+    informationDelegate?.authorDidTap(post.id)
   }
 }

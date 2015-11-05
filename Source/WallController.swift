@@ -3,17 +3,7 @@ import UIKit
 public protocol WallControllerDelegate: class {
 
   func shouldFetchMoreInformation()
-  func likeButtonDidPress(postID: Int)
-  func commentsButtonDidPress(postID: Int)
   func shouldRefreshPosts(refreshControl: UIRefreshControl)
-}
-
-public protocol WallControllerInformationDelegate: class {
-
-  func likesInformationDidPress(postID: Int)
-  func commentsInformationDidPress(postID: Int)
-  func seenInformationDidPress(postID: Int)
-  func authorDidTap(postID: Int)
 }
 
 public class WallController: UIViewController {
@@ -60,9 +50,10 @@ public class WallController: UIViewController {
     }()
 
   public weak var delegate: WallControllerDelegate?
-  public weak var informationDelegate: WallControllerInformationDelegate?
-  public var fetching = true
+  public weak var actionDelegate: PostActionDelegate?
+  public weak var informationDelegate: PostInformationDelegate?
   private var posts = [Post]()
+  public var fetching = true
 
   // MARK: - View Lifecycle
 
@@ -122,7 +113,9 @@ public class WallController: UIViewController {
   // MARK: - Refresh Control
 
   public func handleRefreshControl(refreshControl: UIRefreshControl) {
+    tableView.beginUpdates()
     tableView.reloadData()
+    tableView.endUpdates()
     delegate?.shouldRefreshPosts(refreshControl)
   }
 }
@@ -131,28 +124,9 @@ public class WallController: UIViewController {
 
 extension WallController: PostTableViewCellDelegate {
 
-  public func likesDidUpdate(postID: Int, liked: Bool) {
-    delegate?.likeButtonDidPress(postID)
-  }
-
-  public func commentButtonDidPress(postID: Int) {
-    delegate?.commentsButtonDidPress(postID)
-  }
-
-  public func likesInformationDidPress(postID: Int) {
-    informationDelegate?.likesInformationDidPress(postID)
-  }
-
-  public func commentInformationDidPress(postID: Int) {
-    informationDelegate?.commentsInformationDidPress(postID)
-  }
-
-  public func seenInformationDidPress(postID: Int) {
-    informationDelegate?.seenInformationDidPress(postID)
-  }
-
-  public func authorDidTap(postID: Int) {
-    informationDelegate?.authorDidTap(postID)
+  public func updateCellSize(postID: Int) {
+    tableView.beginUpdates()
+    tableView.endUpdates()
   }
 }
 
@@ -174,7 +148,12 @@ extension WallController: UITableViewDelegate {
       imageTop = 50
     }
 
-    let totalHeight: CGFloat = imageHeight + imageTop + 56 + 44 + 20 + 12 + textFrame.height
+    var informationHeight: CGFloat = 56
+    if post.likeCount == 0 && post.commentCount == 0 {
+      informationHeight = 16
+    }
+
+    let totalHeight: CGFloat = imageHeight + imageTop + informationHeight + 44 + 20 + 12 + textFrame.height
 
     return totalHeight
   }
@@ -208,6 +187,8 @@ extension WallController: UITableViewDataSource {
 
     cell.configureCell(post)
     cell.delegate = self
+    cell.actionDelegate = actionDelegate
+    cell.informationDelegate = informationDelegate
 
     return cell
   }
