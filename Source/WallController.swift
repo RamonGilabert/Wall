@@ -90,13 +90,13 @@ public class WallController: UIViewController {
 
   // MARK: - Configuration
 
-  public func appendPosts(newPosts: [Post]) {
+  public func appendPosts(newPosts: [PostConvertible]) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
       var indexPaths = [NSIndexPath]()
-      for (index, _) in newPosts.enumerate() {
+      for (index, post) in newPosts.enumerate() {
         indexPaths.append(NSIndexPath(forRow: self.posts.count + index, inSection: 0))
+        self.posts.append(post.wallModel)
       }
-      self.posts += newPosts
 
       dispatch_async(dispatch_get_main_queue()) {
         self.loadingIndicator.stopAnimating()
