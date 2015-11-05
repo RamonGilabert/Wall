@@ -1,12 +1,12 @@
 import UIKit
 
-public protocol PostTableViewCellActionDelegate: class {
+public protocol PostActionDelegate: class {
 
   func likeButtonDidPress(postID: Int)
   func commentsButtonDidPress(postID: Int)
 }
 
-public protocol PostTableViewCellInformationDelegate: class {
+public protocol PostInformationDelegate: class {
 
   func likesInformationDidPress(postID: Int)
   func commentsInformationDidPress(postID: Int)
@@ -60,8 +60,8 @@ public class PostTableViewCell: UITableViewCell {
     return layer
     }()
 
-  public weak var actionDelegate: PostTableViewCellActionDelegate?
-  public weak var informationDelegate: PostTableViewCellInformationDelegate?
+  public weak var actionDelegate: PostActionDelegate?
+  public weak var informationDelegate: PostInformationDelegate?
   public var post: Post?
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
