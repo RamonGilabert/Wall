@@ -7,6 +7,10 @@ public protocol WallTableViewCellDelegate: class {
 
 public class WallTableViewCell: UITableViewCell {
 
+  public class func height(post: Post) -> CGFloat {
+    return 44
+  }
+
   public var post: Post?
   public weak var delegate: WallTableViewCellDelegate?
 

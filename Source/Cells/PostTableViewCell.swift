@@ -16,6 +16,27 @@ public protocol PostInformationDelegate: class {
 
 public class PostTableViewCell: WallTableViewCell {
 
+  public override class func height(post: Post) -> CGFloat {
+    let postText = post.text as NSString
+    let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 40,
+      height: CGFloat.max), options: .UsesLineFragmentOrigin,
+      attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
+
+    var imageHeight: CGFloat = 274
+    var imageTop: CGFloat = 60
+    if post.media.isEmpty {
+      imageHeight = 0
+      imageTop = 50
+    }
+
+    var informationHeight: CGFloat = 56
+    if post.likeCount == 0 && post.commentCount == 0 {
+      informationHeight = 16
+    }
+
+    return imageHeight + imageTop + informationHeight + 44 + 20 + 12 + textFrame.height
+  }
+
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
 
