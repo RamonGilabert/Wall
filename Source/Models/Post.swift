@@ -1,5 +1,10 @@
 import UIKit
 
+public protocol PostConvertible {
+
+  var wallModel: Post { get }
+}
+
 public class Post {
 
   public var id = 0
@@ -19,5 +24,14 @@ public class Post {
       self.publishDate = publishDate
       self.author = author
       self.images = attachments
+  }
+}
+
+// MARK: - PostConvertible
+
+extension Post: PostConvertible {
+
+  public var wallModel: Post {
+    return self
   }
 }
