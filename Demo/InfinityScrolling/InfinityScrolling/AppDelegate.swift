@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let sencenceCount = Int(arc4random_uniform(8) + 1)
         let post = Post(
-          text: faker.lorem.sentences(amount: sencenceCount),
+          text: faker.lorem.sentences(amount: sencenceCount) + " www.apple.com",
           publishDate: "3 hours ago",
           author: author,
           attachments: attachments

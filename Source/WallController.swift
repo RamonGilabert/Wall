@@ -112,10 +112,7 @@ public class WallController: UIViewController {
 extension WallController: PostTableViewCellDelegate {
 
   public func updateCellSize(postID: Int) {
-    guard let postIndex = posts.indexOf({ $0.id == postID }) else { return }
-
     tableView.beginUpdates()
-    tableView.cellForRowAtIndexPath(NSIndexPath(forRow: postIndex, inSection: 0))
     tableView.endUpdates()
   }
 }

@@ -120,7 +120,7 @@ public class PostTableViewCell: UITableViewCell {
     informationView.configureView(post.likeCount, comments: post.commentCount, seen: post.seenCount)
     actionBarView.configureView(post.liked)
 
-    postText.text = post.text
+    postText.attributedText = buildAttributedString(post.text)
     postText.frame.size.width = UIScreen.mainScreen().bounds.width - 40
     postText.sizeToFit()
     postText.frame = CGRect(x: 20, y: CGRectGetMaxY(postImagesView.frame) + 12,
@@ -133,6 +133,24 @@ public class PostTableViewCell: UITableViewCell {
 
   public func configureCell(post: Post) {
     self.post = post
+  }
+
+  public func buildAttributedString(string: String) -> NSAttributedString {
+    let mutableAttributedString = NSMutableAttributedString(string: string)
+
+    let detector = try? NSDataDetector(types: NSTextCheckingType.Link.rawValue)
+    detector?.enumerateMatchesInString(string, options: [],
+      range: NSMakeRange(0, string.characters.count), usingBlock: { results, flag, _ in
+        if let result = results {
+          mutableAttributedString.addAttributes([
+            NSForegroundColorAttributeName: UIColor.redColor(),
+            NSUnderlineColorAttributeName: UIColor.redColor(),
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue
+            ], range: result.range)
+        }
+    })
+
+    return mutableAttributedString
   }
 }
 
