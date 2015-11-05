@@ -1,6 +1,11 @@
 import UIKit
 import SDWebImage
 
+public protocol PostMediaViewDelegate: class {
+
+  func mediaDidTap(index: Int)
+}
+
 public class PostMediaView: UIView {
 
   public struct Dimensions {
@@ -9,35 +14,13 @@ public class PostMediaView: UIView {
     public static let height: CGFloat = 274
   }
 
-  public lazy var firstImageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
-    imageView.clipsToBounds = true
-    imageView.backgroundColor = UIColor.lightGrayColor()
-    imageView.opaque = true
-
-    return imageView
-    }()
-
-  public lazy var secondImageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
-    imageView.clipsToBounds = true
-    imageView.backgroundColor = UIColor.lightGrayColor()
-    imageView.opaque = true
-
-    return imageView
-    }()
-
-  public lazy var thirdImageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
-    imageView.clipsToBounds = true
-    imageView.backgroundColor = UIColor.lightGrayColor()
-    imageView.opaque = true
-
-    return imageView
-    }()
+  public lazy var firstImageView = UIImageView()
+  public lazy var secondImageView = UIImageView()
+  public lazy var thirdImageView = UIImageView()
+  public lazy var firstTapGestureRecognizer = UITapGestureRecognizer()
+  public lazy var secondTapGestureRecognizer = UITapGestureRecognizer()
+  public lazy var thirdTapGestureRecognizer = UITapGestureRecognizer()
+  public lazy var fourthTapGestureRecognizer = UITapGestureRecognizer()
 
   public lazy var imagesCountLabel: UILabel = {
     let label = UILabel()
@@ -45,15 +28,29 @@ public class PostMediaView: UIView {
     label.textColor = UIColor.whiteColor()
     label.textAlignment = .Center
     label.opaque = true
-    label.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+    label.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.35)
 
     return label
     }()
+
+  public weak var delegate: PostMediaViewDelegate?
 
   // MARK: - Initialization
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
+
+    [firstImageView, secondImageView, thirdImageView].forEach {
+      $0.contentMode = .ScaleAspectFill
+      $0.clipsToBounds = true
+      $0.backgroundColor = UIColor.lightGrayColor()
+      $0.opaque = true
+    }
+
+    [firstTapGestureRecognizer, secondTapGestureRecognizer,
+      thirdTapGestureRecognizer, fourthTapGestureRecognizer].forEach {
+        $0.addTarget(self, action: "handleGestureRecognizer:")
+    }
 
     thirdImageView.addSubview(imagesCountLabel)
     backgroundColor = UIColor.whiteColor()
@@ -61,6 +58,19 @@ public class PostMediaView: UIView {
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Actions
+
+  public func handleGestureRecognizer(gesture: UITapGestureRecognizer) {
+    var index = 2
+    if gesture == firstTapGestureRecognizer {
+      index = 0
+    } else if gesture == secondTapGestureRecognizer {
+      index = 1
+    }
+
+    delegate?.mediaDidTap(index)
   }
 
   // MARK: - Setup

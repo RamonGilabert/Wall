@@ -22,6 +22,7 @@ public protocol PostInformationDelegate: class {
 public protocol PostActivityDelegate: class {
 
   func shouldDisplayDetail(postID: Int)
+  func mediaDidTap(postID: Int, kind: Media.Kind, index: Int)
 }
 
 public class PostTableViewCell: UITableViewCell {
@@ -35,8 +36,10 @@ public class PostTableViewCell: UITableViewCell {
     return view
     }()
 
-  public lazy var postMediaView: PostMediaView = {
+  public lazy var postMediaView: PostMediaView = { [unowned self] in
     let view = PostMediaView()
+    view.delegate = self
+
     return view
     }()
 
@@ -230,5 +233,13 @@ extension PostTableViewCell: PostAuthorViewDelegate {
   public func authorDidTap() {
     guard let post = post else { return }
     informationDelegate?.authorDidTap(post.id)
+  }
+}
+
+extension PostTableViewCell: PostMediaViewDelegate {
+
+  public func mediaDidTap(index: Int) {
+    guard let post = post, firstMedia = post.media.first else { return }
+    activityDelegate?.mediaDidTap(post.id, kind: firstMedia.kind, index: index)
   }
 }
