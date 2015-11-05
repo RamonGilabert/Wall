@@ -53,6 +53,7 @@ public class PostTableViewCell: UITableViewCell {
       NSForegroundColorAttributeName: UIColor.redColor(),
       NSUnderlineColorAttributeName: UIColor.redColor(),
       NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
+    textView.subviews.first?.backgroundColor = UIColor.whiteColor()
 
     return textView
     }()
