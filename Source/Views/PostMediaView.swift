@@ -45,12 +45,18 @@ public class PostMediaView: UIView {
       $0.clipsToBounds = true
       $0.backgroundColor = UIColor.lightGrayColor()
       $0.opaque = true
+      $0.userInteractionEnabled = true
     }
 
     [firstTapGestureRecognizer, secondTapGestureRecognizer,
       thirdTapGestureRecognizer, fourthTapGestureRecognizer].forEach {
         $0.addTarget(self, action: "handleGestureRecognizer:")
     }
+
+    firstImageView.addGestureRecognizer(firstTapGestureRecognizer)
+    secondImageView.addGestureRecognizer(secondTapGestureRecognizer)
+    thirdImageView.addGestureRecognizer(thirdTapGestureRecognizer)
+    imagesCountLabel.addGestureRecognizer(fourthTapGestureRecognizer)
 
     thirdImageView.addSubview(imagesCountLabel)
     backgroundColor = UIColor.whiteColor()

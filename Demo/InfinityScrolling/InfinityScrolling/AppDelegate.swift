@@ -153,4 +153,8 @@ extension AppDelegate: PostActivityDelegate {
   func shouldDisplayDetail(postID: Int) {
     print("Detail")
   }
+
+  func mediaDidTap(postID: Int, kind: Media.Kind, index: Int) {
+    print("Index \(index)")
+  }
 }
