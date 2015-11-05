@@ -73,7 +73,8 @@ public class PostInformationBarView: UIView {
   }
 
   public func configureLikes(likes: Int) {
-    let title = likes == 0 ? "" : "\(likes) likes"
+    let title = likes == 0
+      ? "" : String.localizedStringWithFormat(NSLocalizedString("%d like(s)", comment: ""), likes)
 
     likesButton.setTitle(title, forState: .Normal)
     likesButton.sizeToFit()
@@ -81,7 +82,8 @@ public class PostInformationBarView: UIView {
   }
 
   public func configureComments(comments: Int) {
-    let title = comments == 0 ? "" : "\(comments) comments"
+    let title = comments == 0
+      ? "" : String.localizedStringWithFormat(NSLocalizedString("%d comment(s)", comment: ""), comments)
     let positionOffset: CGFloat = likesButton.titleForState(UIControlState.Normal) == ""
       ? Dimensions.offset : CGRectGetMaxX(likesButton.frame) + Dimensions.interitemOffset
 
