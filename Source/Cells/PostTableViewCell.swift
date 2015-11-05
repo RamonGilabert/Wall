@@ -35,12 +35,13 @@ public class PostTableViewCell: UITableViewCell {
     return view
     }()
 
-  public lazy var postText: UITextView = {
+  public lazy var postText: UITextView = { [unowned self] in
     let textView = UITextView()
     textView.font = UIFont.systemFontOfSize(14)
     textView.dataDetectorTypes = .Link
     textView.editable = false
     textView.scrollEnabled = false
+    textView.delegate = self
     textView.textContainer.lineFragmentPadding = 0
     textView.textContainerInset = UIEdgeInsetsZero
     textView.linkTextAttributes = [
@@ -123,7 +124,7 @@ public class PostTableViewCell: UITableViewCell {
     }
 
     authorView.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60)
-    postImagesView.frame = CGRect(x: 0, y: imageTop, width: UIScreen.mainScreen().bounds.width, height: imageHeight)
+    postMediaView.frame = CGRect(x: 0, y: imageTop, width: UIScreen.mainScreen().bounds.width, height: imageHeight)
     informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: informationHeight)
     actionBarView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
     bottomSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
@@ -148,12 +149,16 @@ public class PostTableViewCell: UITableViewCell {
   }
 }
 
+// MARK: - UITextViewDelegate
+
 extension PostTableViewCell: UITextViewDelegate {
 
   public func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
     return true
   }
 }
+
+// MARK: - PostInformationBarViewDelegate
 
 extension PostTableViewCell: PostInformationBarViewDelegate {
 

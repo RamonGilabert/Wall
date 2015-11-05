@@ -52,9 +52,8 @@ public class WallController: UIViewController {
   public weak var delegate: WallControllerDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
-  public var posts = [Post]()
-  public var fetching = true
   private var posts = [Post]()
+  public var fetching = true
 
   // MARK: - View Lifecycle
 
