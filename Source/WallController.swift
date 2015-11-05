@@ -3,9 +3,13 @@ import UIKit
 public protocol WallControllerDelegate: class {
 
   func shouldFetchMoreInformation()
+  func shouldRefreshPosts(refreshControl: UIRefreshControl)
+}
+
+public protocol WallControllerActionDelegate: class {
+
   func likeButtonDidPress(postID: Int)
   func commentsButtonDidPress(postID: Int)
-  func shouldRefreshPosts(refreshControl: UIRefreshControl)
 }
 
 public protocol WallControllerInformationDelegate: class {
@@ -60,6 +64,7 @@ public class WallController: UIViewController {
     }()
 
   public weak var delegate: WallControllerDelegate?
+  public weak var actionDelegate: WallControllerActionDelegate?
   public weak var informationDelegate: WallControllerInformationDelegate?
   public var posts = [Post]()
   public var fetching = true
@@ -119,11 +124,11 @@ public class WallController: UIViewController {
 extension WallController: PostTableViewCellDelegate {
 
   public func likesDidUpdate(postID: Int, liked: Bool) {
-    delegate?.likeButtonDidPress(postID)
+    actionDelegate?.likeButtonDidPress(postID)
   }
 
   public func commentButtonDidPress(postID: Int) {
-    delegate?.commentsButtonDidPress(postID)
+    actionDelegate?.commentsButtonDidPress(postID)
   }
 
   public func likesInformationDidPress(postID: Int) {
