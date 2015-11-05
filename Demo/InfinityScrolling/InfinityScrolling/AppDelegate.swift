@@ -136,4 +136,8 @@ extension AppDelegate: WallControllerInformationDelegate {
   func seenInformationDidPress(postID: Int) {
     print("Seen")
   }
+
+  func authorDidTap(postID: Int) {
+    print("Author")
+  }
 }

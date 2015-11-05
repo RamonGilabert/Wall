@@ -1,6 +1,11 @@
 import UIKit
 import SDWebImage
 
+public protocol PostAuthorViewDelegate: class {
+
+  func authorDidTap()
+}
+
 public class PostAuthorView: UIView {
 
   public struct Dimensions {
@@ -37,6 +42,15 @@ public class PostAuthorView: UIView {
     return label
     }()
 
+  public lazy var tapAuthorGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "handleTapGestureRecognizer")
+
+    return gesture
+    }()
+
+  public weak var delegate: PostAuthorViewDelegate?
+
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
@@ -44,6 +58,8 @@ public class PostAuthorView: UIView {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = UIColor.whiteColor()
+      $0.userInteractionEnabled = true
+      $0.addGestureRecognizer(tapAuthorGestureRecognizer)
     }
 
     backgroundColor = UIColor.whiteColor()
@@ -62,6 +78,12 @@ public class PostAuthorView: UIView {
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Action methods
+
+  public func handleTapGestureRecognizer() {
+    delegate?.authorDidTap()
   }
 
   // MARK: - Setup

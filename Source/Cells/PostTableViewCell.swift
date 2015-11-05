@@ -7,14 +7,17 @@ public protocol PostTableViewCellDelegate: class {
   func likesInformationDidPress(postID: Int)
   func commentInformationDidPress(postID: Int)
   func seenInformationDidPress(postID: Int)
+  func authorDidTap(postID: Int)
 }
 
 public class PostTableViewCell: UITableViewCell {
 
   public static let reusableIdentifier = "PostTableViewCell"
 
-  public lazy var authorView: PostAuthorView = {
+  public lazy var authorView: PostAuthorView = { [unowned self] in
     let view = PostAuthorView()
+    view.delegate = self
+
     return view
     }()
 
@@ -150,5 +153,13 @@ extension PostTableViewCell: PostActionBarViewDelegate {
   public func commentButtonDidPress() {
     guard let post = post else { return }
     delegate?.commentButtonDidPress(post.id)
+  }
+}
+
+extension PostTableViewCell: PostAuthorViewDelegate {
+
+  public func authorDidTap() {
+    guard let post = post else { return }
+    delegate?.authorDidTap(post.id)
   }
 }

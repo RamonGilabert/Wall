@@ -13,6 +13,7 @@ public protocol WallControllerInformationDelegate: class {
   func likesInformationDidPress(postID: Int)
   func commentsInformationDidPress(postID: Int)
   func seenInformationDidPress(postID: Int)
+  func authorDidTap(postID: Int)
 }
 
 public class WallController: UIViewController {
@@ -135,6 +136,10 @@ extension WallController: PostTableViewCellDelegate {
 
   public func seenInformationDidPress(postID: Int) {
     informationDelegate?.seenInformationDidPress(postID)
+  }
+
+  public func authorDidTap(postID: Int) {
+    informationDelegate?.authorDidTap(postID)
   }
 }
 
