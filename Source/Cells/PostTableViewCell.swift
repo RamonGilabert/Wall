@@ -1,5 +1,10 @@
 import UIKit
 
+public protocol PostTableViewCellDelegate: class {
+
+  func updateCellSize(postID: Int)
+}
+
 public protocol PostActionDelegate: class {
 
   func likeButtonDidPress(postID: Int)
@@ -60,6 +65,7 @@ public class PostTableViewCell: UITableViewCell {
     return layer
     }()
 
+  public weak var delegate: PostTableViewCellDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
   public var post: Post?
@@ -99,9 +105,14 @@ public class PostTableViewCell: UITableViewCell {
       postImagesView.alpha = 0
     }
 
+    var informationHeight: CGFloat = 56
+    if post.likeCount == 0 && post.commentCount == 0 {
+      informationHeight = 16
+    }
+
     authorView.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60)
     postImagesView.frame = CGRect(x: 0, y: imageTop, width: UIScreen.mainScreen().bounds.width, height: imageHeight)
-    informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 56)
+    informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: informationHeight)
     actionBarView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
     bottomSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
 
@@ -152,6 +163,7 @@ extension PostTableViewCell: PostActionBarViewDelegate {
     post.likeCount += liked ? 1 : -1
 
     informationView.configureLikes(post.likeCount)
+    delegate?.updateCellSize(post.id)
     actionDelegate?.likeButtonDidPress(post.id)
   }
 

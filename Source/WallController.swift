@@ -102,8 +102,21 @@ public class WallController: UIViewController {
   // MARK: - Refresh control
 
   public func handleRefreshControl(refreshControl: UIRefreshControl) {
+    tableView.beginUpdates()
     tableView.reloadData()
+    tableView.endUpdates()
     delegate?.shouldRefreshPosts(refreshControl)
+  }
+}
+
+extension WallController: PostTableViewCellDelegate {
+
+  public func updateCellSize(postID: Int) {
+    guard let postIndex = posts.indexOf({ $0.id == postID }) else { return }
+
+    tableView.beginUpdates()
+    tableView.cellForRowAtIndexPath(NSIndexPath(forRow: postIndex, inSection: 0))
+    tableView.endUpdates()
   }
 }
 
@@ -123,7 +136,12 @@ extension WallController: UITableViewDelegate {
       imageTop = 50
     }
 
-    let totalHeight: CGFloat = imageHeight + imageTop + 56 + 44 + 20 + 12 + textFrame.height
+    var informationHeight: CGFloat = 56
+    if post.likeCount == 0 && post.commentCount == 0 {
+      informationHeight = 16
+    }
+
+    let totalHeight: CGFloat = imageHeight + imageTop + informationHeight + 44 + 20 + 12 + textFrame.height
 
     return totalHeight
   }
@@ -154,6 +172,7 @@ extension WallController: UITableViewDataSource {
     let post = posts[indexPath.row]
 
     cell.configureCell(post)
+    cell.delegate = self
     cell.actionDelegate = actionDelegate
     cell.informationDelegate = informationDelegate
 
