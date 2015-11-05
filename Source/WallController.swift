@@ -10,8 +10,6 @@ public class WallController: UIViewController {
 
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
-    tableView.registerClass(PostTableViewCell.self,
-      forCellReuseIdentifier: PostTableViewCell.reusableIdentifier)
     tableView.delegate = self
     tableView.dataSource = self
     tableView.frame = CGRect(x: 0, y: 0,
@@ -65,6 +63,9 @@ public class WallController: UIViewController {
     tableView.sendSubviewToBack(refreshControl)
     refreshControl.subviews.first?.frame.origin.y = -5
 
+    registerCell(PostTableViewCell.self,
+      reusableIdentifier: PostTableViewCell.reusableIdentifier)
+
     view.backgroundColor = UIColor.whiteColor()
     view.layer.opaque = true
 
@@ -82,6 +83,11 @@ public class WallController: UIViewController {
   }
 
   // MARK: - Configuration
+
+  public func registerCell<T: WallTableViewCell>(cellClass: T.Type, reusableIdentifier: String) {
+    tableView.registerClass(cellClass,
+      forCellReuseIdentifier: reusableIdentifier)
+  }
 
   public func initializePosts(newPosts: [PostConvertible]) {
     posts = []
@@ -120,9 +126,9 @@ public class WallController: UIViewController {
   }
 }
 
-// MARK: - PostTableViewCellDelegate
+// MARK: - WallTableViewCellDelegate
 
-extension WallController: PostTableViewCellDelegate {
+extension WallController: WallTableViewCellDelegate {
 
   public func updateCellSize(postID: Int) {
     tableView.beginUpdates()
@@ -180,15 +186,22 @@ extension WallController: UITableViewDataSource {
   }
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.reusableIdentifier)
-      as? PostTableViewCell else { return PostTableViewCell() }
-
     let post = posts[indexPath.row]
+    var wallCell: WallTableViewCell?
+
+    if let reusableIdentifier = post.reusableIdentifier,
+      registeredCell = tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) as? WallTableViewCell {
+        wallCell = registeredCell
+    } else if let postCell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.reusableIdentifier) as? PostTableViewCell {
+      postCell.actionDelegate = actionDelegate
+      postCell.informationDelegate = informationDelegate
+      wallCell = postCell
+    }
+
+    guard let cell = wallCell else { return PostTableViewCell() }
 
     cell.configureCell(post)
     cell.delegate = self
-    cell.actionDelegate = actionDelegate
-    cell.informationDelegate = informationDelegate
 
     return cell
   }

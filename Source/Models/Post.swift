@@ -16,18 +16,20 @@ public class Post {
   public var seenCount = 0
   public var commentCount = 0
   public var author: Author?
+  public var reusableIdentifier: String?
 
   public var media: [Media]
 
   // MARK: - Initialization
 
-  public init(id: Int, text: String = "", publishDate: String,
-    author: Author? = nil, media: [Media] = []) {
+  public init(id: Int, text: String = "", publishDate: String, author: Author? = nil,
+    media: [Media] = [], reusableIdentifier: String? = nil) {
       self.id = id
       self.text = text
       self.publishDate = publishDate
       self.author = author
       self.media = media
+      self.reusableIdentifier = reusableIdentifier
   }
 }
 
