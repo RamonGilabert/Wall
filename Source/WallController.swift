@@ -126,9 +126,9 @@ public class WallController: UIViewController {
   }
 }
 
-// MARK: - PostTableViewCellDelegate
+// MARK: - WallTableViewCellDelegate
 
-extension WallController: PostTableViewCellDelegate {
+extension WallController: WallTableViewCellDelegate {
 
   public func updateCellSize(postID: Int) {
     tableView.beginUpdates()
