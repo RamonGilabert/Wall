@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let sencenceCount = Int(arc4random_uniform(8) + 1)
         let post = Post(
           id: i,
-          text: faker.lorem.sentences(amount: sencenceCount),
+          text: faker.lorem.sentences(amount: sencenceCount) + " " + faker.internet.url(),
           publishDate: "3 hours ago",
           author: author,
           media: media

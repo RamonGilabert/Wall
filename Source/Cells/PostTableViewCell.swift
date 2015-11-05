@@ -19,6 +19,11 @@ public protocol PostInformationDelegate: class {
   func authorDidTap(postID: Int)
 }
 
+public protocol PostActivityDelegate: class {
+
+  func shouldDisplayDetail(postID: Int)
+}
+
 public class PostTableViewCell: UITableViewCell {
 
   public static let reusableIdentifier = "PostTableViewCell"
@@ -74,9 +79,24 @@ public class PostTableViewCell: UITableViewCell {
     return layer
     }()
 
+  public lazy var generalTapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "handleTapGestureRecognizer")
+
+    return gesture
+    }()
+
+  public lazy var textGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "handleTapGestureRecognizer")
+
+    return gesture
+    }()
+
   public weak var delegate: PostTableViewCellDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
+  public weak var activityDelegate: PostActivityDelegate?
   public var post: Post?
 
   // MARK: - Initialization
@@ -91,6 +111,9 @@ public class PostTableViewCell: UITableViewCell {
         $0.backgroundColor = UIColor.whiteColor()
     }
 
+    addGestureRecognizer(generalTapGestureRecognizer)
+    postText.addGestureRecognizer(textGestureRecognizer)
+
     layer.addSublayer(bottomSeparator)
     opaque = true
     selectionStyle = .None
@@ -98,6 +121,13 @@ public class PostTableViewCell: UITableViewCell {
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Actions
+
+  public func handleTapGestureRecognizer() {
+    guard let post = post else { return }
+    activityDelegate?.shouldDisplayDetail(post.id)
   }
 
   // MARK: - Setup

@@ -4,6 +4,7 @@ public protocol WallControllerDelegate: class {
 
   func shouldFetchMoreInformation()
   func shouldRefreshPosts(refreshControl: UIRefreshControl)
+  func shouldDisplayDetail(postID: Int)
 }
 
 public class WallController: UIViewController {
@@ -127,6 +128,10 @@ extension WallController: PostTableViewCellDelegate {
   public func updateCellSize(postID: Int) {
     tableView.beginUpdates()
     tableView.endUpdates()
+  }
+
+  public func shouldDisplayDetail(postID: Int) {
+    delegate?.shouldDisplayDetail(postID)
   }
 }
 
