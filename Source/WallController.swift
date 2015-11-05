@@ -203,7 +203,6 @@ extension WallController: UITableViewDataSource {
     cell.configureCell(post)
     cell.delegate = self
 
-
     return cell
   }
 }
