@@ -59,6 +59,8 @@ public class PostTableViewCell: UITableViewCell {
   public weak var delegate: PostTableViewCellDelegate?
   public var post: Post?
 
+  // MARK: - Initialization
+
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -77,6 +79,8 @@ public class PostTableViewCell: UITableViewCell {
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+
+  // MARK: - Setup
 
   public override func drawRect(rect: CGRect) {
     super.drawRect(rect)
@@ -120,6 +124,8 @@ public class PostTableViewCell: UITableViewCell {
   }
 }
 
+// MARK: - PostInformationBarViewDelegate
+
 extension PostTableViewCell: PostInformationBarViewDelegate {
 
   public func likesInformationButtonDidPress() {
@@ -138,6 +144,8 @@ extension PostTableViewCell: PostInformationBarViewDelegate {
   }
 }
 
+// MARK: - PostActionBarViewDelegate
+
 extension PostTableViewCell: PostActionBarViewDelegate {
 
   public func likeButtonDidPress(liked: Bool) {
@@ -155,6 +163,8 @@ extension PostTableViewCell: PostActionBarViewDelegate {
     delegate?.commentButtonDidPress(post.id)
   }
 }
+
+// MARK: - PostAuthorViewDelegate
 
 extension PostTableViewCell: PostAuthorViewDelegate {
 

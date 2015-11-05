@@ -64,6 +64,8 @@ public class WallController: UIViewController {
   public var posts = [Post]()
   public var fetching = true
 
+  // MARK: - View Lifecycle
+
   public override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -108,13 +110,15 @@ public class WallController: UIViewController {
     }
   }
 
-  // MARK: - Refresh control
+  // MARK: - Refresh Control
 
   public func handleRefreshControl(refreshControl: UIRefreshControl) {
     tableView.reloadData()
     delegate?.shouldRefreshPosts(refreshControl)
   }
 }
+
+// MARK: - PostTableViewCellDelegate
 
 extension WallController: PostTableViewCellDelegate {
 
@@ -142,6 +146,8 @@ extension WallController: PostTableViewCellDelegate {
     informationDelegate?.authorDidTap(postID)
   }
 }
+
+// MARK: - UITableViewDelegate
 
 extension WallController: UITableViewDelegate {
 
@@ -176,6 +182,8 @@ extension WallController: UITableViewDelegate {
     }
   }
 }
+
+// MARK: - UITableViewDataSource
 
 extension WallController: UITableViewDataSource {
 
