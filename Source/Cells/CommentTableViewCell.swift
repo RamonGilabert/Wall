@@ -2,6 +2,16 @@ import UIKit
 
 public class CommentTableViewCell: WallTableViewCell {
 
+  public override class func height(post: Post) -> CGFloat {
+    let postText = post.text as NSString
+    let textFrame = postText.boundingRectWithSize(CGSize(
+      width: UIScreen.mainScreen().bounds.width - Dimensions.textOffset - Dimensions.sideOffset,
+      height: CGFloat.max), options: .UsesLineFragmentOrigin,
+      attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
+
+    return 101 + textFrame.height
+  }
+
   public static let reusableIdentifier = "CommentTableViewCell"
 
   public struct Dimensions {
@@ -73,8 +83,10 @@ public class CommentTableViewCell: WallTableViewCell {
     [avatarImageView, authorName, postText, dateLabel].forEach {
       addSubview($0)
       $0.opaque = true
-      $0.backgroundColor = UIColor.whiteColor()
+      $0.backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
     }
+
+    backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
 
     layer.addSublayer(bottomSeparator)
     opaque = true
@@ -113,7 +125,7 @@ public class CommentTableViewCell: WallTableViewCell {
     dateLabel.text = post.publishDate
 
     bottomSeparator.frame = CGRect(x: 0, y: dateLabel.frame.maxY + 26,
-      width: UIScreen.mainScreen().bounds.width, height: 20)
+      width: UIScreen.mainScreen().bounds.width, height: 0.5)
   }
 }
 
