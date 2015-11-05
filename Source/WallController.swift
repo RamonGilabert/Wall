@@ -53,6 +53,7 @@ public class WallController: UIViewController {
   public lazy var refreshControl: UIRefreshControl = {
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: "handleRefreshControl:", forControlEvents: .ValueChanged)
+    refreshControl.opaque = true
 
     return refreshControl
     }()
@@ -101,7 +102,7 @@ public class WallController: UIViewController {
         self.tableView.beginUpdates()
         self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
         self.tableView.endUpdates()
-        self.fetching = false
+        self.fetching = newPosts.isEmpty ? true : false
       }
     }
   }
