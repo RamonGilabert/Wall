@@ -86,13 +86,6 @@ public class PostTableViewCell: UITableViewCell {
     return gesture
     }()
 
-  public lazy var textGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
-    let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: "handleTapGestureRecognizer")
-
-    return gesture
-    }()
-
   public weak var delegate: PostTableViewCellDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
@@ -112,7 +105,6 @@ public class PostTableViewCell: UITableViewCell {
     }
 
     addGestureRecognizer(generalTapGestureRecognizer)
-    postText.addGestureRecognizer(textGestureRecognizer)
 
     layer.addSublayer(bottomSeparator)
     opaque = true

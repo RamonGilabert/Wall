@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controller.delegate = self
     controller.actionDelegate = self
     controller.informationDelegate = self
+    controller.activityDelegate = self
 
     return controller
     }()
@@ -144,5 +145,12 @@ extension AppDelegate: PostInformationDelegate {
 
   func authorDidTap(postID: Int) {
     print("Author")
+  }
+}
+
+extension AppDelegate: PostActivityDelegate {
+
+  func shouldDisplayDetail(postID: Int) {
+    print("Detail")
   }
 }

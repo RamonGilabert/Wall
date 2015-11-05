@@ -53,6 +53,7 @@ public class WallController: UIViewController {
   public weak var delegate: WallControllerDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
+  public weak var activityDelegate: PostActivityDelegate?
   private var posts = [Post]()
   public var fetching = true
 
@@ -194,6 +195,7 @@ extension WallController: UITableViewDataSource {
     cell.delegate = self
     cell.actionDelegate = actionDelegate
     cell.informationDelegate = informationDelegate
+    cell.activityDelegate = activityDelegate
 
     return cell
   }
