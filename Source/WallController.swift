@@ -201,6 +201,7 @@ extension WallController: UITableViewDataSource {
     } else if let postCell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.reusableIdentifier) as? PostTableViewCell {
       postCell.actionDelegate = actionDelegate
       postCell.informationDelegate = informationDelegate
+      postCell.activityDelegate = activityDelegate
       wallCell = postCell
     }
 
@@ -208,9 +209,6 @@ extension WallController: UITableViewDataSource {
 
     cell.configureCell(post)
     cell.delegate = self
-    cell.actionDelegate = actionDelegate
-    cell.informationDelegate = informationDelegate
-    cell.activityDelegate = activityDelegate
 
     return cell
   }

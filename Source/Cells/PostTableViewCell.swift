@@ -20,7 +20,7 @@ public protocol PostActivityDelegate: class {
   func mediaDidTap(postID: Int, kind: Media.Kind, index: Int)
 }
 
-public class PostTableViewCell: UITableViewCell {
+public class PostTableViewCell: WallTableViewCell {
 
   public static let reusableIdentifier = "PostTableViewCell"
 
@@ -85,11 +85,9 @@ public class PostTableViewCell: UITableViewCell {
     return gesture
     }()
 
-  public weak var delegate: PostTableViewCellDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
   public weak var activityDelegate: PostActivityDelegate?
-  public var post: Post?
 
   // MARK: - Initialization
 
