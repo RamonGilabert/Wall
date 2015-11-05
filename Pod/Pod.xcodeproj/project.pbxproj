@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		14A139B41AEFC72B00AD732F /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A139B31AEFC72B00AD732F /* Tests.swift */; };
+		D513B16C1BEB54FE003142EE /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513B1621BEB54FE003142EE /* PostTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		D513B16D1BEB54FE003142EE /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513B1641BEB54FE003142EE /* Author.swift */; settings = {ASSET_TAGS = (); }; };
+		D513B16E1BEB54FE003142EE /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513B1651BEB54FE003142EE /* Post.swift */; settings = {ASSET_TAGS = (); }; };
+		D513B16F1BEB54FE003142EE /* PostActionBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513B1671BEB54FE003142EE /* PostActionBarView.swift */; settings = {ASSET_TAGS = (); }; };
+		D513B1701BEB54FE003142EE /* PostAuthorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513B1681BEB54FE003142EE /* PostAuthorView.swift */; settings = {ASSET_TAGS = (); }; };
+		D513B1711BEB54FE003142EE /* PostImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513B1691BEB54FE003142EE /* PostImagesView.swift */; settings = {ASSET_TAGS = (); }; };
+		D513B1721BEB54FE003142EE /* PostInformationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513B16A1BEB54FE003142EE /* PostInformationBarView.swift */; settings = {ASSET_TAGS = (); }; };
+		D513B1731BEB54FE003142EE /* WallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513B16B1BEB54FE003142EE /* WallController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +28,14 @@
 		14C136541AB784B200B7B07A /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		14C136551AB784B200B7B07A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		14C1365C1AB784BC00B7B07A /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		D513B1621BEB54FE003142EE /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		D513B1641BEB54FE003142EE /* Author.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
+		D513B1651BEB54FE003142EE /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		D513B1671BEB54FE003142EE /* PostActionBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostActionBarView.swift; sourceTree = "<group>"; };
+		D513B1681BEB54FE003142EE /* PostAuthorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostAuthorView.swift; sourceTree = "<group>"; };
+		D513B1691BEB54FE003142EE /* PostImagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostImagesView.swift; sourceTree = "<group>"; };
+		D513B16A1BEB54FE003142EE /* PostInformationBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostInformationBarView.swift; sourceTree = "<group>"; };
+		D513B16B1BEB54FE003142EE /* WallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WallController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,10 +101,42 @@
 		14C1365B1AB784BC00B7B07A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				D513B1611BEB54FE003142EE /* Cells */,
+				D513B1631BEB54FE003142EE /* Models */,
+				D513B1661BEB54FE003142EE /* Views */,
+				D513B16B1BEB54FE003142EE /* WallController.swift */,
 				14C1365C1AB784BC00B7B07A /* .gitkeep */,
 			);
 			name = Source;
 			path = ../Source;
+			sourceTree = "<group>";
+		};
+		D513B1611BEB54FE003142EE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D513B1621BEB54FE003142EE /* PostTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		D513B1631BEB54FE003142EE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D513B1641BEB54FE003142EE /* Author.swift */,
+				D513B1651BEB54FE003142EE /* Post.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D513B1661BEB54FE003142EE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D513B1671BEB54FE003142EE /* PostActionBarView.swift */,
+				D513B1681BEB54FE003142EE /* PostAuthorView.swift */,
+				D513B1691BEB54FE003142EE /* PostImagesView.swift */,
+				D513B16A1BEB54FE003142EE /* PostInformationBarView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -117,6 +165,7 @@
 		146D728B1AB782920058798C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = Example;
 				TargetAttributes = {
@@ -158,7 +207,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D513B1731BEB54FE003142EE /* WallController.swift in Sources */,
+				D513B1711BEB54FE003142EE /* PostImagesView.swift in Sources */,
+				D513B16D1BEB54FE003142EE /* Author.swift in Sources */,
+				D513B16F1BEB54FE003142EE /* PostActionBarView.swift in Sources */,
+				D513B1721BEB54FE003142EE /* PostInformationBarView.swift in Sources */,
 				14A139B41AEFC72B00AD732F /* Tests.swift in Sources */,
+				D513B1701BEB54FE003142EE /* PostAuthorView.swift in Sources */,
+				D513B16C1BEB54FE003142EE /* PostTableViewCell.swift in Sources */,
+				D513B16E1BEB54FE003142EE /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
