@@ -18,6 +18,8 @@ public class PostMediaView: UIView {
     return imageView
     }()
 
+  // MARK: - Initialization
+
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
