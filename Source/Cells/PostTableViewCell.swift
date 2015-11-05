@@ -19,7 +19,21 @@ public protocol PostInformationDelegate: class {
   func authorDidTap(postID: Int)
 }
 
-public class PostTableViewCell: UITableViewCell {
+public class WallTableViewCell: UITableViewCell {
+
+  public var post: Post?
+  public weak var delegate: PostTableViewCellDelegate?
+
+
+  public func configureCell(post: Post) {
+    self.post = post
+  }
+}
+
+public class PostTableViewCell: WallTableViewCell {
+
+  public weak var actionDelegate: PostActionDelegate?
+  public weak var informationDelegate: PostInformationDelegate?
 
   public static let reusableIdentifier = "PostTableViewCell"
 
@@ -73,11 +87,6 @@ public class PostTableViewCell: UITableViewCell {
 
     return layer
     }()
-
-  public weak var delegate: PostTableViewCellDelegate?
-  public weak var actionDelegate: PostActionDelegate?
-  public weak var informationDelegate: PostInformationDelegate?
-  public var post: Post?
 
   // MARK: - Initialization
 
@@ -142,10 +151,6 @@ public class PostTableViewCell: UITableViewCell {
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postText.frame))
     actionBarView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(informationView.frame))
     bottomSeparator.frame.origin.y = CGRectGetMaxY(actionBarView.frame)
-  }
-
-  public func configureCell(post: Post) {
-    self.post = post
   }
 }
 
