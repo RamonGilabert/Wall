@@ -1,10 +1,5 @@
 import UIKit
 
-public protocol PostTableViewCellDelegate: class {
-
-  func updateCellSize(postID: Int)
-}
-
 public protocol PostActionDelegate: class {
 
   func likeButtonDidPress(postID: Int)
@@ -168,10 +163,6 @@ public class PostTableViewCell: UITableViewCell {
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postText.frame))
     actionBarView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(informationView.frame))
     bottomSeparator.frame.origin.y = CGRectGetMaxY(actionBarView.frame)
-  }
-
-  public func configureCell(post: Post) {
-    self.post = post
   }
 }
 
