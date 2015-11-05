@@ -49,19 +49,27 @@ public class PostAuthorView: UIView {
     return gesture
     }()
 
+  public lazy var tapLabelGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "handleTapGestureRecognizer")
+
+    return gesture
+    }()
+
   public weak var delegate: PostAuthorViewDelegate?
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [avatarImageView, authorName, dateLabel].forEach {
+    [dateLabel, authorName, avatarImageView].forEach {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = UIColor.whiteColor()
       $0.userInteractionEnabled = true
-      $0.addGestureRecognizer(tapAuthorGestureRecognizer)
     }
 
+    avatarImageView.addGestureRecognizer(tapAuthorGestureRecognizer)
+    authorName.addGestureRecognizer(tapLabelGestureRecognizer)
     backgroundColor = UIColor.whiteColor()
   }
 
