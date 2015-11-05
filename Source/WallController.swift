@@ -8,6 +8,8 @@ public protocol WallControllerDelegate: class {
 
 public class WallController: UIViewController {
 
+  private var cells = [String: WallTableViewCell.Type]()
+
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
     tableView.delegate = self
@@ -20,15 +22,6 @@ public class WallController: UIViewController {
     tableView.opaque = true
 
     return tableView
-    }()
-
-  public lazy var topSeparator: UIView = {
-    let view = UIView()
-    view.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
-    view.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
-    view.opaque = true
-
-    return view
     }()
 
   public lazy var loadingIndicator: UIActivityIndicatorView = {
@@ -52,13 +45,14 @@ public class WallController: UIViewController {
   public weak var informationDelegate: PostInformationDelegate?
   private var posts = [Post]()
   public var fetching = true
+  public var verticalOffset: CGFloat = 20
 
   // MARK: - View Lifecycle
 
   public override func viewDidLoad() {
     super.viewDidLoad()
 
-    [topSeparator, tableView].forEach { view.addSubview($0) }
+    view.addSubview(tableView)
     [refreshControl, loadingIndicator].forEach { tableView.addSubview($0) }
     tableView.sendSubviewToBack(refreshControl)
     refreshControl.subviews.first?.frame.origin.y = -5
@@ -69,12 +63,9 @@ public class WallController: UIViewController {
     view.backgroundColor = UIColor.whiteColor()
     view.layer.opaque = true
 
-    if let navigationController = navigationController {
-      tableView.contentInset.top = navigationController.navigationBar.frame.height
-        + UIApplication.sharedApplication().statusBarFrame.height + 20
-      tableView.contentInset.bottom = 20
-      tableView.scrollIndicatorInsets.top = tableView.contentInset.top - 20
-    }
+    tableView.contentInset.top = verticalOffset
+    tableView.contentInset.bottom = verticalOffset
+    tableView.scrollIndicatorInsets.top = tableView.contentInset.top - verticalOffset
   }
 
   public override func viewDidAppear(animated: Bool) {
@@ -87,6 +78,7 @@ public class WallController: UIViewController {
   public func registerCell<T: WallTableViewCell>(cellClass: T.Type, reusableIdentifier: String) {
     tableView.registerClass(cellClass,
       forCellReuseIdentifier: reusableIdentifier)
+    cells[reusableIdentifier] = cellClass
   }
 
   public func initializePosts(newPosts: [PostConvertible]) {
@@ -142,26 +134,13 @@ extension WallController: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     let post = posts[indexPath.row]
-    let postText = post.text as NSString
-    let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 40,
-      height: CGFloat.max), options: .UsesLineFragmentOrigin,
-      attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
+    var CellClass = WallTableViewCell.self
 
-    var imageHeight: CGFloat = 274
-    var imageTop: CGFloat = 60
-    if post.media.isEmpty {
-      imageHeight = 0
-      imageTop = 50
+    if let RegisteredCellClass = cells[post.reusableIdentifier] {
+      CellClass = RegisteredCellClass
     }
 
-    var informationHeight: CGFloat = 56
-    if post.likeCount == 0 && post.commentCount == 0 {
-      informationHeight = 16
-    }
-
-    let totalHeight: CGFloat = imageHeight + imageTop + informationHeight + 44 + 20 + 12 + textFrame.height
-
-    return totalHeight
+    return CellClass.height(post)
   }
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -189,13 +168,12 @@ extension WallController: UITableViewDataSource {
     let post = posts[indexPath.row]
     var wallCell: WallTableViewCell?
 
-    if let reusableIdentifier = post.reusableIdentifier,
-      registeredCell = tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) as? WallTableViewCell {
-        wallCell = registeredCell
-    } else if let postCell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.reusableIdentifier) as? PostTableViewCell {
-      postCell.actionDelegate = actionDelegate
-      postCell.informationDelegate = informationDelegate
-      wallCell = postCell
+    if let registeredCell = tableView.dequeueReusableCellWithIdentifier(post.reusableIdentifier) as? WallTableViewCell {
+      wallCell = registeredCell
+      if let postCell = wallCell as? PostTableViewCell {
+        postCell.actionDelegate = actionDelegate
+        postCell.informationDelegate = informationDelegate
+      }
     }
 
     guard let cell = wallCell else { return PostTableViewCell() }
