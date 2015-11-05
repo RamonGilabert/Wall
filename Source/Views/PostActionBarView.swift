@@ -46,6 +46,8 @@ public class PostActionBarView: UIView {
 
   public weak var delegate: PostActionBarViewDelegate?
 
+  // MARK: - Initialization
+
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
@@ -58,6 +60,8 @@ public class PostActionBarView: UIView {
     layer.addSublayer(topSeparator)
     backgroundColor = UIColor.whiteColor()
   }
+
+  // MARK: - Setup
 
   public override func drawRect(rect: CGRect) {
     super.drawRect(rect)
@@ -76,14 +80,12 @@ public class PostActionBarView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  // MARK: - Setup
-
   public func configureView(liked: Bool) {
     let color = liked ? UIColor.redColor() : UIColor.grayColor()
     likeButton.setTitleColor(color, forState: .Normal)
   }
 
-  // MARK: - Action methods
+  // MARK: - Actions
 
   public func likeButtonDidPress() {
     let color = likeButton.titleColorForState(.Normal) == UIColor.redColor()

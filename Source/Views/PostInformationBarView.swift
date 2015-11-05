@@ -44,6 +44,8 @@ public class PostInformationBarView: UIView {
 
   public weak var delegate: PostInformationBarViewDelegate?
 
+  // MARK: - Initialization
+
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
@@ -90,7 +92,7 @@ public class PostInformationBarView: UIView {
       y: Dimensions.topOffset)
   }
 
-  // MARK: - Action methods
+  // MARK: - Actions
 
   public func likesButtonDidPress() {
     delegate?.likesInformationButtonDidPress()

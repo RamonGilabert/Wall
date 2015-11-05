@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var wallController: WallController = { [unowned self] in
     let controller = WallController()
-    controller.posts = self.generatePosts(0, to: 10)
+    controller.initializePosts(self.generatePosts(0, to: 10))
     controller.title = "Infinity Scrolling".uppercaseString
     controller.delegate = self
     controller.informationDelegate = self
@@ -31,8 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
 
-  func generatePosts(from: Int, to: Int) -> [Post] {
-    var posts = [Post]()
+  func generatePosts(from: Int, to: Int) -> [PostConvertible] {
+    var posts = [PostConvertible]()
 
     for i in from...to {
       autoreleasepool({
@@ -43,45 +43,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             avatar: imageURL)
         }
 
-        var attachments = [NSURL]()
-        var attachmentCount = 0
+        var media = [Media]()
+        var mediaCount = 0
         var likes = 0
         var commentCount = 0
         var seen = 0
         var liked = true
 
         if i % 4 == 0 {
-          attachmentCount = 4
+          mediaCount = 4
           commentCount = 3
           likes = 3
           seen = 4
           liked = false
         } else if i % 3 == 0 {
-          attachmentCount = 2
+          mediaCount = 2
           commentCount = 1
           likes = 1
           seen = 2
           liked = true
         } else if i % 2 == 0 {
-          attachmentCount = 1
+          mediaCount = 1
           commentCount = 4
           likes = 4
           seen = 6
           liked = false
         }
 
-        for x in 0..<attachmentCount {
+        for x in 0..<mediaCount {
           if let imageURL = NSURL(string: "http://lorempixel.com/250/250/?type=attachment&id=\(i)\(x)") {
-            attachments.append(imageURL)
+            media.append(Media(kind: .Image, source: imageURL))
           }
         }
 
         let sencenceCount = Int(arc4random_uniform(8) + 1)
         let post = Post(
+          id: i,
           text: faker.lorem.sentences(amount: sencenceCount),
           publishDate: "3 hours ago",
           author: author,
-          attachments: attachments
+          media: media
         )
 
         post.likeCount = likes
