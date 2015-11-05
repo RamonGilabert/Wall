@@ -50,8 +50,8 @@ public class WallController: UIViewController {
     }()
 
   public weak var delegate: WallControllerDelegate?
-  public var actionDelegate: PostActionDelegate?
-  public var informationDelegate: PostInformationDelegate?
+  public weak var actionDelegate: PostActionDelegate?
+  public weak var informationDelegate: PostInformationDelegate?
   public var posts = [Post]()
   public var fetching = true
 

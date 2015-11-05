@@ -35,12 +35,20 @@ public class PostTableViewCell: UITableViewCell {
     return view
     }()
 
-  public lazy var postText: UILabel = {
-    let label = UILabel()
-    label.font = UIFont.systemFontOfSize(14)
-    label.numberOfLines = 0
+  public lazy var postText: UITextView = {
+    let textView = UITextView()
+    textView.font = UIFont.systemFontOfSize(14)
+    textView.dataDetectorTypes = .Link
+    textView.editable = false
+    textView.scrollEnabled = false
+    textView.textContainer.lineFragmentPadding = 0
+    textView.textContainerInset = UIEdgeInsetsZero
+    textView.linkTextAttributes = [
+      NSForegroundColorAttributeName: UIColor.redColor(),
+      NSUnderlineColorAttributeName: UIColor.redColor(),
+      NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
 
-    return label
+    return textView
     }()
 
   public lazy var informationView: PostInformationBarView = { [unowned self] in
@@ -120,7 +128,7 @@ public class PostTableViewCell: UITableViewCell {
     informationView.configureView(post.likeCount, comments: post.commentCount, seen: post.seenCount)
     actionBarView.configureView(post.liked)
 
-    postText.attributedText = buildAttributedString(post.text)
+    postText.text = post.text
     postText.frame.size.width = UIScreen.mainScreen().bounds.width - 40
     postText.sizeToFit()
     postText.frame = CGRect(x: 20, y: CGRectGetMaxY(postImagesView.frame) + 12,
@@ -134,23 +142,12 @@ public class PostTableViewCell: UITableViewCell {
   public func configureCell(post: Post) {
     self.post = post
   }
+}
 
-  public func buildAttributedString(string: String) -> NSAttributedString {
-    let mutableAttributedString = NSMutableAttributedString(string: string)
+extension PostTableViewCell: UITextViewDelegate {
 
-    let detector = try? NSDataDetector(types: NSTextCheckingType.Link.rawValue)
-    detector?.enumerateMatchesInString(string, options: [],
-      range: NSMakeRange(0, string.characters.count), usingBlock: { results, flag, _ in
-        if let result = results {
-          mutableAttributedString.addAttributes([
-            NSForegroundColorAttributeName: UIColor.redColor(),
-            NSUnderlineColorAttributeName: UIColor.redColor(),
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue
-            ], range: result.range)
-        }
-    })
-
-    return mutableAttributedString
+  public func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+    return true
   }
 }
 
