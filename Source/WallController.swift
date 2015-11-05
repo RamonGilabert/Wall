@@ -154,7 +154,7 @@ extension WallController: UITableViewDelegate {
 
     var imageHeight: CGFloat = 274
     var imageTop: CGFloat = 60
-    if post.images.isEmpty {
+    if post.media.isEmpty {
       imageHeight = 0
       imageTop = 50
     }

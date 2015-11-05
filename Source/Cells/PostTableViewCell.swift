@@ -21,8 +21,8 @@ public class PostTableViewCell: UITableViewCell {
     return view
     }()
 
-  public lazy var postImagesView: PostImagesView = {
-    let view = PostImagesView()
+  public lazy var postImagesView: PostMediaView = {
+    let view = PostMediaView()
     return view
     }()
 
@@ -85,10 +85,10 @@ public class PostTableViewCell: UITableViewCell {
 
     var imageHeight: CGFloat = 0
     var imageTop: CGFloat = 50
-    if !post.images.isEmpty {
+    if !post.media.isEmpty {
       imageHeight = 274
       imageTop = 60
-      postImagesView.configureView(post.images)
+      postImagesView.configureView(post.media)
       postImagesView.alpha = 1
     } else {
       postImagesView.alpha = 0
