@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controller.posts = self.generatePosts(0, to: 10)
     controller.title = "Infinity Scrolling".uppercaseString
     controller.delegate = self
-    controller.actionDelegateHandler = self
-    controller.informationDelegateHandler = self
+    controller.actionDelegate = self
+    controller.informationDelegate = self
 
     return controller
     }()
