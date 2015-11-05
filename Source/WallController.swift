@@ -6,20 +6,6 @@ public protocol WallControllerDelegate: class {
   func shouldRefreshPosts(refreshControl: UIRefreshControl)
 }
 
-public protocol WallControllerActionDelegate: class {
-
-  func likeButtonDidPress(postID: Int)
-  func commentsButtonDidPress(postID: Int)
-}
-
-public protocol WallControllerInformationDelegate: class {
-
-  func likesInformationDidPress(postID: Int)
-  func commentsInformationDidPress(postID: Int)
-  func seenInformationDidPress(postID: Int)
-  func authorDidTap(postID: Int)
-}
-
 public class WallController: UIViewController {
 
   public lazy var tableView: UITableView = { [unowned self] in
@@ -64,8 +50,8 @@ public class WallController: UIViewController {
     }()
 
   public weak var delegate: WallControllerDelegate?
-  public weak var actionDelegate: WallControllerActionDelegate?
-  public weak var informationDelegate: WallControllerInformationDelegate?
+  public var actionDelegateHandler: PostTableViewCellActionDelegate?
+  public var informationDelegateHandler: PostTableViewCellInformationDelegate?
   public var posts = [Post]()
   public var fetching = true
 
@@ -121,33 +107,6 @@ public class WallController: UIViewController {
   }
 }
 
-extension WallController: PostTableViewCellDelegate {
-
-  public func likesDidUpdate(postID: Int, liked: Bool) {
-    actionDelegate?.likeButtonDidPress(postID)
-  }
-
-  public func commentButtonDidPress(postID: Int) {
-    actionDelegate?.commentsButtonDidPress(postID)
-  }
-
-  public func likesInformationDidPress(postID: Int) {
-    informationDelegate?.likesInformationDidPress(postID)
-  }
-
-  public func commentInformationDidPress(postID: Int) {
-    informationDelegate?.commentsInformationDidPress(postID)
-  }
-
-  public func seenInformationDidPress(postID: Int) {
-    informationDelegate?.seenInformationDidPress(postID)
-  }
-
-  public func authorDidTap(postID: Int) {
-    informationDelegate?.authorDidTap(postID)
-  }
-}
-
 extension WallController: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -195,7 +154,8 @@ extension WallController: UITableViewDataSource {
     let post = posts[indexPath.row]
 
     cell.configureCell(post)
-    cell.delegate = self
+    cell.actionDelegate = actionDelegateHandler
+    cell.informationDelegate = informationDelegateHandler
 
     return cell
   }

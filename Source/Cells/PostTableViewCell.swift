@@ -1,11 +1,15 @@
 import UIKit
 
-public protocol PostTableViewCellDelegate: class {
+public protocol PostTableViewCellActionDelegate: class {
 
-  func likesDidUpdate(postID: Int, liked: Bool)
-  func commentButtonDidPress(postID: Int)
+  func likeButtonDidPress(postID: Int)
+  func commentsButtonDidPress(postID: Int)
+}
+
+public protocol PostTableViewCellInformationDelegate: class {
+
   func likesInformationDidPress(postID: Int)
-  func commentInformationDidPress(postID: Int)
+  func commentsInformationDidPress(postID: Int)
   func seenInformationDidPress(postID: Int)
   func authorDidTap(postID: Int)
 }
@@ -56,7 +60,8 @@ public class PostTableViewCell: UITableViewCell {
     return layer
     }()
 
-  public weak var delegate: PostTableViewCellDelegate?
+  public weak var actionDelegate: PostTableViewCellActionDelegate?
+  public weak var informationDelegate: PostTableViewCellInformationDelegate?
   public var post: Post?
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -124,17 +129,17 @@ extension PostTableViewCell: PostInformationBarViewDelegate {
 
   public func likesInformationButtonDidPress() {
     guard let post = post else { return }
-    delegate?.likesInformationDidPress(post.id)
+    informationDelegate?.likesInformationDidPress(post.id)
   }
 
   public func commentInformationButtonDidPress() {
     guard let post = post else { return }
-    delegate?.commentInformationDidPress(post.id)
+    informationDelegate?.commentsInformationDidPress(post.id)
   }
 
   public func seenInformationButtonDidPress() {
     guard let post = post else { return }
-    delegate?.seenInformationDidPress(post.id)
+    informationDelegate?.seenInformationDidPress(post.id)
   }
 }
 
@@ -147,12 +152,12 @@ extension PostTableViewCell: PostActionBarViewDelegate {
     post.likeCount += liked ? 1 : -1
 
     informationView.configureLikes(post.likeCount)
-    delegate?.likesDidUpdate(post.id, liked: liked)
+    actionDelegate?.likeButtonDidPress(post.id)
   }
 
   public func commentButtonDidPress() {
     guard let post = post else { return }
-    delegate?.commentButtonDidPress(post.id)
+    actionDelegate?.commentsButtonDidPress(post.id)
   }
 }
 
@@ -160,6 +165,6 @@ extension PostTableViewCell: PostAuthorViewDelegate {
 
   public func authorDidTap() {
     guard let post = post else { return }
-    delegate?.authorDidTap(post.id)
+    informationDelegate?.authorDidTap(post.id)
   }
 }
