@@ -12,9 +12,12 @@ public class Media {
 
   // MARK: - Initialization
 
-  public init(kind: Kind, source: String, thumbnail: String? = nil) {
+  public init(kind: Kind, source: NSURL?, thumbnail: NSURL? = nil) {
     self.kind = kind
-    self.source = NSURL(string: source)
-    self.thumbnail = NSURL(string: thumbnail ?? source)
+    self.source = source
+
+    if kind == .Image {
+      self.thumbnail = thumbnail ?? source
+    }
   }
 }
