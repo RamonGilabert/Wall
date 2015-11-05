@@ -71,15 +71,21 @@ public class PostInformationBarView: UIView {
   }
 
   public func configureLikes(likes: Int) {
-    likesButton.setTitle("\(likes) likes", forState: .Normal)
+    let title = likes == 0 ? "" : "\(likes) likes"
+
+    likesButton.setTitle(title, forState: .Normal)
     likesButton.sizeToFit()
     likesButton.frame.origin = CGPoint(x: Dimensions.offset, y: Dimensions.topOffset)
   }
 
   public func configureComments(comments: Int) {
-    commentButton.setTitle("\(comments) comments", forState: .Normal)
+    let title = comments == 0 ? "" : "\(comments) comments"
+    let positionOffset: CGFloat = likesButton.titleForState(UIControlState.Normal) == ""
+      ? Dimensions.offset : CGRectGetMaxX(likesButton.frame) + Dimensions.interitemOffset
+
+    commentButton.setTitle(title, forState: .Normal)
     commentButton.sizeToFit()
-    commentButton.frame.origin = CGPoint(x: CGRectGetMaxX(likesButton.frame) + Dimensions.interitemOffset,
+    commentButton.frame.origin = CGPoint(x: positionOffset,
       y: Dimensions.topOffset)
   }
 

@@ -163,6 +163,7 @@ extension PostTableViewCell: PostActionBarViewDelegate {
     post.likeCount += liked ? 1 : -1
 
     informationView.configureLikes(post.likeCount)
+    informationView.configureComments(post.commentCount)
     delegate?.updateCellSize(post.id)
     actionDelegate?.likeButtonDidPress(post.id)
   }
