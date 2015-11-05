@@ -22,6 +22,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return controller
     }()
 
+  lazy var commentController: WallController = { [unowned self] in
+    let controller = WallController()
+    controller.verticalOffset = 0
+    let post = self.generatePosts(0, to: 1, reusableIdentifier: PostDetailTableViewCell.reusableCellIdentifier).first!
+    let posts = [post] + self.generatePosts(1, to: 6, reusableIdentifier: CommentTableViewCell.reusableIdentifier)
+
+    controller.initializePosts(posts)
+    controller.title = "Post detail".uppercaseString
+    controller.registerCell(CommentTableViewCell.self, reusableIdentifier: CommentTableViewCell.reusableIdentifier)
+    controller.registerCell(PostDetailTableViewCell.self, reusableIdentifier: PostDetailTableViewCell.reusableCellIdentifier)
+
+    return controller
+    }()
+
   let faker = Faker()
   var window: UIWindow?
 
@@ -33,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
 
-  func generatePosts(from: Int, to: Int) -> [PostConvertible] {
+  func generatePosts(from: Int, to: Int, reusableIdentifier: String = PostTableViewCell.reusableIdentifier) -> [PostConvertible] {
     var posts = [PostConvertible]()
 
     for i in from...to {
@@ -87,6 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           media: media
         )
 
+        post.reusableIdentifier = reusableIdentifier
         post.likeCount = likes
         post.seenCount = seen
         post.commentCount = commentCount
@@ -137,6 +152,7 @@ extension AppDelegate: PostInformationDelegate {
 
   func commentsInformationDidPress(postID: Int) {
     print("Comments")
+    navigationController.pushViewController(commentController, animated: true)
   }
 
   func seenInformationDidPress(postID: Int) {
