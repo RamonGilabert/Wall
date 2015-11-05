@@ -21,7 +21,7 @@ public class PostTableViewCell: UITableViewCell {
     return view
     }()
 
-  public lazy var postImagesView: PostMediaView = {
+  public lazy var postMediaView: PostMediaView = {
     let view = PostMediaView()
     return view
     }()
@@ -62,7 +62,7 @@ public class PostTableViewCell: UITableViewCell {
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [authorView, postImagesView, postText,
+    [authorView, postMediaView, postText,
       informationView, actionBarView].forEach {
         addSubview($0)
         $0.opaque = true
@@ -88,14 +88,14 @@ public class PostTableViewCell: UITableViewCell {
     if !post.media.isEmpty {
       imageHeight = 274
       imageTop = 60
-      postImagesView.configureView(post.media)
-      postImagesView.alpha = 1
+      postMediaView.configureView(post.media)
+      postMediaView.alpha = 1
     } else {
-      postImagesView.alpha = 0
+      postMediaView.alpha = 0
     }
 
     authorView.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60)
-    postImagesView.frame = CGRect(x: 0, y: imageTop, width: UIScreen.mainScreen().bounds.width, height: imageHeight)
+    postMediaView.frame = CGRect(x: 0, y: imageTop, width: UIScreen.mainScreen().bounds.width, height: imageHeight)
     informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 56)
     actionBarView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
     bottomSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
@@ -107,7 +107,7 @@ public class PostTableViewCell: UITableViewCell {
     postText.text = post.text
     postText.frame.size.width = UIScreen.mainScreen().bounds.width - 40
     postText.sizeToFit()
-    postText.frame = CGRect(x: 20, y: CGRectGetMaxY(postImagesView.frame) + 12,
+    postText.frame = CGRect(x: 20, y: CGRectGetMaxY(postMediaView.frame) + 12,
       width: postText.frame.width, height: postText.frame.height)
 
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postText.frame))
