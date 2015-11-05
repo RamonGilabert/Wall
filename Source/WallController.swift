@@ -8,6 +8,8 @@ public protocol WallControllerDelegate: class {
 
 public class WallController: UIViewController {
 
+  public static var cells = [String: UITableViewCell.Type]()
+
   public lazy var tableView: UITableView = { [unowned self] in
     let tableView = UITableView()
     tableView.registerClass(PostTableViewCell.self,
