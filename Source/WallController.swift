@@ -174,14 +174,13 @@ extension WallController: UITableViewDataSource {
     let post = posts[indexPath.row]
     var wallCell: WallTableViewCell?
 
-    if let reusableIdentifier = post.reusableIdentifier,
-      registeredCell = tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) as? WallTableViewCell {
-        wallCell = registeredCell
-    } else if let postCell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.reusableIdentifier) as? PostTableViewCell {
-      postCell.actionDelegate = actionDelegate
-      postCell.informationDelegate = informationDelegate
-      postCell.activityDelegate = activityDelegate
-      wallCell = postCell
+    if let registeredCell = tableView.dequeueReusableCellWithIdentifier(post.reusableIdentifier) as? WallTableViewCell {
+      wallCell = registeredCell
+      if let postCell = wallCell as? PostTableViewCell {
+        postCell.actionDelegate = actionDelegate
+        postCell.informationDelegate = informationDelegate
+        postCell.activityDelegate = activityDelegate
+      }
     }
 
     guard let cell = wallCell else { return PostTableViewCell() }
