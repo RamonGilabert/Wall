@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/vadym/Development/hyper/ios/opensource/Wall2/Pod/Wall.xcodeproj">
+      location = "self:Wall.xcodeproj">
    </FileRef>
 </Workspace>
