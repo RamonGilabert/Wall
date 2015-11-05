@@ -1,9 +1,20 @@
-//
-//  PostDetailTableViewCell.swift
-//  InfinityScrolling
-//
-//  Created by Vadym Markov on 05/11/15.
-//  Copyright © 2015 Ramon Gilabert Llop. All rights reserved.
-//
+import UIKit
+import Wall
 
-import Foundation
+class PostDetailTableViewCell: PostTableViewCell {
+
+  static let reusableCellIdentifier = "PostDetailTableViewCell"
+
+  override class func height(post: Post) -> CGFloat {
+    return super.height(post) - 20
+  }
+
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    bottomSeparator.opacity = 0
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+}
