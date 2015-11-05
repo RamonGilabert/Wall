@@ -58,6 +58,8 @@ public class PostAuthorView: UIView {
 
   public weak var delegate: PostAuthorViewDelegate?
 
+  // MARK: - Initialization
+
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
@@ -73,6 +75,12 @@ public class PostAuthorView: UIView {
     backgroundColor = UIColor.whiteColor()
   }
 
+  public required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Setup
+
   public override func drawRect(rect: CGRect) {
     super.drawRect(rect)
 
@@ -84,18 +92,6 @@ public class PostAuthorView: UIView {
       width: UIScreen.mainScreen().bounds.width - 70, height: 17)
   }
 
-  public required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  // MARK: - Action methods
-
-  public func handleTapGestureRecognizer() {
-    delegate?.authorDidTap()
-  }
-
-  // MARK: - Setup
-
   public func configureView(author: Author, date: String) {
     if let avatarURL = author.avatar {
       avatarImageView.sd_setImageWithURL(avatarURL)
@@ -103,5 +99,11 @@ public class PostAuthorView: UIView {
 
     authorName.text = author.name
     dateLabel.text = date
+  }
+
+  // MARK: - Actions
+
+  public func handleTapGestureRecognizer() {
+    delegate?.authorDidTap()
   }
 }

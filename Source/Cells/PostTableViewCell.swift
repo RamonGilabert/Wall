@@ -30,8 +30,8 @@ public class PostTableViewCell: UITableViewCell {
     return view
     }()
 
-  public lazy var postImagesView: PostImagesView = {
-    let view = PostImagesView()
+  public lazy var postMediaView: PostMediaView = {
+    let view = PostMediaView()
     return view
     }()
 
@@ -78,10 +78,12 @@ public class PostTableViewCell: UITableViewCell {
   public weak var informationDelegate: PostInformationDelegate?
   public var post: Post?
 
+  // MARK: - Initialization
+
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [authorView, postImagesView, postText,
+    [authorView, postMediaView, postText,
       informationView, actionBarView].forEach {
         addSubview($0)
         $0.opaque = true
@@ -97,6 +99,8 @@ public class PostTableViewCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // MARK: - Setup
+
   public override func drawRect(rect: CGRect) {
     super.drawRect(rect)
 
@@ -104,13 +108,13 @@ public class PostTableViewCell: UITableViewCell {
 
     var imageHeight: CGFloat = 0
     var imageTop: CGFloat = 50
-    if !post.images.isEmpty {
+    if !post.media.isEmpty {
       imageHeight = 274
       imageTop = 60
-      postImagesView.configureView(post.images)
-      postImagesView.alpha = 1
+      postMediaView.configureView(post.media)
+      postMediaView.alpha = 1
     } else {
-      postImagesView.alpha = 0
+      postMediaView.alpha = 0
     }
 
     var informationHeight: CGFloat = 56
@@ -131,7 +135,7 @@ public class PostTableViewCell: UITableViewCell {
     postText.text = post.text
     postText.frame.size.width = UIScreen.mainScreen().bounds.width - 40
     postText.sizeToFit()
-    postText.frame = CGRect(x: 20, y: CGRectGetMaxY(postImagesView.frame) + 12,
+    postText.frame = CGRect(x: 20, y: CGRectGetMaxY(postMediaView.frame) + 12,
       width: postText.frame.width, height: postText.frame.height)
 
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postText.frame))
@@ -169,6 +173,8 @@ extension PostTableViewCell: PostInformationBarViewDelegate {
   }
 }
 
+// MARK: - PostActionBarViewDelegate
+
 extension PostTableViewCell: PostActionBarViewDelegate {
 
   public func likeButtonDidPress(liked: Bool) {
@@ -188,6 +194,8 @@ extension PostTableViewCell: PostActionBarViewDelegate {
     actionDelegate?.commentsButtonDidPress(post.id)
   }
 }
+
+// MARK: - PostAuthorViewDelegate
 
 extension PostTableViewCell: PostAuthorViewDelegate {
 

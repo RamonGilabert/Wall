@@ -1,4 +1,9 @@
-import UIKit
+import Foundation
+
+public protocol PostConvertible {
+
+  var wallModel: Post { get }
+}
 
 public class Post {
 
@@ -10,14 +15,27 @@ public class Post {
   public var likeCount = 0
   public var seenCount = 0
   public var commentCount = 0
-  public var images = [NSURL]()
   public var author: Author?
 
-  public init(text: String = "", publishDate: String, author: Author? = nil,
-    attachments: [NSURL] = []) {
+  public var media: [Media]
+
+  // MARK: - Initialization
+
+  public init(id: Int, text: String = "", publishDate: String,
+    author: Author? = nil, media: [Media] = []) {
+      self.id = id
       self.text = text
       self.publishDate = publishDate
       self.author = author
-      self.images = attachments
+      self.media = media
+  }
+}
+
+// MARK: - PostConvertible
+
+extension Post: PostConvertible {
+
+  public var wallModel: Post {
+    return self
   }
 }

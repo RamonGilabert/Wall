@@ -54,6 +54,9 @@ public class WallController: UIViewController {
   public weak var informationDelegate: PostInformationDelegate?
   public var posts = [Post]()
   public var fetching = true
+  private var posts = [Post]()
+
+  // MARK: - View Lifecycle
 
   public override func viewDidLoad() {
     super.viewDidLoad()
@@ -81,13 +84,22 @@ public class WallController: UIViewController {
 
   // MARK: - Configuration
 
-  public func appendPosts(newPosts: [Post]) {
+  public func initializePosts(newPosts: [PostConvertible]) {
+    posts = []
+    newPosts.forEach {
+      posts.append($0.wallModel)
+    }
+  }
+
+  public func appendPosts(newPosts: [PostConvertible]) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
       var indexPaths = [NSIndexPath]()
-      for (index, _) in newPosts.enumerate() {
-        indexPaths.append(NSIndexPath(forRow: self.posts.count + index, inSection: 0))
+      let count = self.posts.count
+
+      for (index, post) in newPosts.enumerate() {
+        indexPaths.append(NSIndexPath(forRow: count + index, inSection: 0))
+        self.posts.append(post.wallModel)
       }
-      self.posts += newPosts
 
       dispatch_async(dispatch_get_main_queue()) {
         self.loadingIndicator.stopAnimating()
@@ -99,7 +111,7 @@ public class WallController: UIViewController {
     }
   }
 
-  // MARK: - Refresh control
+  // MARK: - Refresh Control
 
   public func handleRefreshControl(refreshControl: UIRefreshControl) {
     tableView.beginUpdates()
@@ -109,6 +121,8 @@ public class WallController: UIViewController {
   }
 }
 
+// MARK: - PostTableViewCellDelegate
+
 extension WallController: PostTableViewCellDelegate {
 
   public func updateCellSize(postID: Int) {
@@ -116,6 +130,8 @@ extension WallController: PostTableViewCellDelegate {
     tableView.endUpdates()
   }
 }
+
+// MARK: - UITableViewDelegate
 
 extension WallController: UITableViewDelegate {
 
@@ -128,7 +144,7 @@ extension WallController: UITableViewDelegate {
 
     var imageHeight: CGFloat = 274
     var imageTop: CGFloat = 60
-    if post.images.isEmpty {
+    if post.media.isEmpty {
       imageHeight = 0
       imageTop = 50
     }
@@ -155,6 +171,8 @@ extension WallController: UITableViewDelegate {
     }
   }
 }
+
+// MARK: - UITableViewDataSource
 
 extension WallController: UITableViewDataSource {
 

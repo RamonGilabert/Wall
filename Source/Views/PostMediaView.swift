@@ -1,7 +1,7 @@
 import UIKit
 import SDWebImage
 
-public class PostImagesView: UIView {
+public class PostMediaView: UIView {
 
   public struct Dimensions {
     public static let containerOffset: CGFloat = 10
@@ -18,6 +18,8 @@ public class PostImagesView: UIView {
     return imageView
     }()
 
+  // MARK: - Initialization
+
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
@@ -33,8 +35,8 @@ public class PostImagesView: UIView {
 
   // MARK: - Setup
 
-  public func configureView(images: [NSURL]) {
-    if let image = images.first {
+  public func configureView(media: [Media]) {
+    if let mediaItem = media.first, image = mediaItem.thumbnail {
       imageView.sd_setImageWithURL(image)
     }
 
