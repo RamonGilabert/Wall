@@ -1,10 +1,5 @@
 import UIKit
 
-public protocol PostTableViewCellDelegate: class {
-
-  func updateCellSize(postID: Int)
-}
-
 public protocol PostActionDelegate: class {
 
   func likeButtonDidPress(postID: Int)
@@ -17,17 +12,6 @@ public protocol PostInformationDelegate: class {
   func commentsInformationDidPress(postID: Int)
   func seenInformationDidPress(postID: Int)
   func authorDidTap(postID: Int)
-}
-
-public class WallTableViewCell: UITableViewCell {
-
-  public var post: Post?
-  public weak var delegate: PostTableViewCellDelegate?
-
-
-  public func configureCell(post: Post) {
-    self.post = post
-  }
 }
 
 public class PostTableViewCell: WallTableViewCell {
