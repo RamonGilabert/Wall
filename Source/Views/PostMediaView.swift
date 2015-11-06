@@ -87,7 +87,7 @@ public class PostMediaView: UIView {
 
     viewsArray.forEach { $0.removeFromSuperview() }
 
-    for (index, element) in media.enumerate() {
+    for (index, element) in media.enumerate() where index < 3 {
       addSubview(viewsArray[index])
       viewsArray[index].sd_setImageWithURL(element.thumbnail)
     }

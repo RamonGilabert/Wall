@@ -2,7 +2,7 @@ import UIKit
 
 public protocol WallTableViewCellDelegate: class {
 
-  func updateCellSize(postID: Int)
+  func updateCellSize(postID: Int, liked: Bool)
 }
 
 public class WallTableViewCell: UITableViewCell {

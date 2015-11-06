@@ -15,9 +15,7 @@ public class WallController: UIViewController {
     let tableView = UITableView()
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.frame = CGRect(x: 0, y: 0,
-      width: UIScreen.mainScreen().bounds.width,
-      height: UIScreen.mainScreen().bounds.height)
+    tableView.frame = self.view.bounds
     tableView.separatorStyle = .None
     tableView.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
     tableView.opaque = true
@@ -48,6 +46,7 @@ public class WallController: UIViewController {
   private var posts = [Post]()
   public var fetching = true
   public var verticalOffset: CGFloat = 20
+  public var cachedHeights = [Int : CGFloat]()
 
   // MARK: - View Lifecycle
 
@@ -124,7 +123,10 @@ public class WallController: UIViewController {
 
 extension WallController: WallTableViewCellDelegate {
 
-  public func updateCellSize(postID: Int) {
+  public func updateCellSize(postID: Int, liked: Bool) {
+    guard let postIndex = posts.indexOf({ $0.id == postID }) else { return }
+
+    cachedHeights.removeValueForKey(postIndex)
     tableView.beginUpdates()
     tableView.endUpdates()
   }
@@ -139,14 +141,24 @@ extension WallController: WallTableViewCellDelegate {
 extension WallController: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    let post = posts[indexPath.row]
-    var CellClass = WallTableViewCell.self
+    if let height = cachedHeights[indexPath.row] {
+      return height
+    } else {
+      let post = posts[indexPath.row]
+      var CellClass = WallTableViewCell.self
 
-    if let RegisteredCellClass = cells[post.reusableIdentifier] {
-      CellClass = RegisteredCellClass
+      if let RegisteredCellClass = cells[post.reusableIdentifier] {
+        CellClass = RegisteredCellClass
+      }
+
+      cachedHeights[indexPath.row] = CellClass.height(post)
+
+      return CellClass.height(post)
     }
+  }
 
-    return CellClass.height(post)
+  public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    return 400
   }
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
