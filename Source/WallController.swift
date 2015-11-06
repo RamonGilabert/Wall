@@ -132,13 +132,10 @@ extension WallController: WallTableViewCellDelegate {
     tableView.beginUpdates()
     tableView.endUpdates()
   }
-}
 
-extension WallController: PostActivityDelegate {
-
-  public func shouldDisplayDetail(postID: Int) {
-    guard let index = posts.indexOf({ $0.id == postID }) else { return }
-    delegate?.didTapCell(postID, index: index)
+  public func cellDidTap(id: Int) {
+    guard let index = posts.indexOf({ $0.id == id }) else { return }
+    delegate?.didTapCell(id, index: index)
   }
 }
 
@@ -198,7 +195,6 @@ extension WallController: UITableViewDataSource {
       if let postCell = wallCell as? PostTableViewCell {
         postCell.actionDelegate = actionDelegate
         postCell.informationDelegate = informationDelegate
-        postCell.activityDelegate = self
       }
 
       if let commentCell = wallCell as? CommentTableViewCell {

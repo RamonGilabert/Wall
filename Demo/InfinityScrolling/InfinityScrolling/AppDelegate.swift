@@ -137,6 +137,7 @@ extension AppDelegate: WallControllerDelegate {
   }
 
   func didTapCell(id: Int, index: Int) {
+    print("Cell selected")
     if navigationController.visibleViewController != commentController {
       commentController.cachedHeights.removeAll()
       navigationController.pushViewController(commentController, animated: true)

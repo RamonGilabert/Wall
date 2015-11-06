@@ -2,12 +2,8 @@ import UIKit
 
 public protocol WallTableViewCellDelegate: class {
 
+  func cellDidTap(id: Int)
   func updateCellSize(postID: Int, liked: Bool)
-}
-
-public protocol WallActionDelegate: class {
-
-  func shouldDisplayDetail(id: Int)
 }
 
 public class WallTableViewCell: UITableViewCell {
@@ -25,7 +21,6 @@ public class WallTableViewCell: UITableViewCell {
 
   public var post: Post?
   public weak var delegate: WallTableViewCellDelegate?
-  public weak var actionWallDelegate: WallActionDelegate?
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -47,6 +42,6 @@ public class WallTableViewCell: UITableViewCell {
 
   public func handleTapGestureRecognizer() {
     guard let post = post else { return }
-    actionWallDelegate?.shouldDisplayDetail(post.id)
+    delegate?.cellDidTap(post.id)
   }
 }

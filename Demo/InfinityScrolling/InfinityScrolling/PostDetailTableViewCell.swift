@@ -13,7 +13,6 @@ class PostDetailTableViewCell: PostTableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     bottomSeparator.opacity = 0
     informationView.commentButton.alpha = 0
-
   }
 
   required init?(coder aDecoder: NSCoder) {
