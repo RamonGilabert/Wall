@@ -152,6 +152,7 @@ extension AppDelegate: PostInformationDelegate {
 
   func commentsInformationDidPress(postID: Int) {
     print("Comments")
+    commentController.cachedHeights.removeAll()
     navigationController.pushViewController(commentController, animated: true)
   }
 
@@ -168,6 +169,8 @@ extension AppDelegate: PostActivityDelegate {
 
   func shouldDisplayDetail(postID: Int) {
     print("Detail")
+    commentController.cachedHeights.removeAll()
+    navigationController.pushViewController(commentController, animated: true)
   }
 
   func mediaDidTap(postID: Int, kind: Media.Kind, index: Int) {

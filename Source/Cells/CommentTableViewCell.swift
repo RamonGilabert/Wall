@@ -9,7 +9,7 @@ public class CommentTableViewCell: WallTableViewCell {
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
       attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
 
-    return 101 + textFrame.height
+    return 74.5 + textFrame.height
   }
 
   public static let reusableIdentifier = "CommentTableViewCell"
@@ -63,6 +63,7 @@ public class CommentTableViewCell: WallTableViewCell {
       NSForegroundColorAttributeName: UIColor.redColor(),
       NSUnderlineColorAttributeName: UIColor.redColor(),
       NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
+    textView.subviews.first?.backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
 
     return textView
     }()
@@ -103,6 +104,7 @@ public class CommentTableViewCell: WallTableViewCell {
     super.drawRect(rect)
 
     guard let post = post, author = post.author else { return }
+    let totalWidth = UIScreen.mainScreen().bounds.width
 
     avatarImageView.frame = CGRect(x: Dimensions.sideOffset, y: Dimensions.sideOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize)
@@ -111,21 +113,20 @@ public class CommentTableViewCell: WallTableViewCell {
     }
 
     authorName.frame = CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,
-      width: UIScreen.mainScreen().bounds.width - 70, height: 20)
+      width: totalWidth - 70, height: 20)
     authorName.text = author.name
 
     postText.text = post.text
-    postText.frame.size.width = UIScreen.mainScreen().bounds.width - Dimensions.textOffset - Dimensions.sideOffset
+    postText.frame.size.width = totalWidth - Dimensions.textOffset - Dimensions.sideOffset
     postText.sizeToFit()
-    postText.frame = CGRect(x: Dimensions.textOffset, y: authorName.frame.maxY + 12,
+    postText.frame = CGRect(x: Dimensions.textOffset, y: 40,
       width: postText.frame.width, height: postText.frame.height)
 
-    dateLabel.frame = CGRect(x: Dimensions.textOffset, y: postText.frame.maxY + 26,
+    dateLabel.frame = CGRect(x: Dimensions.textOffset, y: postText.frame.maxY + 9,
       width: postText.frame.width, height: 17)
     dateLabel.text = post.publishDate
 
-    bottomSeparator.frame = CGRect(x: 0, y: dateLabel.frame.maxY + 26,
-      width: UIScreen.mainScreen().bounds.width, height: 0.5)
+    bottomSeparator.frame = CGRect(x: 0, y: dateLabel.frame.maxY + 8, width: totalWidth, height: 0.5)
   }
 }
 
