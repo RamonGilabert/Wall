@@ -64,8 +64,8 @@ public class PostTableViewCell: WallTableViewCell {
     textView.textContainer.lineFragmentPadding = 0
     textView.textContainerInset = UIEdgeInsetsZero
     textView.linkTextAttributes = [
-      NSForegroundColorAttributeName: UIColor.redColor(),
-      NSUnderlineColorAttributeName: UIColor.redColor(),
+      NSForegroundColorAttributeName: ColorList.Basis.highlightedColor,
+      NSUnderlineColorAttributeName: ColorList.Basis.highlightedColor,
       NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
     textView.subviews.first?.backgroundColor = UIColor.whiteColor()
 
@@ -107,7 +107,7 @@ public class PostTableViewCell: WallTableViewCell {
         $0.layer.drawsAsynchronously = true
     }
 
-    bottomSeparator.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
+    bottomSeparator.backgroundColor = ColorList.Basis.tableViewBackground
     opaque = true
     selectionStyle = .None
   }

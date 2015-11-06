@@ -28,7 +28,7 @@ public class PostMediaView: UIView {
     label.textColor = UIColor.whiteColor()
     label.textAlignment = .Center
     label.opaque = true
-    label.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.35)
+    label.backgroundColor = ColorList.Post.media
 
     return label
     }()
@@ -43,7 +43,7 @@ public class PostMediaView: UIView {
     [firstImageView, secondImageView, thirdImageView].forEach {
       $0.contentMode = .ScaleAspectFill
       $0.clipsToBounds = true
-      $0.backgroundColor = UIColor.lightGrayColor()
+      $0.backgroundColor = UIColor.whiteColor()
       $0.opaque = true
       $0.userInteractionEnabled = true
       $0.layer.drawsAsynchronously = true

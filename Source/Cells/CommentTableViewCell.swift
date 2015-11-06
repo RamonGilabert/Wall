@@ -50,7 +50,7 @@ public class CommentTableViewCell: WallTableViewCell {
 
   public lazy var dateLabel: UILabel = {
     let label = UILabel()
-    label.textColor = UIColor.lightGrayColor()
+    label.textColor = ColorList.Comment.date
     label.font = FontList.Comment.date
 
     return label
@@ -66,10 +66,10 @@ public class CommentTableViewCell: WallTableViewCell {
     textView.textContainer.lineFragmentPadding = 0
     textView.textContainerInset = UIEdgeInsetsZero
     textView.linkTextAttributes = [
-      NSForegroundColorAttributeName: UIColor.redColor(),
-      NSUnderlineColorAttributeName: UIColor.redColor(),
+      NSForegroundColorAttributeName: ColorList.Basis.highlightedColor,
+      NSUnderlineColorAttributeName: ColorList.Basis.highlightedColor,
       NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
-    textView.subviews.first?.backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
+    textView.subviews.first?.backgroundColor = ColorList.Comment.background
     textView.layer.shouldRasterize = true
 
     return textView
@@ -77,7 +77,7 @@ public class CommentTableViewCell: WallTableViewCell {
 
   public lazy var bottomSeparator: CALayer = {
     let layer = CALayer()
-    layer.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1).CGColor
+    layer.backgroundColor = ColorList.Comment.background.CGColor
     layer.opaque = true
 
     return layer
@@ -107,10 +107,10 @@ public class CommentTableViewCell: WallTableViewCell {
     [avatarImageView, authorLabel, textView, dateLabel].forEach {
       addSubview($0)
       $0.opaque = true
-      $0.backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
+      $0.backgroundColor = ColorList.Comment.background
     }
 
-    backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
+    backgroundColor = ColorList.Comment.background
 
     avatarImageView.addGestureRecognizer(imageTapGestureRecognizer)
     authorLabel.addGestureRecognizer(authorTapGestureRecognizer)

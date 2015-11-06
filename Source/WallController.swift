@@ -19,7 +19,7 @@ public class WallController: UIViewController {
       width: UIScreen.mainScreen().bounds.width,
       height: UIScreen.mainScreen().bounds.height)
     tableView.separatorStyle = .None
-    tableView.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
+    tableView.backgroundColor = ColorList.Basis.tableViewBackground
     tableView.opaque = true
 
     return tableView

@@ -36,7 +36,7 @@ public class PostAuthorView: UIView {
 
   public lazy var dateLabel: UILabel = {
     let label = UILabel()
-    label.textColor = UIColor.lightGrayColor()
+    label.textColor = ColorList.Post.date
     label.font = FontList.Post.date
 
     return label

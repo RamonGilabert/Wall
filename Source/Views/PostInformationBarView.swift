@@ -18,7 +18,7 @@ public class PostInformationBarView: UIView {
   public lazy var likesButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.titleLabel?.font = FontList.Information.like
-    button.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+    button.setTitleColor(ColorList.Information.like, forState: .Normal)
     button.addTarget(self, action: "likesButtonDidPress", forControlEvents: .TouchUpInside)
 
     return button
@@ -27,7 +27,7 @@ public class PostInformationBarView: UIView {
   public lazy var commentButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.titleLabel?.font = FontList.Information.comment
-    button.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+    button.setTitleColor(ColorList.Information.comment, forState: .Normal)
     button.addTarget(self, action: "commentButtonDidPress", forControlEvents: .TouchUpInside)
 
     return button
@@ -36,7 +36,7 @@ public class PostInformationBarView: UIView {
   public lazy var seenButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.titleLabel?.font = FontList.Information.comment
-    button.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+    button.setTitleColor(ColorList.Information.seen, forState: .Normal)
     button.addTarget(self, action: "seenButtonDidPress", forControlEvents: .TouchUpInside)
 
     return button

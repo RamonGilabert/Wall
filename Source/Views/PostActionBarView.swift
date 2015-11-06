@@ -15,7 +15,7 @@ public class PostActionBarView: UIView {
 
   public lazy var topSeparator: CALayer = {
     let layer = CALayer()
-    layer.backgroundColor = UIColor.grayColor().CGColor
+    layer.backgroundColor = ColorList.Basis.tableViewBackground.CGColor
     layer.opaque = true
 
     return layer
@@ -37,7 +37,7 @@ public class PostActionBarView: UIView {
     button.setTitle(NSLocalizedString("Comment", comment: ""), forState: .Normal)
     button.titleLabel?.font = FontList.Action.comment
     button.addTarget(self, action: "commentButtonDidPress", forControlEvents: .TouchUpInside)
-    button.setTitleColor(UIColor.grayColor(), forState: .Normal)
+    button.setTitleColor(ColorList.Action.comment, forState: .Normal)
     button.subviews.first?.opaque = true
     button.subviews.first?.backgroundColor = UIColor.whiteColor()
 
@@ -82,16 +82,16 @@ public class PostActionBarView: UIView {
   }
 
   public func configureView(liked: Bool) {
-    let color = liked ? UIColor.redColor() : UIColor.grayColor()
+    let color = liked ? ColorList.Action.liked : ColorList.Action.like
     likeButton.setTitleColor(color, forState: .Normal)
   }
 
   // MARK: - Actions
 
   public func likeButtonDidPress() {
-    let color = likeButton.titleColorForState(.Normal) == UIColor.redColor()
-      ? UIColor.grayColor() : UIColor.redColor()
-    let liked = color == UIColor.redColor()
+    let color = likeButton.titleColorForState(.Normal) == ColorList.Action.liked
+      ? ColorList.Action.like : ColorList.Action.liked
+    let liked = color == ColorList.Action.liked
 
     if liked {
       UIView.animateWithDuration(0.1, animations: {
