@@ -82,52 +82,45 @@ public class PostMediaView: UIView {
   // MARK: - Setup
 
   public func configureView(media: [Media]) {
-    [firstImageView, secondImageView, thirdImageView].forEach { $0.removeFromSuperview() }
+    let totalWitdh = UIScreen.mainScreen().bounds.width
+    let viewsArray = [firstImageView, secondImageView, thirdImageView]
+
+    viewsArray.forEach { $0.removeFromSuperview() }
+
+    for (index, element) in media.enumerate() {
+      addSubview(viewsArray[index])
+      viewsArray[index].sd_setImageWithURL(element.thumbnail)
+    }
     
     switch media.count {
     case 1:
-      addSubview(firstImageView)
-      firstImageView.sd_setImageWithURL(media[0].thumbnail)
       firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
-        width: UIScreen.mainScreen().bounds.width - Dimensions.totalOffset,
-        height: Dimensions.height)
+        width: totalWitdh - Dimensions.totalOffset, height: Dimensions.height)
     case 2:
-      [firstImageView, secondImageView].forEach { addSubview($0) }
-      firstImageView.sd_setImageWithURL(media[0].thumbnail)
-      secondImageView.sd_setImageWithURL(media[1].thumbnail)
-      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
-        width: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) / 2 - 5,
-        height: Dimensions.height)
+      let imageSize = (totalWitdh - Dimensions.totalOffset) / 2
 
-      secondImageView.frame = CGRect(x: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) / 2 + 5 + Dimensions.containerOffset, y: 0,
-        width: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) / 2 - 5,
-        height: Dimensions.height)
+      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
+        width: imageSize - 5, height: Dimensions.height)
+
+      secondImageView.frame = CGRect(x: imageSize + 5 + Dimensions.containerOffset, y: 0,
+        width: imageSize - 5, height: Dimensions.height)
     default:
-      [firstImageView, secondImageView, thirdImageView].forEach { addSubview($0) }
-      firstImageView.sd_setImageWithURL(media[0].thumbnail)
-      secondImageView.sd_setImageWithURL(media[1].thumbnail)
-      thirdImageView.sd_setImageWithURL(media[2].thumbnail)
+      let smallImageSize = (totalWitdh - Dimensions.totalOffset) / 3
+      let bigImageSize = smallImageSize * 2
+      let smallOffset = bigImageSize + 5 + Dimensions.containerOffset
 
       firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
-        width: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) * 2 / 3 - 5,
-        height: Dimensions.height)
+        width: bigImageSize - 5, height: Dimensions.height)
 
-      secondImageView.frame = CGRect(x: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) * 2 / 3 + 5 + Dimensions.containerOffset, y: 0,
-        width: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) / 3 - 5,
-        height: Dimensions.height / 2 - 5)
+      secondImageView.frame = CGRect(x: smallOffset, y: 0,
+        width: smallImageSize - 5, height: Dimensions.height / 2 - 5)
 
-      thirdImageView.frame = CGRect(x: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) * 2 / 3 + 5 + Dimensions.containerOffset, y: Dimensions.height / 2 + 5,
-        width: (UIScreen.mainScreen().bounds.width - Dimensions.totalOffset) / 3 - 5,
-        height: Dimensions.height / 2 - 5)
+      thirdImageView.frame = CGRect(x: smallOffset, y: Dimensions.height / 2 + 5,
+        width: smallImageSize - 5, height: Dimensions.height / 2 - 5)
 
       imagesCountLabel.frame = thirdImageView.bounds
-
-      if media.count > 3 {
-        imagesCountLabel.alpha = 1
-        imagesCountLabel.text = "+\(media.count - 3)"
-      } else {
-        imagesCountLabel.alpha = 0
-      }
+      imagesCountLabel.text = "+\(media.count - 3)"
+      imagesCountLabel.alpha = media.count > 3 ? 1 : 0
     }
   }
 }
