@@ -4,6 +4,7 @@ public protocol WallControllerDelegate: class {
 
   func shouldFetchMoreInformation()
   func shouldRefreshPosts(refreshControl: UIRefreshControl)
+  func shouldDisplayDetail(postID: Int)
 }
 
 public class WallController: UIViewController {
@@ -43,9 +44,11 @@ public class WallController: UIViewController {
   public weak var delegate: WallControllerDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
+  public weak var activityDelegate: PostActivityDelegate?
   private var posts = [Post]()
   public var fetching = true
   public var verticalOffset: CGFloat = 20
+  public var cachedHeights = [Int : CGFloat]()
 
   // MARK: - View Lifecycle
 
@@ -122,9 +125,16 @@ public class WallController: UIViewController {
 
 extension WallController: WallTableViewCellDelegate {
 
-  public func updateCellSize(postID: Int) {
+  public func updateCellSize(postID: Int, liked: Bool) {
+    guard let postIndex = posts.indexOf({ $0.id == postID }) else { return }
+
+    cachedHeights.removeValueForKey(postIndex)
     tableView.beginUpdates()
     tableView.endUpdates()
+  }
+
+  public func shouldDisplayDetail(postID: Int) {
+    delegate?.shouldDisplayDetail(postID)
   }
 }
 
@@ -133,14 +143,20 @@ extension WallController: WallTableViewCellDelegate {
 extension WallController: UITableViewDelegate {
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    let post = posts[indexPath.row]
-    var CellClass = WallTableViewCell.self
+    if let height = cachedHeights[indexPath.row] {
+      return height
+    } else {
+      let post = posts[indexPath.row]
+      var CellClass = WallTableViewCell.self
 
-    if let RegisteredCellClass = cells[post.reusableIdentifier] {
-      CellClass = RegisteredCellClass
+      if let RegisteredCellClass = cells[post.reusableIdentifier] {
+        CellClass = RegisteredCellClass
+      }
+
+      cachedHeights[indexPath.row] = CellClass.height(post)
+
+      return CellClass.height(post)
     }
-
-    return CellClass.height(post)
   }
 
   public func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -173,6 +189,7 @@ extension WallController: UITableViewDataSource {
       if let postCell = wallCell as? PostTableViewCell {
         postCell.actionDelegate = actionDelegate
         postCell.informationDelegate = informationDelegate
+        postCell.activityDelegate = activityDelegate
       }
     }
 

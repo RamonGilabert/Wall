@@ -1,6 +1,11 @@
 import UIKit
 import SDWebImage
 
+public protocol PostMediaViewDelegate: class {
+
+  func mediaDidTap(index: Int)
+}
+
 public class PostMediaView: UIView {
 
   public struct Dimensions {
@@ -9,23 +14,51 @@ public class PostMediaView: UIView {
     public static let height: CGFloat = 274
   }
 
-  public lazy var imageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
-    imageView.clipsToBounds = true
-    imageView.backgroundColor = UIColor.lightGrayColor()
+  public lazy var firstImageView = UIImageView()
+  public lazy var secondImageView = UIImageView()
+  public lazy var thirdImageView = UIImageView()
+  public lazy var firstTapGestureRecognizer = UITapGestureRecognizer()
+  public lazy var secondTapGestureRecognizer = UITapGestureRecognizer()
+  public lazy var thirdTapGestureRecognizer = UITapGestureRecognizer()
+  public lazy var fourthTapGestureRecognizer = UITapGestureRecognizer()
 
-    return imageView
+  public lazy var imagesCountLabel: UILabel = {
+    let label = UILabel()
+    label.font = UIFont.systemFontOfSize(36)
+    label.textColor = UIColor.whiteColor()
+    label.textAlignment = .Center
+    label.opaque = true
+    label.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.35)
+
+    return label
     }()
+
+  public weak var delegate: PostMediaViewDelegate?
 
   // MARK: - Initialization
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    addSubview(imageView)
-    imageView.opaque = true
+    [firstImageView, secondImageView, thirdImageView].forEach {
+      $0.contentMode = .ScaleAspectFill
+      $0.clipsToBounds = true
+      $0.backgroundColor = UIColor.lightGrayColor()
+      $0.opaque = true
+      $0.userInteractionEnabled = true
+    }
 
+    [firstTapGestureRecognizer, secondTapGestureRecognizer,
+      thirdTapGestureRecognizer, fourthTapGestureRecognizer].forEach {
+        $0.addTarget(self, action: "handleGestureRecognizer:")
+    }
+
+    firstImageView.addGestureRecognizer(firstTapGestureRecognizer)
+    secondImageView.addGestureRecognizer(secondTapGestureRecognizer)
+    thirdImageView.addGestureRecognizer(thirdTapGestureRecognizer)
+    imagesCountLabel.addGestureRecognizer(fourthTapGestureRecognizer)
+
+    thirdImageView.addSubview(imagesCountLabel)
     backgroundColor = UIColor.whiteColor()
   }
 
@@ -33,15 +66,61 @@ public class PostMediaView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // MARK: - Actions
+
+  public func handleGestureRecognizer(gesture: UITapGestureRecognizer) {
+    var index = 2
+    if gesture == firstTapGestureRecognizer {
+      index = 0
+    } else if gesture == secondTapGestureRecognizer {
+      index = 1
+    }
+
+    delegate?.mediaDidTap(index)
+  }
+
   // MARK: - Setup
 
   public func configureView(media: [Media]) {
-    if let mediaItem = media.first, image = mediaItem.thumbnail {
-      imageView.sd_setImageWithURL(image)
-    }
+    let totalWitdh = UIScreen.mainScreen().bounds.width
+    let viewsArray = [firstImageView, secondImageView, thirdImageView]
 
-    imageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
-      width: UIScreen.mainScreen().bounds.width - Dimensions.totalOffset,
-      height: Dimensions.height)
+    viewsArray.forEach { $0.removeFromSuperview() }
+
+    for (index, element) in media.enumerate() where index < 3 {
+      addSubview(viewsArray[index])
+      viewsArray[index].sd_setImageWithURL(element.thumbnail)
+    }
+    
+    switch media.count {
+    case 1:
+      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
+        width: totalWitdh - Dimensions.totalOffset, height: Dimensions.height)
+    case 2:
+      let imageSize = (totalWitdh - Dimensions.totalOffset) / 2
+
+      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
+        width: imageSize - 5, height: Dimensions.height)
+
+      secondImageView.frame = CGRect(x: imageSize + 5 + Dimensions.containerOffset, y: 0,
+        width: imageSize - 5, height: Dimensions.height)
+    default:
+      let smallImageSize = (totalWitdh - Dimensions.totalOffset) / 3
+      let bigImageSize = smallImageSize * 2
+      let smallOffset = bigImageSize + 5 + Dimensions.containerOffset
+
+      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
+        width: bigImageSize - 5, height: Dimensions.height)
+
+      secondImageView.frame = CGRect(x: smallOffset, y: 0,
+        width: smallImageSize - 5, height: Dimensions.height / 2 - 5)
+
+      thirdImageView.frame = CGRect(x: smallOffset, y: Dimensions.height / 2 + 5,
+        width: smallImageSize - 5, height: Dimensions.height / 2 - 5)
+
+      imagesCountLabel.frame = thirdImageView.bounds
+      imagesCountLabel.text = "+\(media.count - 3)"
+      imagesCountLabel.alpha = media.count > 3 ? 1 : 0
+    }
   }
 }

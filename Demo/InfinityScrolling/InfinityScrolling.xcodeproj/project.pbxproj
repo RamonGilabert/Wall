@@ -10,8 +10,8 @@
 		29B7E3701BDE18B20034040B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B7E36F1BDE18B20034040B /* AppDelegate.swift */; };
 		29B7E3771BDE18B20034040B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B7E3761BDE18B20034040B /* Assets.xcassets */; };
 		29B7E37A1BDE18B20034040B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B7E3781BDE18B20034040B /* LaunchScreen.storyboard */; };
+		53FF02E29DCEFF5329DF4CCD /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68D01968941926BD9397C49A /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D513B17B1BEBB495003142EE /* PostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513B17A1BEBB495003142EE /* PostDetailTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		F788F9B67381C899510A5ED7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68D01968941926BD9397C49A /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F788F9B67381C899510A5ED7 /* Pods.framework in Frameworks */,
+				53FF02E29DCEFF5329DF4CCD /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,7 +313,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = InfinityScrolling/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RamonGilabert.InfinityScrolling;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -326,7 +326,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = InfinityScrolling/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RamonGilabert.InfinityScrolling;
 				PRODUCT_NAME = "$(TARGET_NAME)";

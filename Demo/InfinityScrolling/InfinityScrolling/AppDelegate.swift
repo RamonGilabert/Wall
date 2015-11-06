@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controller.delegate = self
     controller.actionDelegate = self
     controller.informationDelegate = self
+    controller.activityDelegate = self
 
     return controller
     }()
@@ -28,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let posts = [post] + self.generatePosts(1, to: 6, reusableIdentifier: CommentTableViewCell.reusableIdentifier)
 
     controller.initializePosts(posts)
+    controller.loadingIndicator.alpha = 0
     controller.title = "Post detail".uppercaseString
     controller.registerCell(CommentTableViewCell.self, reusableIdentifier: CommentTableViewCell.reusableIdentifier)
     controller.registerCell(PostDetailTableViewCell.self, reusableIdentifier: PostDetailTableViewCell.reusableCellIdentifier)
@@ -94,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let sencenceCount = Int(arc4random_uniform(8) + 1)
         let post = Post(
           id: i,
-          text: faker.lorem.sentences(amount: sencenceCount),
+          text: faker.lorem.sentences(amount: sencenceCount) + " " + faker.internet.url(),
           publishDate: "3 hours ago",
           author: author,
           media: media
@@ -151,6 +153,7 @@ extension AppDelegate: PostInformationDelegate {
 
   func commentsInformationDidPress(postID: Int) {
     print("Comments")
+    commentController.cachedHeights.removeAll()
     navigationController.pushViewController(commentController, animated: true)
   }
 
@@ -160,5 +163,18 @@ extension AppDelegate: PostInformationDelegate {
 
   func authorDidTap(postID: Int) {
     print("Author")
+  }
+}
+
+extension AppDelegate: PostActivityDelegate {
+
+  func shouldDisplayDetail(postID: Int) {
+    print("Detail")
+    commentController.cachedHeights.removeAll()
+    navigationController.pushViewController(commentController, animated: true)
+  }
+
+  func mediaDidTap(postID: Int, kind: Media.Kind, index: Int) {
+    print("Index \(index)")
   }
 }

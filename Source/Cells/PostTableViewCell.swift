@@ -14,7 +14,15 @@ public protocol PostInformationDelegate: class {
   func authorDidTap(postID: Int)
 }
 
+public protocol PostActivityDelegate: class {
+
+  func shouldDisplayDetail(postID: Int)
+  func mediaDidTap(postID: Int, kind: Media.Kind, index: Int)
+}
+
 public class PostTableViewCell: WallTableViewCell {
+
+  public static let reusableIdentifier = "PostTableViewCell"
 
   public override class func height(post: Post) -> CGFloat {
     let postText = post.text as NSString
@@ -37,11 +45,6 @@ public class PostTableViewCell: WallTableViewCell {
     return imageHeight + imageTop + informationHeight + 44 + 20 + 12 + textFrame.height
   }
 
-  public weak var actionDelegate: PostActionDelegate?
-  public weak var informationDelegate: PostInformationDelegate?
-
-  public static let reusableIdentifier = "PostTableViewCell"
-
   public lazy var authorView: PostAuthorView = { [unowned self] in
     let view = PostAuthorView()
     view.delegate = self
@@ -49,8 +52,10 @@ public class PostTableViewCell: WallTableViewCell {
     return view
     }()
 
-  public lazy var postMediaView: PostMediaView = {
+  public lazy var postMediaView: PostMediaView = { [unowned self] in
     let view = PostMediaView()
+    view.delegate = self
+
     return view
     }()
 
@@ -67,6 +72,7 @@ public class PostTableViewCell: WallTableViewCell {
       NSForegroundColorAttributeName: UIColor.redColor(),
       NSUnderlineColorAttributeName: UIColor.redColor(),
       NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
+    textView.subviews.first?.backgroundColor = UIColor.whiteColor()
 
     return textView
     }()
@@ -93,6 +99,17 @@ public class PostTableViewCell: WallTableViewCell {
     return layer
     }()
 
+  public lazy var generalTapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "handleTapGestureRecognizer")
+
+    return gesture
+    }()
+
+  public weak var actionDelegate: PostActionDelegate?
+  public weak var informationDelegate: PostInformationDelegate?
+  public weak var activityDelegate: PostActivityDelegate?
+
   // MARK: - Initialization
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -105,6 +122,8 @@ public class PostTableViewCell: WallTableViewCell {
         $0.backgroundColor = UIColor.whiteColor()
     }
 
+    addGestureRecognizer(generalTapGestureRecognizer)
+
     layer.addSublayer(bottomSeparator)
     opaque = true
     selectionStyle = .None
@@ -112,6 +131,13 @@ public class PostTableViewCell: WallTableViewCell {
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Actions
+
+  public func handleTapGestureRecognizer() {
+    guard let post = post else { return }
+    activityDelegate?.shouldDisplayDetail(post.id)
   }
 
   // MARK: - Setup
@@ -200,7 +226,7 @@ extension PostTableViewCell: PostActionBarViewDelegate {
 
     informationView.configureLikes(post.likeCount)
     informationView.configureComments(post.commentCount)
-    delegate?.updateCellSize(post.id)
+    delegate?.updateCellSize(post.id, liked: liked)
     actionDelegate?.likeButtonDidPress(post.id)
   }
 
@@ -217,5 +243,13 @@ extension PostTableViewCell: PostAuthorViewDelegate {
   public func authorDidTap() {
     guard let post = post else { return }
     informationDelegate?.authorDidTap(post.id)
+  }
+}
+
+extension PostTableViewCell: PostMediaViewDelegate {
+
+  public func mediaDidTap(index: Int) {
+    guard let post = post, firstMedia = post.media.first else { return }
+    activityDelegate?.mediaDidTap(post.id, kind: firstMedia.kind, index: index)
   }
 }

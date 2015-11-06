@@ -23,7 +23,7 @@ public class PostActionBarView: UIView {
 
   public lazy var likeButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
-    button.setTitle("Like", forState: .Normal)
+    button.setTitle(NSLocalizedString("Like", comment: ""), forState: .Normal)
     button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
     button.addTarget(self, action: "likeButtonDidPress", forControlEvents: .TouchUpInside)
     button.subviews.first?.opaque = true
@@ -34,7 +34,7 @@ public class PostActionBarView: UIView {
 
   public lazy var commentButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
-    button.setTitle("Comment", forState: .Normal)
+    button.setTitle(NSLocalizedString("Comment", comment: ""), forState: .Normal)
     button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
     button.addTarget(self, action: "commentButtonDidPress", forControlEvents: .TouchUpInside)
     button.setTitleColor(UIColor.grayColor(), forState: .Normal)
