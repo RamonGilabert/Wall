@@ -15,7 +15,9 @@ public class WallController: UIViewController {
     let tableView = UITableView()
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.frame = self.view.bounds
+    tableView.frame = CGRect(x: 0, y: 0,
+      width: UIScreen.mainScreen().bounds.width,
+      height: UIScreen.mainScreen().bounds.height)
     tableView.separatorStyle = .None
     tableView.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
     tableView.opaque = true

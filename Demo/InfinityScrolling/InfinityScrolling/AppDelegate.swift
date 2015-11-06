@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let posts = [post] + self.generatePosts(1, to: 6, reusableIdentifier: CommentTableViewCell.reusableIdentifier)
 
     controller.initializePosts(posts)
+    controller.loadingIndicator.alpha = 0
     controller.title = "Post detail".uppercaseString
     controller.registerCell(CommentTableViewCell.self, reusableIdentifier: CommentTableViewCell.reusableIdentifier)
     controller.registerCell(PostDetailTableViewCell.self, reusableIdentifier: PostDetailTableViewCell.reusableCellIdentifier)
