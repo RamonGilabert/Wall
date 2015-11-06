@@ -12,12 +12,12 @@ public protocol PostInformationDelegate: class {
   func commentsInformationDidPress(postID: Int)
   func seenInformationDidPress(postID: Int)
   func authorDidTap(postID: Int)
+  func mediaDidTap(postID: Int, kind: Media.Kind, index: Int)
 }
 
 public protocol PostActivityDelegate: class {
 
   func shouldDisplayDetail(postID: Int)
-  func mediaDidTap(postID: Int, kind: Media.Kind, index: Int)
 }
 
 public class PostTableViewCell: WallTableViewCell {
@@ -250,6 +250,6 @@ extension PostTableViewCell: PostMediaViewDelegate {
 
   public func mediaDidTap(index: Int) {
     guard let post = post, firstMedia = post.media.first else { return }
-    activityDelegate?.mediaDidTap(post.id, kind: firstMedia.kind, index: index)
+    informationDelegate?.mediaDidTap(post.id, kind: firstMedia.kind, index: index)
   }
 }

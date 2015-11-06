@@ -33,6 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controller.title = "Post detail".uppercaseString
     controller.registerCell(CommentTableViewCell.self, reusableIdentifier: CommentTableViewCell.reusableIdentifier)
     controller.registerCell(PostDetailTableViewCell.self, reusableIdentifier: PostDetailTableViewCell.reusableCellIdentifier)
+    controller.actionDelegate = self
+    controller.informationDelegate = self
 
     return controller
     }()
@@ -141,7 +143,7 @@ extension AppDelegate: PostActionDelegate {
   }
 
   func commentsButtonDidPress(postID: Int) {
-    
+
   }
 }
 
@@ -164,6 +166,10 @@ extension AppDelegate: PostInformationDelegate {
   func authorDidTap(postID: Int) {
     print("Author")
   }
+
+  func mediaDidTap(postID: Int, kind: Media.Kind, index: Int) {
+    print("Index \(index)")
+  }
 }
 
 extension AppDelegate: PostActivityDelegate {
@@ -172,9 +178,5 @@ extension AppDelegate: PostActivityDelegate {
     print("Detail")
     commentController.cachedHeights.removeAll()
     navigationController.pushViewController(commentController, animated: true)
-  }
-
-  func mediaDidTap(postID: Int, kind: Media.Kind, index: Int) {
-    print("Index \(index)")
   }
 }

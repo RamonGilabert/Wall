@@ -54,7 +54,7 @@ public class PostActionBarView: UIView {
     [likeButton, commentButton].forEach {
       addSubview($0)
       $0.opaque = true
-      $0.backgroundColor = UIColor.whiteColor()
+      $0.backgroundColor = UIColor.clearColor()
     }
 
     layer.addSublayer(topSeparator)
