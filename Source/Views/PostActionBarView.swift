@@ -56,6 +56,7 @@ public class PostActionBarView: UIView {
       $0.opaque = true
       $0.backgroundColor = UIColor.clearColor()
       $0.layer.shouldRasterize = true
+      $0.layer.drawsAsynchronously = true
     }
 
     layer.addSublayer(topSeparator)

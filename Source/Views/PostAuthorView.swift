@@ -69,6 +69,7 @@ public class PostAuthorView: UIView {
       $0.backgroundColor = UIColor.whiteColor()
       $0.userInteractionEnabled = true
       $0.layer.shouldRasterize = true
+      $0.layer.drawsAsynchronously = true
     }
 
     avatarImageView.addGestureRecognizer(tapAuthorGestureRecognizer)

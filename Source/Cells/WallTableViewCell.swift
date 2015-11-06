@@ -27,6 +27,7 @@ public class WallTableViewCell: UITableViewCell {
 
     addGestureRecognizer(tapGestureRecognizer)
     layer.shouldRasterize = true
+    layer.drawsAsynchronously = true
   }
 
   public required init?(coder aDecoder: NSCoder) {
