@@ -20,7 +20,7 @@ public struct FontList {
     public static var seen = UIFont.systemFontOfSize(12)
   }
 
-  public struct Actions {
+  public struct Action {
     public static var like = UIFont.boldSystemFontOfSize(14)
     public static var comment = UIFont.boldSystemFontOfSize(14)
   }
