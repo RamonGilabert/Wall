@@ -27,7 +27,7 @@ public class PostAuthorView: UIView {
     return imageView
     }()
 
-  public lazy var authorName: UILabel = {
+  public lazy var authorLabel: UILabel = {
     let label = UILabel()
     label.font = UIFont.boldSystemFontOfSize(14)
 
@@ -63,7 +63,7 @@ public class PostAuthorView: UIView {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [dateLabel, authorName, avatarImageView].forEach {
+    [dateLabel, authorLabel, avatarImageView].forEach {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = UIColor.whiteColor()
@@ -71,7 +71,7 @@ public class PostAuthorView: UIView {
     }
 
     avatarImageView.addGestureRecognizer(tapAuthorGestureRecognizer)
-    authorName.addGestureRecognizer(tapLabelGestureRecognizer)
+    authorLabel.addGestureRecognizer(tapLabelGestureRecognizer)
     backgroundColor = UIColor.whiteColor()
   }
 
@@ -86,7 +86,7 @@ public class PostAuthorView: UIView {
 
     avatarImageView.frame = CGRect(x: Dimensions.avatarOffset, y: Dimensions.avatarOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize)
-    authorName.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.nameTopOffset,
+    authorLabel.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.nameTopOffset,
       width: UIScreen.mainScreen().bounds.width - 70, height: 20)
     dateLabel.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.dateTopOffset,
       width: UIScreen.mainScreen().bounds.width - 70, height: 17)
@@ -97,7 +97,7 @@ public class PostAuthorView: UIView {
       avatarImageView.sd_setImageWithURL(avatarURL)
     }
 
-    authorName.text = author.name
+    authorLabel.text = author.name
     dateLabel.text = date
   }
 
