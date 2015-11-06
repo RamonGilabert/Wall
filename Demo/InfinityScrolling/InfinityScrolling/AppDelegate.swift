@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controller.delegate = self
     controller.actionDelegate = self
     controller.informationDelegate = self
-    controller.activityDelegate = self
 
     return controller
     }()
@@ -33,8 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controller.title = "Post detail".uppercaseString
     controller.registerCell(CommentTableViewCell.self, reusableIdentifier: CommentTableViewCell.reusableIdentifier)
     controller.registerCell(PostDetailTableViewCell.self, reusableIdentifier: PostDetailTableViewCell.reusableCellIdentifier)
+    controller.delegate = self
     controller.actionDelegate = self
     controller.informationDelegate = self
+    controller.commentDelegate = self
 
     return controller
     }()
@@ -134,6 +135,13 @@ extension AppDelegate: WallControllerDelegate {
       refreshControl.endRefreshing()
     }
   }
+
+  func didTapCell(id: Int, index: Int) {
+    if navigationController.visibleViewController != commentController {
+      commentController.cachedHeights.removeAll()
+      navigationController.pushViewController(commentController, animated: true)
+    }
+  }
 }
 
 extension AppDelegate: PostActionDelegate {
@@ -144,6 +152,13 @@ extension AppDelegate: PostActionDelegate {
 
   func commentsButtonDidPress(postID: Int) {
 
+  }
+}
+
+extension AppDelegate: CommentTableViewCellDelegate {
+
+  func commentAuthorDidTap(commentID: Int) {
+    print("Comment's author")
   }
 }
 
@@ -169,14 +184,5 @@ extension AppDelegate: PostInformationDelegate {
 
   func mediaDidTap(postID: Int, kind: Media.Kind, index: Int) {
     print("Index \(index)")
-  }
-}
-
-extension AppDelegate: PostActivityDelegate {
-
-  func shouldDisplayDetail(postID: Int) {
-    print("Detail")
-    commentController.cachedHeights.removeAll()
-    navigationController.pushViewController(commentController, animated: true)
   }
 }

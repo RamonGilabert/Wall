@@ -4,7 +4,7 @@ public protocol WallControllerDelegate: class {
 
   func shouldFetchMoreInformation()
   func shouldRefreshPosts(refreshControl: UIRefreshControl)
-  func shouldDisplayDetail(postID: Int)
+  func didTapCell(id: Int, index: Int)
 }
 
 public class WallController: UIViewController {
@@ -44,7 +44,7 @@ public class WallController: UIViewController {
   public weak var delegate: WallControllerDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
-  public weak var activityDelegate: PostActivityDelegate?
+  public weak var commentDelegate: CommentTableViewCellDelegate?
   private var posts = [Post]()
   public var fetching = true
   public var verticalOffset: CGFloat = 20
@@ -132,15 +132,24 @@ extension WallController: WallTableViewCellDelegate {
     tableView.beginUpdates()
     tableView.endUpdates()
   }
+}
+
+extension WallController: PostActivityDelegate {
 
   public func shouldDisplayDetail(postID: Int) {
-    delegate?.shouldDisplayDetail(postID)
+    guard let index = posts.indexOf({ $0.id == postID }) else { return }
+    delegate?.didTapCell(postID, index: index)
   }
 }
 
 // MARK: - UITableViewDelegate
 
 extension WallController: UITableViewDelegate {
+
+  public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let post = posts[indexPath.row]
+    delegate?.didTapCell(post.id, index: indexPath.row)
+  }
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     if let height = cachedHeights[indexPath.row] {
@@ -189,7 +198,11 @@ extension WallController: UITableViewDataSource {
       if let postCell = wallCell as? PostTableViewCell {
         postCell.actionDelegate = actionDelegate
         postCell.informationDelegate = informationDelegate
-        postCell.activityDelegate = activityDelegate
+        postCell.activityDelegate = self
+      }
+
+      if let commentCell = wallCell as? CommentTableViewCell {
+        commentCell.commentDelegate = commentDelegate
       }
     }
 

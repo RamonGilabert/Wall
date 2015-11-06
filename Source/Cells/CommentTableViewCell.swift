@@ -1,5 +1,10 @@
 import UIKit
 
+public protocol CommentTableViewCellDelegate: class {
+
+  func commentAuthorDidTap(commentID: Int)
+}
+
 public class CommentTableViewCell: WallTableViewCell {
 
   public override class func height(post: Post) -> CGFloat {
@@ -31,6 +36,7 @@ public class CommentTableViewCell: WallTableViewCell {
     imageView.clipsToBounds = true
     imageView.opaque = true
     imageView.backgroundColor = UIColor.whiteColor()
+    imageView.userInteractionEnabled = true
 
     return imageView
     }()
@@ -76,6 +82,22 @@ public class CommentTableViewCell: WallTableViewCell {
     return layer
     }()
 
+  public lazy var imageTapGestureRecognizer: UITapGestureRecognizer = {
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "handleAuthorGestureRecognizer")
+
+    return gesture
+    }()
+
+  public lazy var authorTapGestureRecognizer: UITapGestureRecognizer = {
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "handleAuthorGestureRecognizer")
+
+    return gesture
+    }()
+
+  public weak var commentDelegate: CommentTableViewCellDelegate?
+
   // MARK: - Initialization
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -89,6 +111,9 @@ public class CommentTableViewCell: WallTableViewCell {
 
     backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
 
+    avatarImageView.addGestureRecognizer(imageTapGestureRecognizer)
+    authorLabel.addGestureRecognizer(authorTapGestureRecognizer)
+
     layer.addSublayer(bottomSeparator)
     opaque = true
     selectionStyle = .None
@@ -96,6 +121,13 @@ public class CommentTableViewCell: WallTableViewCell {
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Actions
+
+  public func handleAuthorGestureRecognizer() {
+    guard let post = post else { return }
+    commentDelegate?.commentAuthorDidTap(post.id)
   }
 
   // MARK: - Setup
