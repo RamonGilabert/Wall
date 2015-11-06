@@ -35,7 +35,7 @@ public class CommentTableViewCell: WallTableViewCell {
     return imageView
     }()
 
-  public lazy var authorName: UILabel = {
+  public lazy var authorLabel: UILabel = {
     let label = UILabel()
     label.font = UIFont.boldSystemFontOfSize(14)
 
@@ -50,7 +50,7 @@ public class CommentTableViewCell: WallTableViewCell {
     return label
     }()
 
-  public lazy var postText: UITextView = { [unowned self] in
+  public lazy var textView: UITextView = { [unowned self] in
     let textView = UITextView()
     textView.font = UIFont.systemFontOfSize(14)
     textView.dataDetectorTypes = .Link
@@ -81,7 +81,7 @@ public class CommentTableViewCell: WallTableViewCell {
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [avatarImageView, authorName, postText, dateLabel].forEach {
+    [avatarImageView, authorLabel, textView, dateLabel].forEach {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)

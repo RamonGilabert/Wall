@@ -59,7 +59,7 @@ public class PostTableViewCell: WallTableViewCell {
     return view
     }()
 
-  public lazy var postText: UITextView = { [unowned self] in
+  public lazy var textView: UITextView = { [unowned self] in
     let textView = UITextView()
     textView.font = UIFont.systemFontOfSize(14)
     textView.dataDetectorTypes = .Link
@@ -115,7 +115,7 @@ public class PostTableViewCell: WallTableViewCell {
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [authorView, postMediaView, postText,
+    [authorView, postMediaView, textView,
       informationView, actionBarView].forEach {
         addSubview($0)
         $0.opaque = true
@@ -173,13 +173,13 @@ public class PostTableViewCell: WallTableViewCell {
     informationView.configureView(post.likeCount, comments: post.commentCount, seen: post.seenCount)
     actionBarView.configureView(post.liked)
 
-    postText.text = post.text
-    postText.frame.size.width = UIScreen.mainScreen().bounds.width - 40
-    postText.sizeToFit()
-    postText.frame = CGRect(x: 20, y: CGRectGetMaxY(postMediaView.frame) + 12,
-      width: postText.frame.width, height: postText.frame.height)
+    textView.text = post.text
+    textView.frame.size.width = UIScreen.mainScreen().bounds.width - 40
+    textView.sizeToFit()
+    textView.frame = CGRect(x: 20, y: CGRectGetMaxY(postMediaView.frame) + 12,
+      width: textView.frame.width, height: textView.frame.height)
 
-    informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(postText.frame))
+    informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(textView.frame))
     actionBarView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(informationView.frame))
     bottomSeparator.frame.origin.y = CGRectGetMaxY(actionBarView.frame)
   }
