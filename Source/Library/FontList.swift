@@ -6,6 +6,7 @@ public struct FontList {
     public static var author = UIFont.boldSystemFontOfSize(14)
     public static var date = UIFont.systemFontOfSize(12)
     public static var text = UIFont.systemFontOfSize(14)
+    public static var media = UIFont.boldSystemFontOfSize(36)
   }
 
   public struct Comment {
@@ -17,7 +18,7 @@ public struct FontList {
   public struct Information {
     public static var like = UIFont.systemFontOfSize(12)
     public static var comment = UIFont.systemFontOfSize(12)
-    public static var seen = UIFont.systemFontOfSize(12)
+    public static var seen = UIFont.italicSystemFontOfSize(12)
   }
 
   public struct Action {

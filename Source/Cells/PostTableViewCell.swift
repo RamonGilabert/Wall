@@ -23,7 +23,7 @@ public class PostTableViewCell: WallTableViewCell {
     let postText = post.text as NSString
     let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 40,
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
-      attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
+      attributes: [ NSFontAttributeName : FontList.Post.text ], context: nil)
 
     var imageHeight: CGFloat = 274
     var imageTop: CGFloat = 60
@@ -56,7 +56,7 @@ public class PostTableViewCell: WallTableViewCell {
 
   public lazy var textView: UITextView = { [unowned self] in
     let textView = UITextView()
-    textView.font = UIFont.systemFontOfSize(14)
+    textView.font = FontList.Post.text
     textView.dataDetectorTypes = .Link
     textView.editable = false
     textView.scrollEnabled = false

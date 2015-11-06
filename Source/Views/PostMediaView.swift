@@ -24,7 +24,7 @@ public class PostMediaView: UIView {
 
   public lazy var imagesCountLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont.systemFontOfSize(36)
+    label.font = FontList.Post.media
     label.textColor = UIColor.whiteColor()
     label.textAlignment = .Center
     label.opaque = true

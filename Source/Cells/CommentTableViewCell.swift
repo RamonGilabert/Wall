@@ -12,7 +12,7 @@ public class CommentTableViewCell: WallTableViewCell {
     let textFrame = postText.boundingRectWithSize(CGSize(
       width: UIScreen.mainScreen().bounds.width - Dimensions.textOffset - Dimensions.sideOffset,
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
-      attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
+      attributes: [ NSFontAttributeName : FontList.Comment.text ], context: nil)
 
     return 70.5 + textFrame.height
   }
@@ -43,7 +43,7 @@ public class CommentTableViewCell: WallTableViewCell {
 
   public lazy var authorLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont.boldSystemFontOfSize(14)
+    label.font = FontList.Comment.author
 
     return label
     }()
@@ -51,14 +51,14 @@ public class CommentTableViewCell: WallTableViewCell {
   public lazy var dateLabel: UILabel = {
     let label = UILabel()
     label.textColor = UIColor.lightGrayColor()
-    label.font = UIFont.systemFontOfSize(12)
+    label.font = FontList.Comment.date
 
     return label
     }()
 
   public lazy var textView: UITextView = { [unowned self] in
     let textView = UITextView()
-    textView.font = UIFont.systemFontOfSize(14)
+    textView.font = FontList.Comment.author
     textView.dataDetectorTypes = .Link
     textView.editable = false
     textView.scrollEnabled = false

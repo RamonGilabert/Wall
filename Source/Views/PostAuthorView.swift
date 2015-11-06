@@ -29,7 +29,7 @@ public class PostAuthorView: UIView {
 
   public lazy var authorLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont.boldSystemFontOfSize(14)
+    label.font = FontList.Post.author
 
     return label
     }()
@@ -37,7 +37,7 @@ public class PostAuthorView: UIView {
   public lazy var dateLabel: UILabel = {
     let label = UILabel()
     label.textColor = UIColor.lightGrayColor()
-    label.font = UIFont.systemFontOfSize(12)
+    label.font = FontList.Post.date
 
     return label
     }()
