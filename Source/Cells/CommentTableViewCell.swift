@@ -9,7 +9,7 @@ public class CommentTableViewCell: WallTableViewCell {
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
       attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
 
-    return 74.5 + textFrame.height
+    return 70.5 + textFrame.height
   }
 
   public static let reusableIdentifier = "CommentTableViewCell"
@@ -119,7 +119,7 @@ public class CommentTableViewCell: WallTableViewCell {
     textView.text = post.text
     textView.frame.size.width = totalWidth - Dimensions.textOffset - Dimensions.sideOffset
     textView.sizeToFit()
-    textView.frame = CGRect(x: Dimensions.textOffset, y: 40,
+    textView.frame = CGRect(x: Dimensions.textOffset, y: 36,
       width: textView.frame.width, height: textView.frame.height)
 
     dateLabel.frame = CGRect(x: Dimensions.textOffset, y: textView.frame.maxY + 9,
