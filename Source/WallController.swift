@@ -157,10 +157,6 @@ extension WallController: UITableViewDelegate {
     }
   }
 
-  public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 400
-  }
-
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     let currentOffset = scrollView.contentOffset.y
     let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
