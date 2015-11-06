@@ -68,6 +68,7 @@ public class PostTableViewCell: WallTableViewCell {
       NSUnderlineColorAttributeName: UIColor.redColor(),
       NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
     textView.subviews.first?.backgroundColor = UIColor.whiteColor()
+    textView.layer.shouldRasterize = true
 
     return textView
     }()

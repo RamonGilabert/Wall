@@ -55,6 +55,7 @@ public class PostActionBarView: UIView {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = UIColor.clearColor()
+      $0.layer.shouldRasterize = true
     }
 
     layer.addSublayer(topSeparator)

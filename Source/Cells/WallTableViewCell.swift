@@ -26,6 +26,7 @@ public class WallTableViewCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
     addGestureRecognizer(tapGestureRecognizer)
+    layer.shouldRasterize = true
   }
 
   public required init?(coder aDecoder: NSCoder) {
