@@ -112,18 +112,18 @@ public class CommentTableViewCell: WallTableViewCell {
       avatarImageView.sd_setImageWithURL(avatarURL)
     }
 
-    authorName.frame = CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,
+    authorLabel.frame = CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,
       width: totalWidth - 70, height: 20)
-    authorName.text = author.name
+    authorLabel.text = author.name
 
-    postText.text = post.text
-    postText.frame.size.width = totalWidth - Dimensions.textOffset - Dimensions.sideOffset
-    postText.sizeToFit()
-    postText.frame = CGRect(x: Dimensions.textOffset, y: 40,
-      width: postText.frame.width, height: postText.frame.height)
+    textView.text = post.text
+    textView.frame.size.width = totalWidth - Dimensions.textOffset - Dimensions.sideOffset
+    textView.sizeToFit()
+    textView.frame = CGRect(x: Dimensions.textOffset, y: 40,
+      width: textView.frame.width, height: textView.frame.height)
 
-    dateLabel.frame = CGRect(x: Dimensions.textOffset, y: postText.frame.maxY + 9,
-      width: postText.frame.width, height: 17)
+    dateLabel.frame = CGRect(x: Dimensions.textOffset, y: textView.frame.maxY + 9,
+      width: textView.frame.width, height: 17)
     dateLabel.text = post.publishDate
 
     bottomSeparator.frame = CGRect(x: 0, y: dateLabel.frame.maxY + 8, width: totalWidth, height: 0.5)
