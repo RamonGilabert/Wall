@@ -4,7 +4,7 @@ public protocol WallControllerDelegate: class {
 
   func shouldFetchMoreInformation()
   func shouldRefreshPosts(refreshControl: UIRefreshControl)
-  func shouldDisplayDetail(postID: Int)
+  func didTapCell(id: Int, index: Int)
 }
 
 public class WallController: UIViewController {
@@ -19,7 +19,7 @@ public class WallController: UIViewController {
       width: UIScreen.mainScreen().bounds.width,
       height: UIScreen.mainScreen().bounds.height)
     tableView.separatorStyle = .None
-    tableView.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
+    tableView.backgroundColor = ColorList.Basis.tableViewBackground
     tableView.opaque = true
 
     return tableView
@@ -28,7 +28,7 @@ public class WallController: UIViewController {
   public lazy var loadingIndicator: UIActivityIndicatorView = {
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
     activityIndicator.frame.origin.x = (UIScreen.mainScreen().bounds.width - 20) / 2
-    activityIndicator.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
+    activityIndicator.backgroundColor = UIColor.clearColor()
 
     return activityIndicator
     }()
@@ -44,7 +44,7 @@ public class WallController: UIViewController {
   public weak var delegate: WallControllerDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
-  public weak var activityDelegate: PostActivityDelegate?
+  public weak var commentDelegate: CommentTableViewCellDelegate?
   private var posts = [Post]()
   public var fetching = true
   public var verticalOffset: CGFloat = 20
@@ -133,14 +133,20 @@ extension WallController: WallTableViewCellDelegate {
     tableView.endUpdates()
   }
 
-  public func shouldDisplayDetail(postID: Int) {
-    delegate?.shouldDisplayDetail(postID)
+  public func cellDidTap(id: Int) {
+    guard let index = posts.indexOf({ $0.id == id }) else { return }
+    delegate?.didTapCell(id, index: index)
   }
 }
 
 // MARK: - UITableViewDelegate
 
 extension WallController: UITableViewDelegate {
+
+  public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let post = posts[indexPath.row]
+    delegate?.didTapCell(post.id, index: indexPath.row)
+  }
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     if let height = cachedHeights[indexPath.row] {
@@ -189,7 +195,10 @@ extension WallController: UITableViewDataSource {
       if let postCell = wallCell as? PostTableViewCell {
         postCell.actionDelegate = actionDelegate
         postCell.informationDelegate = informationDelegate
-        postCell.activityDelegate = activityDelegate
+      }
+
+      if let commentCell = wallCell as? CommentTableViewCell {
+        commentCell.commentDelegate = commentDelegate
       }
     }
 

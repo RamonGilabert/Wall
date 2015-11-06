@@ -12,11 +12,6 @@ public protocol PostInformationDelegate: class {
   func commentsInformationDidPress(postID: Int)
   func seenInformationDidPress(postID: Int)
   func authorDidTap(postID: Int)
-}
-
-public protocol PostActivityDelegate: class {
-
-  func shouldDisplayDetail(postID: Int)
   func mediaDidTap(postID: Int, kind: Media.Kind, index: Int)
 }
 
@@ -28,7 +23,7 @@ public class PostTableViewCell: WallTableViewCell {
     let postText = post.text as NSString
     let textFrame = postText.boundingRectWithSize(CGSize(width: UIScreen.mainScreen().bounds.width - 40,
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
-      attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
+      attributes: [ NSFontAttributeName : FontList.Post.text ], context: nil)
 
     var imageHeight: CGFloat = 274
     var imageTop: CGFloat = 60
@@ -61,7 +56,7 @@ public class PostTableViewCell: WallTableViewCell {
 
   public lazy var textView: UITextView = { [unowned self] in
     let textView = UITextView()
-    textView.font = UIFont.systemFontOfSize(14)
+    textView.font = FontList.Post.text
     textView.dataDetectorTypes = .Link
     textView.editable = false
     textView.scrollEnabled = false
@@ -69,8 +64,8 @@ public class PostTableViewCell: WallTableViewCell {
     textView.textContainer.lineFragmentPadding = 0
     textView.textContainerInset = UIEdgeInsetsZero
     textView.linkTextAttributes = [
-      NSForegroundColorAttributeName: UIColor.redColor(),
-      NSUnderlineColorAttributeName: UIColor.redColor(),
+      NSForegroundColorAttributeName: ColorList.Basis.highlightedColor,
+      NSUnderlineColorAttributeName: ColorList.Basis.highlightedColor,
       NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
     textView.subviews.first?.backgroundColor = UIColor.whiteColor()
 
@@ -91,24 +86,13 @@ public class PostTableViewCell: WallTableViewCell {
     return view
     }()
 
-  public lazy var bottomSeparator: CALayer = {
-    let layer = CALayer()
-    layer.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1).CGColor
-    layer.opaque = true
-
-    return layer
-    }()
-
-  public lazy var generalTapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
-    let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: "handleTapGestureRecognizer")
-
-    return gesture
+  public lazy var bottomSeparator: UIView = {
+    let view = UIView()
+    return view
     }()
 
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
-  public weak var activityDelegate: PostActivityDelegate?
 
   // MARK: - Initialization
 
@@ -116,28 +100,20 @@ public class PostTableViewCell: WallTableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
     [authorView, postMediaView, textView,
-      informationView, actionBarView].forEach {
+      informationView, actionBarView, bottomSeparator].forEach {
         addSubview($0)
         $0.opaque = true
         $0.backgroundColor = UIColor.whiteColor()
+        $0.layer.drawsAsynchronously = true
     }
 
-    addGestureRecognizer(generalTapGestureRecognizer)
-
-    layer.addSublayer(bottomSeparator)
+    bottomSeparator.backgroundColor = ColorList.Basis.tableViewBackground
     opaque = true
     selectionStyle = .None
   }
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  // MARK: - Actions
-
-  public func handleTapGestureRecognizer() {
-    guard let post = post else { return }
-    activityDelegate?.shouldDisplayDetail(post.id)
   }
 
   // MARK: - Setup
@@ -250,6 +226,6 @@ extension PostTableViewCell: PostMediaViewDelegate {
 
   public func mediaDidTap(index: Int) {
     guard let post = post, firstMedia = post.media.first else { return }
-    activityDelegate?.mediaDidTap(post.id, kind: firstMedia.kind, index: index)
+    informationDelegate?.mediaDidTap(post.id, kind: firstMedia.kind, index: index)
   }
 }
