@@ -28,7 +28,7 @@ public class WallController: UIViewController {
   public lazy var loadingIndicator: UIActivityIndicatorView = {
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
     activityIndicator.frame.origin.x = (UIScreen.mainScreen().bounds.width - 20) / 2
-    activityIndicator.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
+    activityIndicator.backgroundColor = UIColor.clearColor()
 
     return activityIndicator
     }()

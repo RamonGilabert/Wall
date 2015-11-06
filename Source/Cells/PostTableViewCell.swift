@@ -86,12 +86,9 @@ public class PostTableViewCell: WallTableViewCell {
     return view
     }()
 
-  public lazy var bottomSeparator: CALayer = {
-    let layer = CALayer()
-    layer.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1).CGColor
-    layer.opaque = true
-
-    return layer
+  public lazy var bottomSeparator: UIView = {
+    let view = UIView()
+    return view
     }()
 
   public weak var actionDelegate: PostActionDelegate?
@@ -103,13 +100,14 @@ public class PostTableViewCell: WallTableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
     [authorView, postMediaView, textView,
-      informationView, actionBarView].forEach {
+      informationView, actionBarView, bottomSeparator].forEach {
         addSubview($0)
         $0.opaque = true
         $0.backgroundColor = UIColor.whiteColor()
+        $0.layer.drawsAsynchronously = true
     }
 
-    layer.addSublayer(bottomSeparator)
+    bottomSeparator.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
     opaque = true
     selectionStyle = .None
   }
