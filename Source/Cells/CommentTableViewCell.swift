@@ -35,7 +35,7 @@ public class CommentTableViewCell: WallTableViewCell {
     return imageView
     }()
 
-  public lazy var authorName: UILabel = {
+  public lazy var authorLabel: UILabel = {
     let label = UILabel()
     label.font = UIFont.boldSystemFontOfSize(14)
 
@@ -50,7 +50,7 @@ public class CommentTableViewCell: WallTableViewCell {
     return label
     }()
 
-  public lazy var postText: UITextView = { [unowned self] in
+  public lazy var textView: UITextView = { [unowned self] in
     let textView = UITextView()
     textView.font = UIFont.systemFontOfSize(14)
     textView.dataDetectorTypes = .Link
@@ -80,7 +80,7 @@ public class CommentTableViewCell: WallTableViewCell {
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [avatarImageView, authorName, postText, dateLabel].forEach {
+    [avatarImageView, authorLabel, textView, dateLabel].forEach {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
@@ -110,18 +110,18 @@ public class CommentTableViewCell: WallTableViewCell {
       avatarImageView.sd_setImageWithURL(avatarURL)
     }
 
-    authorName.frame = CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,
+    authorLabel.frame = CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,
       width: UIScreen.mainScreen().bounds.width - 70, height: 20)
-    authorName.text = author.name
+    authorLabel.text = author.name
 
-    postText.text = post.text
-    postText.frame.size.width = UIScreen.mainScreen().bounds.width - Dimensions.textOffset - Dimensions.sideOffset
-    postText.sizeToFit()
-    postText.frame = CGRect(x: Dimensions.textOffset, y: authorName.frame.maxY + 12,
-      width: postText.frame.width, height: postText.frame.height)
+    textView.text = post.text
+    textView.frame.size.width = UIScreen.mainScreen().bounds.width - Dimensions.textOffset - Dimensions.sideOffset
+    textView.sizeToFit()
+    textView.frame = CGRect(x: Dimensions.textOffset, y: authorLabel.frame.maxY + 12,
+      width: textView.frame.width, height: textView.frame.height)
 
-    dateLabel.frame = CGRect(x: Dimensions.textOffset, y: postText.frame.maxY + 26,
-      width: postText.frame.width, height: 17)
+    dateLabel.frame = CGRect(x: Dimensions.textOffset, y: textView.frame.maxY + 26,
+      width: textView.frame.width, height: 17)
     dateLabel.text = post.publishDate
 
     bottomSeparator.frame = CGRect(x: 0, y: dateLabel.frame.maxY + 26,
