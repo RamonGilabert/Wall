@@ -55,7 +55,6 @@ public class PostInformationBarView: UIView {
       $0.backgroundColor = UIColor.whiteColor()
       $0.subviews.first?.opaque = true
       $0.subviews.first?.backgroundColor = UIColor.whiteColor()
-      $0.layer.shouldRasterize = true
       $0.layer.drawsAsynchronously = true
     }
 

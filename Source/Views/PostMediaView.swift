@@ -46,7 +46,6 @@ public class PostMediaView: UIView {
       $0.backgroundColor = UIColor.lightGrayColor()
       $0.opaque = true
       $0.userInteractionEnabled = true
-      $0.layer.shouldRasterize = true
       $0.layer.drawsAsynchronously = true
     }
 
