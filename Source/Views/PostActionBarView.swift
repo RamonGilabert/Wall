@@ -70,7 +70,7 @@ public class PostActionBarView: UIView {
     let totalWidth = UIScreen.mainScreen().bounds.width
 
     topSeparator.frame = CGRect(x: Dimensions.generalOffset, y: 0,
-      width: totalWidth - Dimensions.generalOffset, height: Dimensions.separatorHeight)
+      width: totalWidth - Dimensions.generalOffset * 2, height: Dimensions.separatorHeight)
     likeButton.frame = CGRect(x: Dimensions.generalOffset, y: Dimensions.separatorHeight,
       width: totalWidth / 2 - Dimensions.generalOffset, height: 43)
     commentButton.frame = CGRect(x: totalWidth / 2, y: Dimensions.separatorHeight,

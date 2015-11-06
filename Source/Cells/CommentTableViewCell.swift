@@ -70,7 +70,6 @@ public class CommentTableViewCell: WallTableViewCell {
       NSUnderlineColorAttributeName: ColorList.Basis.highlightedColor,
       NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
     textView.subviews.first?.backgroundColor = ColorList.Comment.background
-    textView.layer.shouldRasterize = true
 
     return textView
     }()
