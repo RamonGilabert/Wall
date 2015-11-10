@@ -29,15 +29,15 @@ public class PostAuthorView: UIView {
 
   public lazy var authorLabel: UILabel = {
     let label = UILabel()
-    label.font = FontList.Post.author
+    label.font = UIFont.boldSystemFontOfSize(14)
 
     return label
     }()
 
   public lazy var dateLabel: UILabel = {
     let label = UILabel()
-    label.textColor = ColorList.Post.date
-    label.font = FontList.Post.date
+    label.textColor = UIColor.lightGrayColor()
+    label.font = UIFont.systemFontOfSize(12)
 
     return label
     }()
@@ -68,7 +68,6 @@ public class PostAuthorView: UIView {
       $0.opaque = true
       $0.backgroundColor = UIColor.whiteColor()
       $0.userInteractionEnabled = true
-      $0.layer.drawsAsynchronously = true
     }
 
     avatarImageView.addGestureRecognizer(tapAuthorGestureRecognizer)
@@ -99,10 +98,6 @@ public class PostAuthorView: UIView {
     }
 
     authorLabel.text = author.name
-    dateLabel.text = date
-  }
-
-  public func updateDate(date: String) {
     dateLabel.text = date
   }
 

@@ -11,8 +11,7 @@ class PostDetailTableViewCell: PostTableViewCell {
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    bottomSeparator.alpha = 0
-    informationView.commentButton.alpha = 0
+    bottomSeparator.opacity = 0
   }
 
   required init?(coder aDecoder: NSCoder) {

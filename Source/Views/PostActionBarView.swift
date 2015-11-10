@@ -15,7 +15,7 @@ public class PostActionBarView: UIView {
 
   public lazy var topSeparator: CALayer = {
     let layer = CALayer()
-    layer.backgroundColor = ColorList.Basis.tableViewBackground.CGColor
+    layer.backgroundColor = UIColor.grayColor().CGColor
     layer.opaque = true
 
     return layer
@@ -24,7 +24,7 @@ public class PostActionBarView: UIView {
   public lazy var likeButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
     button.setTitle(NSLocalizedString("Like", comment: ""), forState: .Normal)
-    button.titleLabel?.font = FontList.Action.like
+    button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
     button.addTarget(self, action: "likeButtonDidPress", forControlEvents: .TouchUpInside)
     button.subviews.first?.opaque = true
     button.subviews.first?.backgroundColor = UIColor.whiteColor()
@@ -35,9 +35,9 @@ public class PostActionBarView: UIView {
   public lazy var commentButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
     button.setTitle(NSLocalizedString("Comment", comment: ""), forState: .Normal)
-    button.titleLabel?.font = FontList.Action.comment
+    button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
     button.addTarget(self, action: "commentButtonDidPress", forControlEvents: .TouchUpInside)
-    button.setTitleColor(ColorList.Action.comment, forState: .Normal)
+    button.setTitleColor(UIColor.grayColor(), forState: .Normal)
     button.subviews.first?.opaque = true
     button.subviews.first?.backgroundColor = UIColor.whiteColor()
 
@@ -54,8 +54,7 @@ public class PostActionBarView: UIView {
     [likeButton, commentButton].forEach {
       addSubview($0)
       $0.opaque = true
-      $0.backgroundColor = UIColor.clearColor()
-      $0.layer.drawsAsynchronously = true
+      $0.backgroundColor = UIColor.whiteColor()
     }
 
     layer.addSublayer(topSeparator)
@@ -70,7 +69,7 @@ public class PostActionBarView: UIView {
     let totalWidth = UIScreen.mainScreen().bounds.width
 
     topSeparator.frame = CGRect(x: Dimensions.generalOffset, y: 0,
-      width: totalWidth - Dimensions.generalOffset * 2, height: Dimensions.separatorHeight)
+      width: totalWidth - Dimensions.generalOffset, height: Dimensions.separatorHeight)
     likeButton.frame = CGRect(x: Dimensions.generalOffset, y: Dimensions.separatorHeight,
       width: totalWidth / 2 - Dimensions.generalOffset, height: 43)
     commentButton.frame = CGRect(x: totalWidth / 2, y: Dimensions.separatorHeight,
@@ -82,16 +81,16 @@ public class PostActionBarView: UIView {
   }
 
   public func configureView(liked: Bool) {
-    let color = liked ? ColorList.Action.liked : ColorList.Action.like
+    let color = liked ? UIColor.redColor() : UIColor.grayColor()
     likeButton.setTitleColor(color, forState: .Normal)
   }
 
   // MARK: - Actions
 
   public func likeButtonDidPress() {
-    let color = likeButton.titleColorForState(.Normal) == ColorList.Action.liked
-      ? ColorList.Action.like : ColorList.Action.liked
-    let liked = color == ColorList.Action.liked
+    let color = likeButton.titleColorForState(.Normal) == UIColor.redColor()
+      ? UIColor.grayColor() : UIColor.redColor()
+    let liked = color == UIColor.redColor()
 
     if liked {
       UIView.animateWithDuration(0.1, animations: {

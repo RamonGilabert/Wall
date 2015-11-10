@@ -24,11 +24,11 @@ public class PostMediaView: UIView {
 
   public lazy var imagesCountLabel: UILabel = {
     let label = UILabel()
-    label.font = FontList.Post.media
+    label.font = UIFont.systemFontOfSize(36)
     label.textColor = UIColor.whiteColor()
     label.textAlignment = .Center
     label.opaque = true
-    label.backgroundColor = ColorList.Post.media
+    label.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.35)
 
     return label
     }()
@@ -43,10 +43,9 @@ public class PostMediaView: UIView {
     [firstImageView, secondImageView, thirdImageView].forEach {
       $0.contentMode = .ScaleAspectFill
       $0.clipsToBounds = true
-      $0.backgroundColor = UIColor.whiteColor()
+      $0.backgroundColor = UIColor.lightGrayColor()
       $0.opaque = true
       $0.userInteractionEnabled = true
-      $0.layer.drawsAsynchronously = true
     }
 
     [firstTapGestureRecognizer, secondTapGestureRecognizer,

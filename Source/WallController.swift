@@ -4,8 +4,7 @@ public protocol WallControllerDelegate: class {
 
   func shouldFetchMoreInformation()
   func shouldRefreshPosts(refreshControl: UIRefreshControl)
-  func didTapCell(id: Int, index: Int)
-  func willDisplayCell(cell: PostTableViewCell)
+  func shouldDisplayDetail(postID: Int)
 }
 
 public class WallController: UIViewController {
@@ -20,7 +19,7 @@ public class WallController: UIViewController {
       width: UIScreen.mainScreen().bounds.width,
       height: UIScreen.mainScreen().bounds.height)
     tableView.separatorStyle = .None
-    tableView.backgroundColor = ColorList.Basis.tableViewBackground
+    tableView.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
     tableView.opaque = true
 
     return tableView
@@ -29,7 +28,7 @@ public class WallController: UIViewController {
   public lazy var loadingIndicator: UIActivityIndicatorView = {
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
     activityIndicator.frame.origin.x = (UIScreen.mainScreen().bounds.width - 20) / 2
-    activityIndicator.backgroundColor = UIColor.clearColor()
+    activityIndicator.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
 
     return activityIndicator
     }()
@@ -45,7 +44,7 @@ public class WallController: UIViewController {
   public weak var delegate: WallControllerDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
-  public weak var commentDelegate: CommentTableViewCellDelegate?
+  public weak var activityDelegate: PostActivityDelegate?
   private var posts = [Post]()
   public var fetching = true
   public var verticalOffset: CGFloat = 20
@@ -134,20 +133,14 @@ extension WallController: WallTableViewCellDelegate {
     tableView.endUpdates()
   }
 
-  public func cellDidTap(id: Int) {
-    guard let index = posts.indexOf({ $0.id == id }) else { return }
-    delegate?.didTapCell(id, index: index)
+  public func shouldDisplayDetail(postID: Int) {
+    delegate?.shouldDisplayDetail(postID)
   }
 }
 
 // MARK: - UITableViewDelegate
 
 extension WallController: UITableViewDelegate {
-
-  public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let post = posts[indexPath.row]
-    delegate?.didTapCell(post.id, index: indexPath.row)
-  }
 
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     if let height = cachedHeights[indexPath.row] {
@@ -196,10 +189,7 @@ extension WallController: UITableViewDataSource {
       if let postCell = wallCell as? PostTableViewCell {
         postCell.actionDelegate = actionDelegate
         postCell.informationDelegate = informationDelegate
-      }
-
-      if let commentCell = wallCell as? CommentTableViewCell {
-        commentCell.commentDelegate = commentDelegate
+        postCell.activityDelegate = activityDelegate
       }
     }
 
@@ -209,11 +199,5 @@ extension WallController: UITableViewDataSource {
     cell.delegate = self
 
     return cell
-  }
-
-  public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-    if let cell = cell as? PostTableViewCell {
-      delegate?.willDisplayCell(cell)
-    }
   }
 }
