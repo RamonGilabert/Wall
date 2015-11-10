@@ -5,7 +5,7 @@ public protocol WallControllerDelegate: class {
   func shouldFetchMoreInformation()
   func shouldRefreshPosts(refreshControl: UIRefreshControl)
   func didTapCell(id: Int, index: Int)
-  func willDisplayCell(cell: PostTableViewCell)
+  func willDisplayCell(cell: PostTableViewCell, id: Int, index: Int)
 }
 
 public class WallController: UIViewController {
@@ -213,7 +213,7 @@ extension WallController: UITableViewDataSource {
 
   public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
     if let cell = cell as? PostTableViewCell {
-      delegate?.willDisplayCell(cell)
+      delegate?.willDisplayCell(cell, id: posts[indexPath.row].id, index: indexPath.row)
     }
   }
 }
