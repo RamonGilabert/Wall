@@ -1,5 +1,10 @@
 import UIKit
 
+public protocol CommentTableViewCellDelegate: class {
+
+  func commentAuthorDidTap(commentID: Int)
+}
+
 public class CommentTableViewCell: WallTableViewCell {
 
   public override class func height(post: Post) -> CGFloat {
@@ -7,7 +12,7 @@ public class CommentTableViewCell: WallTableViewCell {
     let textFrame = postText.boundingRectWithSize(CGSize(
       width: UIScreen.mainScreen().bounds.width - Dimensions.textOffset - Dimensions.sideOffset,
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
-      attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(14) ], context: nil)
+      attributes: [ NSFontAttributeName : FontList.Comment.text ], context: nil)
 
     return 70.5 + textFrame.height
   }
@@ -31,28 +36,29 @@ public class CommentTableViewCell: WallTableViewCell {
     imageView.clipsToBounds = true
     imageView.opaque = true
     imageView.backgroundColor = UIColor.whiteColor()
+    imageView.userInteractionEnabled = true
 
     return imageView
     }()
 
   public lazy var authorLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont.boldSystemFontOfSize(14)
+    label.font = FontList.Comment.author
 
     return label
     }()
 
   public lazy var dateLabel: UILabel = {
     let label = UILabel()
-    label.textColor = UIColor.lightGrayColor()
-    label.font = UIFont.systemFontOfSize(12)
+    label.textColor = ColorList.Comment.date
+    label.font = FontList.Comment.date
 
     return label
     }()
 
   public lazy var textView: UITextView = { [unowned self] in
     let textView = UITextView()
-    textView.font = UIFont.systemFontOfSize(14)
+    textView.font = FontList.Comment.author
     textView.dataDetectorTypes = .Link
     textView.editable = false
     textView.scrollEnabled = false
@@ -60,21 +66,37 @@ public class CommentTableViewCell: WallTableViewCell {
     textView.textContainer.lineFragmentPadding = 0
     textView.textContainerInset = UIEdgeInsetsZero
     textView.linkTextAttributes = [
-      NSForegroundColorAttributeName: UIColor.redColor(),
-      NSUnderlineColorAttributeName: UIColor.redColor(),
+      NSForegroundColorAttributeName: ColorList.Basis.highlightedColor,
+      NSUnderlineColorAttributeName: ColorList.Basis.highlightedColor,
       NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue]
-    textView.subviews.first?.backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
+    textView.subviews.first?.backgroundColor = ColorList.Comment.background
 
     return textView
     }()
 
   public lazy var bottomSeparator: CALayer = {
     let layer = CALayer()
-    layer.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1).CGColor
+    layer.backgroundColor = ColorList.Comment.background.CGColor
     layer.opaque = true
 
     return layer
     }()
+
+  public lazy var imageTapGestureRecognizer: UITapGestureRecognizer = {
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "handleAuthorGestureRecognizer")
+
+    return gesture
+    }()
+
+  public lazy var authorTapGestureRecognizer: UITapGestureRecognizer = {
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "handleAuthorGestureRecognizer")
+
+    return gesture
+    }()
+
+  public weak var commentDelegate: CommentTableViewCellDelegate?
 
   // MARK: - Initialization
 
@@ -84,10 +106,13 @@ public class CommentTableViewCell: WallTableViewCell {
     [avatarImageView, authorLabel, textView, dateLabel].forEach {
       addSubview($0)
       $0.opaque = true
-      $0.backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
+      $0.backgroundColor = ColorList.Comment.background
     }
 
-    backgroundColor = UIColor(red: 248/255, green: 249/255, blue: 250/255, alpha: 1)
+    backgroundColor = ColorList.Comment.background
+
+    avatarImageView.addGestureRecognizer(imageTapGestureRecognizer)
+    authorLabel.addGestureRecognizer(authorTapGestureRecognizer)
 
     layer.addSublayer(bottomSeparator)
     opaque = true
@@ -96,6 +121,13 @@ public class CommentTableViewCell: WallTableViewCell {
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Actions
+
+  public func handleAuthorGestureRecognizer() {
+    guard let post = post else { return }
+    commentDelegate?.commentAuthorDidTap(post.id)
   }
 
   // MARK: - Setup
