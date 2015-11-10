@@ -143,6 +143,10 @@ extension AppDelegate: WallControllerDelegate {
       navigationController.pushViewController(commentController, animated: true)
     }
   }
+
+  func willDisplayCell(cell: PostTableViewCell) {
+    
+  }
 }
 
 extension AppDelegate: PostActionDelegate {
