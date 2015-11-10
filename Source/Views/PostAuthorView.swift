@@ -102,6 +102,10 @@ public class PostAuthorView: UIView {
     dateLabel.text = date
   }
 
+  public func updateDate(date: String) {
+    dateLabel.text = date
+  }
+
   // MARK: - Actions
 
   public func handleTapGestureRecognizer() {
