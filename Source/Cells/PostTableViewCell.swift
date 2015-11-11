@@ -34,12 +34,17 @@ public class PostTableViewCell: WallTableViewCell {
       imageTop = 50
     }
 
+    var textOffset: CGFloat = 12
+    if post.text == "" {
+      textOffset = 0
+    }
+
     var informationHeight: CGFloat = 44
-    if post.likeCount == 0 && post.commentCount == 0 {
+    if post.likeCount == 0 && post.commentCount == 0 || post.text == "" {
       informationHeight = 16
     }
 
-    return imageHeight + imageTop + informationHeight + 44 + 20 + 12 + textFrame.height
+    return imageHeight + imageTop + informationHeight + 44 + 20 + textOffset + textFrame.height
   }
 
   public lazy var authorView: PostAuthorView = { [unowned self] in
@@ -141,6 +146,11 @@ public class PostTableViewCell: WallTableViewCell {
       informationHeight = 16
     }
 
+    var textOffset: CGFloat = 12
+    if post.text == "" {
+      textOffset = 0
+    }
+
     authorView.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60)
     postMediaView.frame = CGRect(x: 0, y: imageTop, width: UIScreen.mainScreen().bounds.width, height: imageHeight)
     informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: informationHeight)
@@ -154,7 +164,7 @@ public class PostTableViewCell: WallTableViewCell {
     textView.text = post.text
     textView.frame.size.width = UIScreen.mainScreen().bounds.width - 40
     textView.sizeToFit()
-    textView.frame = CGRect(x: 20, y: CGRectGetMaxY(postMediaView.frame) + 12,
+    textView.frame = CGRect(x: 20, y: CGRectGetMaxY(postMediaView.frame) + textOffset,
       width: textView.frame.width, height: textView.frame.height)
 
     informationView.frame.origin = CGPoint(x: 0, y: CGRectGetMaxY(textView.frame))
