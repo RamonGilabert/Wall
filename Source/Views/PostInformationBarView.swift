@@ -11,7 +11,7 @@ public class PostInformationBarView: UIView {
 
   public struct Dimensions {
     public static let offset: CGFloat = 20
-    public static let topOffset: CGFloat = 18
+    public static let topOffset: CGFloat = 8
     public static let interitemOffset: CGFloat = 10
   }
 

@@ -34,7 +34,7 @@ public class PostTableViewCell: WallTableViewCell {
       imageTop = 50
     }
 
-    var informationHeight: CGFloat = 56
+    var informationHeight: CGFloat = 44
     if post.likeCount == 0 && post.commentCount == 0 {
       informationHeight = 16
     }
@@ -136,8 +136,8 @@ public class PostTableViewCell: WallTableViewCell {
       postMediaView.alpha = 0
     }
 
-    var informationHeight: CGFloat = 56
-    if post.likeCount == 0 && post.commentCount == 0 {
+    var informationHeight: CGFloat = 44
+    if post.likeCount == 0 && post.commentCount == 0 || post.text == "" {
       informationHeight = 16
     }
 
