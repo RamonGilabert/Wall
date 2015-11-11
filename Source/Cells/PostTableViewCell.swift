@@ -13,6 +13,8 @@ public protocol PostInformationDelegate: class {
   func seenInformationDidPress(postID: Int)
   func authorDidTap(postID: Int)
   func mediaDidTap(postID: Int, kind: Media.Kind, index: Int)
+  func groupDidTap(postID: Int)
+  func reportButtonDidPress(postID: Int)
 }
 
 public class PostTableViewCell: WallTableViewCell {
@@ -222,11 +224,13 @@ extension PostTableViewCell: PostAuthorViewDelegate {
   }
 
   public func groupDidTap() {
-
+    guard let post = post else { return }
+    informationDelegate?.groupDidTap(post.id)
   }
 
   public func reportButtonDidPress() {
-    
+    guard let post = post else { return }
+    informationDelegate?.reportButtonDidPress(post.id)
   }
 }
 
