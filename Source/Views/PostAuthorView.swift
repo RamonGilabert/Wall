@@ -4,6 +4,8 @@ import SDWebImage
 public protocol PostAuthorViewDelegate: class {
 
   func authorDidTap()
+  func groupDidTap()
+  func reportButtonDidPress()
 }
 
 public class PostAuthorView: UIView {
@@ -34,6 +36,28 @@ public class PostAuthorView: UIView {
     return label
     }()
 
+  public lazy var disclosureImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: ImageList.Basis.disclosure)
+    
+    return imageView
+    }()
+
+  public lazy var groupLabel: UILabel = {
+    let label = UILabel()
+    label.font = FontList.Post.author
+
+    return label
+    }()
+
+  public lazy var reportButton: UIButton = {
+    let button = UIButton()
+    button.setImage(UIImage(named: ImageList.Basis.reportButton), forState: .Normal)
+    button.addTarget(self, action: "reportButtonDidPress", forControlEvents: .TouchUpInside)
+
+    return button
+    }()
+
   public lazy var dateLabel: UILabel = {
     let label = UILabel()
     label.textColor = ColorList.Post.date
@@ -56,6 +80,13 @@ public class PostAuthorView: UIView {
     return gesture
     }()
 
+  public lazy var tapGroupGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: "handleGroupGestureRecognizer")
+
+    return gesture
+    }()
+
   public weak var delegate: PostAuthorViewDelegate?
 
   // MARK: - Initialization
@@ -73,6 +104,7 @@ public class PostAuthorView: UIView {
 
     avatarImageView.addGestureRecognizer(tapAuthorGestureRecognizer)
     authorLabel.addGestureRecognizer(tapLabelGestureRecognizer)
+    groupLabel.addGestureRecognizer(tapGroupGestureRecognizer)
     backgroundColor = UIColor.whiteColor()
   }
 
@@ -84,16 +116,18 @@ public class PostAuthorView: UIView {
 
   public override func drawRect(rect: CGRect) {
     super.drawRect(rect)
+    let totalWidth = UIScreen.mainScreen().bounds.width
 
     avatarImageView.frame = CGRect(x: Dimensions.avatarOffset, y: Dimensions.avatarOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize)
     authorLabel.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.nameTopOffset,
-      width: UIScreen.mainScreen().bounds.width - 70, height: 20)
+      width: totalWidth - 70, height: 20)
+    groupLabel.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
     dateLabel.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.dateTopOffset,
-      width: UIScreen.mainScreen().bounds.width - 70, height: 17)
+      width: totalWidth - 70, height: 17)
   }
 
-  public func configureView(author: Author, date: String) {
+  public func configureView(author: Author, date: String, group: String = "") {
     if let avatarURL = author.avatar {
       avatarImageView.sd_setImageWithURL(avatarURL)
     }
@@ -110,5 +144,13 @@ public class PostAuthorView: UIView {
 
   public func handleTapGestureRecognizer() {
     delegate?.authorDidTap()
+  }
+
+  public func handleGroupGestureRecognizer() {
+    delegate?.groupDidTap()
+  }
+
+  public func reportButtonDidPress() {
+    delegate?.reportButtonDidPress()
   }
 }

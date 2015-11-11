@@ -220,6 +220,14 @@ extension PostTableViewCell: PostAuthorViewDelegate {
     guard let post = post else { return }
     informationDelegate?.authorDidTap(post.id)
   }
+
+  public func groupDidTap() {
+
+  }
+
+  public func reportButtonDidPress() {
+    
+  }
 }
 
 extension PostTableViewCell: PostMediaViewDelegate {
