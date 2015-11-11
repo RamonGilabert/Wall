@@ -144,9 +144,7 @@ extension AppDelegate: WallControllerDelegate {
     }
   }
 
-  func willDisplayCell(cell: PostTableViewCell) {
-    
-  }
+  func willDisplayCell(cell: PostTableViewCell, id: Int, index: Int) { }
 }
 
 extension AppDelegate: PostActionDelegate {

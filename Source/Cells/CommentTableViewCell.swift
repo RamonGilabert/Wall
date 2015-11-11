@@ -27,8 +27,6 @@ public class CommentTableViewCell: WallTableViewCell {
     public static let dateTopOffset: CGFloat = 30
   }
 
-  public let nodeAttributesURL = "nodeAttributesURL"
-
   public lazy var avatarImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = Dimensions.avatarSize / 2
@@ -58,7 +56,7 @@ public class CommentTableViewCell: WallTableViewCell {
 
   public lazy var textView: UITextView = { [unowned self] in
     let textView = UITextView()
-    textView.font = FontList.Comment.author
+    textView.font = FontList.Comment.text
     textView.dataDetectorTypes = .Link
     textView.editable = false
     textView.scrollEnabled = false
