@@ -15,6 +15,7 @@ public class Media {
   public init(kind: Kind, source: NSURL?, thumbnail: NSURL? = nil) {
     self.kind = kind
     self.source = source
+    self.thumbnail = thumbnail
 
     if kind == .Image {
       self.thumbnail = thumbnail ?? source
