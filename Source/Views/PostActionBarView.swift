@@ -23,6 +23,13 @@ public class PostActionBarView: UIView {
 
   public lazy var likeButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
+    let textAttachment = NSTextAttachment()
+    textAttachment.image = UIImage(named: ImageList.Action.likeButton)?.imageWithRenderingMode(.AlwaysTemplate)
+    let attachmentAttributedString = NSAttributedString(attachment: textAttachment)
+    let attributedString = NSMutableAttributedString(string: NSLocalizedString("Like", comment: ""))
+    attributedString.insertAttributedString(attachmentAttributedString, atIndex: 0)
+
+    button.setAttributedTitle(attributedString, forState: .Normal)
     button.setTitle(NSLocalizedString("Like", comment: ""), forState: .Normal)
     button.titleLabel?.font = FontList.Action.like
     button.addTarget(self, action: "likeButtonDidPress", forControlEvents: .TouchUpInside)
@@ -34,7 +41,13 @@ public class PostActionBarView: UIView {
 
   public lazy var commentButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
-    button.setTitle(NSLocalizedString("Comment", comment: ""), forState: .Normal)
+    let textAttachment = NSTextAttachment()
+    textAttachment.image = UIImage(named: ImageList.Action.commentButton)?.imageWithRenderingMode(.AlwaysTemplate)
+    let attachmentAttributedString = NSAttributedString(attachment: textAttachment)
+    let attributedString = NSMutableAttributedString(string: NSLocalizedString("Comment", comment: ""))
+    attributedString.insertAttributedString(attachmentAttributedString, atIndex: 0)
+
+    button.setAttributedTitle(attributedString, forState: .Normal)
     button.titleLabel?.font = FontList.Action.comment
     button.addTarget(self, action: "commentButtonDidPress", forControlEvents: .TouchUpInside)
     button.setTitleColor(ColorList.Action.comment, forState: .Normal)
@@ -84,6 +97,7 @@ public class PostActionBarView: UIView {
   public func configureView(liked: Bool) {
     let color = liked ? ColorList.Action.liked : ColorList.Action.like
     likeButton.setTitleColor(color, forState: .Normal)
+    likeButton.tintColor = color
   }
 
   // MARK: - Actions
