@@ -129,7 +129,8 @@ public class PostAuthorView: UIView {
 
   public func configureView(author: Author, date: String, group: String = "") {
     if let avatarURL = author.avatar {
-      avatarImageView.sd_setImageWithURL(avatarURL)
+      avatarImageView.sd_setImageWithURL(avatarURL,
+        placeholderImage: UIImage(named: ImageList.Basis.placeholder))
     }
 
     authorLabel.text = author.name

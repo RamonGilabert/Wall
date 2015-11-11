@@ -194,6 +194,6 @@ extension AppDelegate: PostInformationDelegate {
   }
 
   func reportButtonDidPress(postID: Int) {
-    
+
   }
 }

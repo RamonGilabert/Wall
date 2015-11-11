@@ -139,7 +139,8 @@ public class CommentTableViewCell: WallTableViewCell {
     avatarImageView.frame = CGRect(x: Dimensions.sideOffset, y: Dimensions.sideOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize)
     if let avatarURL = author.avatar {
-      avatarImageView.sd_setImageWithURL(avatarURL)
+      avatarImageView.sd_setImageWithURL(avatarURL,
+        placeholderImage: UIImage(named: ImageList.Basis.placeholder))
     }
 
     authorLabel.frame = CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,

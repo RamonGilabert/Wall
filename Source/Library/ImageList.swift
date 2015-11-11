@@ -6,6 +6,7 @@ public struct ImageList {
     public static var playButton = ""
     public static var reportButton = ""
     public static var disclosure = ""
+    public static var placeholder = ""
   }
 
   public struct Action {
