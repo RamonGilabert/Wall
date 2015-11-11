@@ -39,7 +39,7 @@ public class PostAuthorView: UIView {
   public lazy var disclosureImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.image = UIImage(named: ImageList.Basis.disclosure)
-    
+
     return imageView
     }()
 
@@ -88,6 +88,7 @@ public class PostAuthorView: UIView {
     }()
 
   public weak var delegate: PostAuthorViewDelegate?
+  public var shouldDisplayGroup = false
 
   // MARK: - Initialization
 
@@ -122,16 +123,17 @@ public class PostAuthorView: UIView {
         placeholderImage: UIImage(named: ImageList.Basis.placeholder))
     }
 
-    if group == "" {
+    if group == "" || !shouldDisplayGroup {
       disclosureImageView.alpha = 0
       groupLabel.alpha = 0
+      groupLabel.text = ""
     } else {
       disclosureImageView.alpha = 1
       groupLabel.alpha = 1
+      groupLabel.text = group
     }
 
     authorLabel.text = author.name
-    groupLabel.text = group
     dateLabel.text = date
 
     [authorLabel, groupLabel].forEach { $0.sizeToFit() }
@@ -139,10 +141,10 @@ public class PostAuthorView: UIView {
     avatarImageView.frame = CGRect(x: Dimensions.avatarOffset, y: Dimensions.avatarOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize)
     authorLabel.frame.origin = CGPoint(x: Dimensions.nameOffset, y: Dimensions.nameTopOffset)
-    disclosureImageView.frame = CGRect(x: CGRectGetMaxX(authorLabel.frame) + 5, y: 24, width: 3, height: 5.88)
+    disclosureImageView.frame = CGRect(x: CGRectGetMaxX(authorLabel.frame) + 5, y: 20, width: 3, height: 5.88)
 
-    if CGRectGetMaxX(disclosureImageView.frame) + 41 + groupLabel.frame.width < totalWidth {
-      groupLabel.frame.origin = CGPoint(x: CGRectGetMaxX(disclosureImageView.frame),
+    if CGRectGetMaxX(disclosureImageView.frame) + 41 + groupLabel.frame.width < totalWidth || !shouldDisplayGroup {
+      groupLabel.frame.origin = CGPoint(x: CGRectGetMaxX(disclosureImageView.frame) + 5,
         y: Dimensions.nameTopOffset)
       dateLabel.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.dateTopOffset,
         width: totalWidth - 70, height: 17)
@@ -151,6 +153,8 @@ public class PostAuthorView: UIView {
       dateLabel.frame = CGRect(x: CGRectGetMaxX(groupLabel.frame) + 10, y: Dimensions.dateTopOffset,
         width: totalWidth - 100, height: 17)
     }
+
+    reportButton.frame = CGRect(x: totalWidth - 32, y: 8, width: 24, height: 24)
   }
 
   public func updateDate(date: String) {
@@ -166,7 +170,7 @@ public class PostAuthorView: UIView {
   public func handleGroupGestureRecognizer() {
     delegate?.groupDidTap()
   }
-
+  
   public func reportButtonDidPress() {
     delegate?.reportButtonDidPress()
   }
