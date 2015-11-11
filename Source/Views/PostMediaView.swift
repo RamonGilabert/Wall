@@ -36,8 +36,8 @@ public class PostMediaView: UIView {
   public lazy var playButton: UIImageView = {
     let imageView = UIImageView()
     imageView.image = UIImage(named: ImageList.Basis.playButton)
-    imageView.frame = CGRect(x: (UIScreen.mainScreen().bounds.width - 64) / 2,
-      y: (274) / 2, width: 64, height: 64)
+    imageView.frame = CGRect(x: (UIScreen.mainScreen().bounds.width - 64 - Dimensions.totalOffset) / 2,
+      y: (274 - 64) / 2, width: 64, height: 64)
 
     return imageView
     }()
