@@ -33,6 +33,15 @@ public class PostMediaView: UIView {
     return label
     }()
 
+  public lazy var playButton: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: ImageList.Basis.playButton)
+    imageView.frame = CGRect(x: (UIScreen.mainScreen().bounds.width - 64) / 2,
+      y: (274) / 2, width: 64, height: 64)
+
+    return imageView
+    }()
+
   public weak var delegate: PostMediaViewDelegate?
 
   // MARK: - Initialization
@@ -40,7 +49,7 @@ public class PostMediaView: UIView {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [firstImageView, secondImageView, thirdImageView].forEach {
+    [firstImageView, secondImageView, thirdImageView, playButton].forEach {
       $0.contentMode = .ScaleAspectFill
       $0.clipsToBounds = true
       $0.backgroundColor = UIColor.whiteColor()
@@ -48,6 +57,8 @@ public class PostMediaView: UIView {
       $0.userInteractionEnabled = true
       $0.layer.drawsAsynchronously = true
     }
+
+    playButton.backgroundColor = UIColor.clearColor()
 
     [firstTapGestureRecognizer, secondTapGestureRecognizer,
       thirdTapGestureRecognizer, fourthTapGestureRecognizer].forEach {
@@ -59,6 +70,7 @@ public class PostMediaView: UIView {
     thirdImageView.addGestureRecognizer(thirdTapGestureRecognizer)
     imagesCountLabel.addGestureRecognizer(fourthTapGestureRecognizer)
 
+    firstImageView.addSubview(playButton)
     thirdImageView.addSubview(imagesCountLabel)
     backgroundColor = UIColor.whiteColor()
   }
@@ -86,6 +98,7 @@ public class PostMediaView: UIView {
     let totalWitdh = UIScreen.mainScreen().bounds.width
     let viewsArray = [firstImageView, secondImageView, thirdImageView]
 
+    playButton.alpha = 0
     viewsArray.forEach { $0.removeFromSuperview() }
 
     for (index, element) in media.enumerate() where index < 3 {
@@ -97,6 +110,10 @@ public class PostMediaView: UIView {
     case 1:
       firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
         width: totalWitdh - Dimensions.totalOffset, height: Dimensions.height)
+
+      if let firstMedia = media.first where firstMedia.kind == .Video {
+        playButton.alpha = 1
+      }
     case 2:
       let imageSize = (totalWitdh - Dimensions.totalOffset) / 2
 
