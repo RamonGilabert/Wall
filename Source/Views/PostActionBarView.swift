@@ -33,8 +33,6 @@ public class PostActionBarView: UIView {
     button.setTitle(NSLocalizedString("Like", comment: ""), forState: .Normal)
     button.titleLabel?.font = FontList.Action.like
     button.addTarget(self, action: "likeButtonDidPress", forControlEvents: .TouchUpInside)
-    button.subviews.first?.opaque = true
-    button.subviews.first?.backgroundColor = UIColor.whiteColor()
 
     return button
     }()
@@ -51,8 +49,6 @@ public class PostActionBarView: UIView {
     button.titleLabel?.font = FontList.Action.comment
     button.addTarget(self, action: "commentButtonDidPress", forControlEvents: .TouchUpInside)
     button.setTitleColor(ColorList.Action.comment, forState: .Normal)
-    button.subviews.first?.opaque = true
-    button.subviews.first?.backgroundColor = UIColor.whiteColor()
 
     return button
     }()
@@ -69,6 +65,8 @@ public class PostActionBarView: UIView {
       $0.opaque = true
       $0.backgroundColor = UIColor.clearColor()
       $0.layer.drawsAsynchronously = true
+      $0.subviews.first?.opaque = true
+      $0.subviews.first?.backgroundColor = UIColor.whiteColor()
     }
 
     layer.addSublayer(topSeparator)
