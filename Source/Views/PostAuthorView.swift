@@ -94,7 +94,7 @@ public class PostAuthorView: UIView {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [dateLabel, authorLabel, avatarImageView].forEach {
+    [dateLabel, authorLabel, avatarImageView, disclosureImageView, groupLabel, reportButton].forEach {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = UIColor.whiteColor()
@@ -114,27 +114,43 @@ public class PostAuthorView: UIView {
 
   // MARK: - Setup
 
-  public override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
+  public func configureView(author: Author, date: String, group: String = "") {
     let totalWidth = UIScreen.mainScreen().bounds.width
 
-    avatarImageView.frame = CGRect(x: Dimensions.avatarOffset, y: Dimensions.avatarOffset,
-      width: Dimensions.avatarSize, height: Dimensions.avatarSize)
-    authorLabel.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.nameTopOffset,
-      width: totalWidth - 70, height: 20)
-    groupLabel.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-    dateLabel.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.dateTopOffset,
-      width: totalWidth - 70, height: 17)
-  }
-
-  public func configureView(author: Author, date: String, group: String = "") {
     if let avatarURL = author.avatar {
       avatarImageView.sd_setImageWithURL(avatarURL,
         placeholderImage: UIImage(named: ImageList.Basis.placeholder))
     }
 
+    if group == "" {
+      disclosureImageView.alpha = 0
+      groupLabel.alpha = 0
+    } else {
+      disclosureImageView.alpha = 1
+      groupLabel.alpha = 1
+    }
+
     authorLabel.text = author.name
+    groupLabel.text = group
     dateLabel.text = date
+
+    [authorLabel, groupLabel].forEach { $0.sizeToFit() }
+
+    avatarImageView.frame = CGRect(x: Dimensions.avatarOffset, y: Dimensions.avatarOffset,
+      width: Dimensions.avatarSize, height: Dimensions.avatarSize)
+    authorLabel.frame.origin = CGPoint(x: Dimensions.nameOffset, y: Dimensions.nameTopOffset)
+    disclosureImageView.frame = CGRect(x: CGRectGetMaxX(authorLabel.frame) + 5, y: 24, width: 3, height: 5.88)
+
+    if CGRectGetMaxX(disclosureImageView.frame) + 41 + groupLabel.frame.width < totalWidth {
+      groupLabel.frame.origin = CGPoint(x: CGRectGetMaxX(disclosureImageView.frame),
+        y: Dimensions.nameTopOffset)
+      dateLabel.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.dateTopOffset,
+        width: totalWidth - 70, height: 17)
+    } else {
+      groupLabel.frame.origin = CGPoint(x: Dimensions.nameOffset, y: Dimensions.dateTopOffset)
+      dateLabel.frame = CGRect(x: CGRectGetMaxX(groupLabel.frame) + 10, y: Dimensions.dateTopOffset,
+        width: totalWidth - 100, height: 17)
+    }
   }
 
   public func updateDate(date: String) {

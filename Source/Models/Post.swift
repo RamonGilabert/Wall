@@ -12,6 +12,7 @@ public class Post {
   public var text = ""
   public var liked = false
   public var seen = false
+  public var group = ""
   public var likeCount = 0
   public var seenCount = 0
   public var commentCount = 0

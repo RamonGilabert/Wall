@@ -157,7 +157,7 @@ public class PostTableViewCell: WallTableViewCell {
     actionBarView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
     bottomSeparator.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20)
 
-    authorView.configureView(author, date: post.publishDate)
+    authorView.configureView(author, date: post.publishDate, group: post.group)
     informationView.configureView(post.likeCount, comments: post.commentCount, seen: post.seenCount)
     actionBarView.configureView(post.liked)
 
