@@ -23,14 +23,7 @@ public class PostActionBarView: UIView {
 
   public lazy var likeButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
-    let textAttachment = NSTextAttachment()
-    textAttachment.image = UIImage(named: ImageList.Action.likeButton)?.imageWithRenderingMode(.AlwaysTemplate)
-    let attachmentAttributedString = NSAttributedString(attachment: textAttachment)
-    let attributedString = NSMutableAttributedString(string: NSLocalizedString("Like", comment: ""))
-    attributedString.insertAttributedString(attachmentAttributedString, atIndex: 0)
-
-    button.setAttributedTitle(attributedString, forState: .Normal)
-    button.setTitle(NSLocalizedString("Like", comment: ""), forState: .Normal)
+    button.setAttributedTitle(self.configureAttributes(true, liked: false), forState: .Normal)
     button.titleLabel?.font = FontList.Action.like
     button.addTarget(self, action: "likeButtonDidPress", forControlEvents: .TouchUpInside)
 
@@ -39,21 +32,15 @@ public class PostActionBarView: UIView {
 
   public lazy var commentButton: UIButton = { [unowned self] in
     let button = UIButton(type: .Custom)
-    let textAttachment = NSTextAttachment()
-    textAttachment.image = UIImage(named: ImageList.Action.commentButton)?.imageWithRenderingMode(.AlwaysTemplate)
-    let attachmentAttributedString = NSAttributedString(attachment: textAttachment)
-    let attributedString = NSMutableAttributedString(string: NSLocalizedString("Comment", comment: ""))
-    attributedString.insertAttributedString(attachmentAttributedString, atIndex: 0)
-
-    button.setAttributedTitle(attributedString, forState: .Normal)
+    button.setAttributedTitle(self.configureAttributes(false, liked: false), forState: .Normal)
     button.titleLabel?.font = FontList.Action.comment
     button.addTarget(self, action: "commentButtonDidPress", forControlEvents: .TouchUpInside)
-    button.setTitleColor(ColorList.Action.comment, forState: .Normal)
 
     return button
     }()
 
   public weak var delegate: PostActionBarViewDelegate?
+  public var liked = false
 
   // MARK: - Initialization
 
@@ -93,17 +80,38 @@ public class PostActionBarView: UIView {
   }
 
   public func configureView(liked: Bool) {
+    self.liked = liked
+    likeButton.setAttributedTitle(configureAttributes(true, liked: liked), forState: .Normal)
+  }
+
+  public func configureAttributes(likes: Bool, liked: Bool) -> NSAttributedString {
+    let text = likes ? NSLocalizedString("Like", comment: "") : NSLocalizedString("Comment", comment: "")
     let color = liked ? ColorList.Action.liked : ColorList.Action.like
-    likeButton.setTitleColor(color, forState: .Normal)
-    likeButton.tintColor = color
+    var image = likes ? ImageList.Action.likeButton : ImageList.Action.commentButton
+
+    if liked {
+      image = ImageList.Action.likedButton
+    }
+
+    let textAttachment = NSTextAttachment()
+    textAttachment.image = UIImage(named: image)
+    let attachmentAttributedString = NSAttributedString(attachment: textAttachment)
+    let attributedString = NSMutableAttributedString(string: String(format: " %@", text))
+    attributedString.insertAttributedString(attachmentAttributedString, atIndex: 0)
+    attributedString.addAttribute(NSForegroundColorAttributeName,
+      value: color, range: NSMakeRange(0, attributedString.length))
+
+    if let image = textAttachment.image {
+      textAttachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height)
+    }
+
+    return attributedString
   }
 
   // MARK: - Actions
 
   public func likeButtonDidPress() {
-    let color = likeButton.titleColorForState(.Normal) == ColorList.Action.liked
-      ? ColorList.Action.like : ColorList.Action.liked
-    let liked = color == ColorList.Action.liked
+    liked = !liked
 
     if liked {
       UIView.animateWithDuration(0.1, animations: {
@@ -116,7 +124,7 @@ public class PostActionBarView: UIView {
     }
 
     delegate?.likeButtonDidPress(liked)
-    likeButton.setTitleColor(color, forState: .Normal)
+    configureView(liked)
   }
 
   public func commentButtonDidPress() {

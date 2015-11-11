@@ -188,4 +188,12 @@ extension AppDelegate: PostInformationDelegate {
   func mediaDidTap(postID: Int, kind: Media.Kind, index: Int) {
     print("Index \(index)")
   }
+
+  func groupDidTap(postID: Int) {
+
+  }
+
+  func reportButtonDidPress(postID: Int) {
+    
+  }
 }

@@ -10,6 +10,7 @@ public struct ImageList {
 
   public struct Action {
     public static var likeButton = ""
+    public static var likedButton = ""
     public static var commentButton = ""
   }
 }
