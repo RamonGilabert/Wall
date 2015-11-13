@@ -106,7 +106,7 @@ public class PostMediaView: UIView {
       viewsArray[index].sd_setImageWithURL(element.thumbnail,
         placeholderImage: UIImage(named: ImageList.Basis.placeholder))
     }
-    
+
     switch media.count {
     case 1:
       firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
