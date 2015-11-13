@@ -50,6 +50,7 @@ public class WallController: UIViewController {
   public var fetching = true
   public var verticalOffset: CGFloat = 20
   public var cachedHeights = [Int : CGFloat]()
+  public var shouldDisplayGroup = false
 
   // MARK: - View Lifecycle
 
@@ -104,9 +105,7 @@ public class WallController: UIViewController {
 
       dispatch_async(dispatch_get_main_queue()) {
         self.loadingIndicator.stopAnimating()
-        self.tableView.beginUpdates()
         self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-        self.tableView.endUpdates()
         self.fetching = newPosts.isEmpty ? true : false
       }
     }
@@ -115,9 +114,7 @@ public class WallController: UIViewController {
   // MARK: - Refresh Control
 
   public func handleRefreshControl(refreshControl: UIRefreshControl) {
-    tableView.beginUpdates()
     tableView.reloadData()
-    tableView.endUpdates()
     delegate?.shouldRefreshPosts(refreshControl)
   }
 }
@@ -130,8 +127,7 @@ extension WallController: WallTableViewCellDelegate {
     guard let postIndex = posts.indexOf({ $0.id == postID }) else { return }
 
     cachedHeights.removeValueForKey(postIndex)
-    tableView.beginUpdates()
-    tableView.endUpdates()
+    tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: postIndex, inSection: 0)], withRowAnimation: .None)
   }
 
   public func cellDidTap(id: Int) {
@@ -196,6 +192,7 @@ extension WallController: UITableViewDataSource {
       if let postCell = wallCell as? PostTableViewCell {
         postCell.actionDelegate = actionDelegate
         postCell.informationDelegate = informationDelegate
+        postCell.authorView.shouldDisplayGroup = shouldDisplayGroup
       }
 
       if let commentCell = wallCell as? CommentTableViewCell {

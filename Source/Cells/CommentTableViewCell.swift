@@ -153,11 +153,19 @@ public class CommentTableViewCell: WallTableViewCell {
     textView.frame = CGRect(x: Dimensions.textOffset, y: 36,
       width: textView.frame.width, height: textView.frame.height)
 
-    dateLabel.frame = CGRect(x: Dimensions.textOffset, y: textView.frame.maxY + 9,
-      width: textView.frame.width, height: 17)
-    dateLabel.text = post.publishDate
+    updateDate(post)
 
     bottomSeparator.frame = CGRect(x: 0, y: dateLabel.frame.maxY + 8, width: totalWidth, height: 0.5)
+  }
+
+  public func updateDate(post: Post) {
+    dateLabel.frame = CGRect(x: Dimensions.textOffset, y: textView.frame.maxY + 9,
+      width: UIScreen.mainScreen().bounds.width, height: 17)
+    dateLabel.text = post.publishDate
+
+    if post.publishDate == "1 Jan 01:00" {
+      dateLabel.text = NSLocalizedString("Publishing", comment: "")
+    }
   }
 }
 

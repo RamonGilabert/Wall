@@ -40,8 +40,9 @@ public class PostTableViewCell: WallTableViewCell {
     }
 
     var informationHeight: CGFloat = 44
-    if post.likeCount == 0 && post.commentCount == 0 || post.text == "" {
-      informationHeight = 16
+    if (post.likeCount == 0 && post.commentCount == 0 && post.text == "")
+      || (post.likeCount == 0 && post.commentCount == 0) {
+        informationHeight = 16
     }
 
     return imageHeight + imageTop + informationHeight + 44 + 20 + textOffset + textFrame.height
@@ -100,6 +101,7 @@ public class PostTableViewCell: WallTableViewCell {
 
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
+  public var detail = false
 
   // MARK: - Initialization
 
@@ -125,10 +127,10 @@ public class PostTableViewCell: WallTableViewCell {
 
   // MARK: - Setup
 
-  public override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
+  public override func configureCell(post: Post) {
+    super.configureCell(post)
 
-    guard let post = post, author = post.author else { return }
+    guard let author = post.author else { return }
 
     var imageHeight: CGFloat = 0
     var imageTop: CGFloat = 50
@@ -142,9 +144,14 @@ public class PostTableViewCell: WallTableViewCell {
     }
 
     var informationHeight: CGFloat = 44
-    if post.likeCount == 0 && post.commentCount == 0 || post.text == "" {
-      informationHeight = 16
+    if (post.likeCount == 0 && post.commentCount == 0 && post.text == "")
+      || (post.likeCount == 0 && post.commentCount == 0) {
+        informationHeight = 16
     }
+
+    //    if detail && post.likeCount == 0 {
+    //      informationHeight = 16
+    //    }
 
     var textOffset: CGFloat = 12
     if post.text == "" {
