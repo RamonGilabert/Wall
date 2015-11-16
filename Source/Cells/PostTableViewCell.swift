@@ -149,9 +149,9 @@ public class PostTableViewCell: WallTableViewCell {
         informationHeight = 16
     }
 
-    //    if detail && post.likeCount == 0 {
-    //      informationHeight = 16
-    //    }
+    if detail && post.likeCount == 0 {
+      informationHeight = 16
+    }
 
     var textOffset: CGFloat = 12
     if post.text == "" {

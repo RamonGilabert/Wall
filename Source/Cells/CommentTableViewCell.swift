@@ -42,6 +42,7 @@ public class CommentTableViewCell: WallTableViewCell {
   public lazy var authorLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Comment.author
+    label.userInteractionEnabled = true
 
     return label
     }()
@@ -72,22 +73,19 @@ public class CommentTableViewCell: WallTableViewCell {
     return textView
     }()
 
-  public lazy var bottomSeparator: CALayer = {
-    let layer = CALayer()
-    layer.backgroundColor = ColorList.Comment.background.CGColor
-    layer.opaque = true
-
-    return layer
+  public lazy var bottomSeparator: UIView = {
+    let view = UIView()
+    return view
     }()
 
-  public lazy var imageTapGestureRecognizer: UITapGestureRecognizer = {
+  public lazy var imageTapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
     gesture.addTarget(self, action: "handleAuthorGestureRecognizer")
 
     return gesture
     }()
 
-  public lazy var authorTapGestureRecognizer: UITapGestureRecognizer = {
+  public lazy var authorTapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
     gesture.addTarget(self, action: "handleAuthorGestureRecognizer")
 
@@ -101,18 +99,18 @@ public class CommentTableViewCell: WallTableViewCell {
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [avatarImageView, authorLabel, textView, dateLabel].forEach {
+    [avatarImageView, authorLabel, textView, dateLabel, bottomSeparator].forEach {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = ColorList.Comment.background
     }
 
+    bottomSeparator.backgroundColor = ColorList.Comment.separator
     backgroundColor = ColorList.Comment.background
 
     avatarImageView.addGestureRecognizer(imageTapGestureRecognizer)
     authorLabel.addGestureRecognizer(authorTapGestureRecognizer)
 
-    layer.addSublayer(bottomSeparator)
     opaque = true
     selectionStyle = .None
   }
@@ -155,7 +153,7 @@ public class CommentTableViewCell: WallTableViewCell {
 
     updateDate(post)
 
-    bottomSeparator.frame = CGRect(x: 0, y: dateLabel.frame.maxY + 8, width: totalWidth, height: 0.5)
+    bottomSeparator.frame = CGRect(x: 8, y: dateLabel.frame.maxY + 8, width: totalWidth - 16, height: 0.5)
   }
 
   public func updateDate(post: Post) {

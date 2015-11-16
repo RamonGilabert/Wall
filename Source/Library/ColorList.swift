@@ -19,6 +19,7 @@ public struct ColorList {
     public static var author = UIColor.blackColor()
     public static var text = UIColor.blackColor()
     public static var date = UIColor.lightGrayColor()
+    public static var separator = UIColor.grayColor()
   }
 
   public struct Information {
