@@ -115,23 +115,8 @@ public class CommentTableViewCell: WallTableViewCell {
     selectionStyle = .None
   }
 
-  public required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  // MARK: - Actions
-
-  public func handleAuthorGestureRecognizer() {
-    guard let post = post else { return }
-    commentDelegate?.commentAuthorDidTap(post.id)
-  }
-
-  // MARK: - Setup
-
-  public override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
-
-    guard let post = post, author = post.author else { return }
+  public override func configureCell(post: Post) {
+    guard let author = post.author else { return }
     let totalWidth = UIScreen.mainScreen().bounds.width
 
     avatarImageView.frame = CGRect(x: Dimensions.sideOffset, y: Dimensions.sideOffset,
@@ -155,6 +140,19 @@ public class CommentTableViewCell: WallTableViewCell {
 
     bottomSeparator.frame = CGRect(x: 8, y: dateLabel.frame.maxY + 8, width: totalWidth - 16, height: 0.5)
   }
+
+  public required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Actions
+
+  public func handleAuthorGestureRecognizer() {
+    guard let post = post else { return }
+    commentDelegate?.commentAuthorDidTap(post.id)
+  }
+
+  // MARK: - Setup
 
   public func updateDate(post: Post) {
     dateLabel.frame = CGRect(x: Dimensions.textOffset, y: textView.frame.maxY + 9,
