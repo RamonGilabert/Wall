@@ -159,7 +159,7 @@ public class CommentTableViewCell: WallTableViewCell {
       width: UIScreen.mainScreen().bounds.width, height: 17)
     dateLabel.text = post.publishDate
 
-    if post.publishDate == "1 Jan 01:00" {
+    if post.publishDate == "1 Jan 01:00" || post.publishDate == "1 jan. 01:00" {
       dateLabel.text = NSLocalizedString("Publishing", comment: "")
     }
   }
