@@ -11,7 +11,7 @@ public class PostMediaView: UIView {
   public struct Dimensions {
     public static let containerOffset: CGFloat = 10
     public static let totalOffset: CGFloat = 20
-    public static let height: CGFloat = 274
+    public static let height: CGFloat = (UIScreen.mainScreen().bounds.width - 20) / 1.295
   }
 
   public lazy var firstImageView = UIImageView()
