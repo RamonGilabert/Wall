@@ -27,7 +27,7 @@ public class PostTableViewCell: WallTableViewCell {
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
       attributes: [ NSFontAttributeName : FontList.Post.text ], context: nil)
 
-    var imageHeight: CGFloat = 274
+    var imageHeight: CGFloat = (UIScreen.mainScreen().bounds.width - 20) / 1.295
     var imageTop: CGFloat = 60
     if post.media.isEmpty {
       imageHeight = 0
@@ -135,7 +135,7 @@ public class PostTableViewCell: WallTableViewCell {
     var imageHeight: CGFloat = 0
     var imageTop: CGFloat = 50
     if !post.media.isEmpty {
-      imageHeight = 274
+      imageHeight = (UIScreen.mainScreen().bounds.width - 20) / 1.295
       imageTop = 60
       postMediaView.configureView(post.media)
       postMediaView.alpha = 1
