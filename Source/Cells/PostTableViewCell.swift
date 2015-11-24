@@ -45,7 +45,7 @@ public class PostTableViewCell: WallTableViewCell {
         informationHeight = 16
     }
 
-    return ceil(imageHeight + imageTop + informationHeight + 44 + 20 + textOffset + textFrame.height)
+    return ceil(imageHeight + imageTop + informationHeight + 44 + 14 + textOffset + textFrame.height)
   }
 
   public lazy var authorView: PostAuthorView = { [unowned self] in
@@ -162,7 +162,7 @@ public class PostTableViewCell: WallTableViewCell {
     postMediaView.frame = CGRectIntegral(CGRect(x: 0, y: imageTop, width: UIScreen.mainScreen().bounds.width, height: imageHeight))
     informationView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: ceil(informationHeight))
     actionBarView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44)
-    bottomSeparator.frame = CGRectIntegral(CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
+    bottomSeparator.frame = CGRectIntegral(CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 14))
 
     authorView.configureView(author, date: post.publishDate, group: post.group)
     informationView.configureView(post.likeCount, comments: post.commentCount, seen: post.seenCount)
