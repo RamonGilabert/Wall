@@ -154,7 +154,7 @@ public class PostAuthorView: UIView {
         width: ceil(totalWidth - 100), height: 17))
     }
 
-    reportButton.frame = CGRectIntegral(CGRect(x: totalWidth - 32, y: 10, width: 24, height: 24))
+    reportButton.frame = CGRectIntegral(CGRect(x: totalWidth - 32, y: 10, width: 44, height: 44))
   }
 
   public func updateDate(date: String) {
