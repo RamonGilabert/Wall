@@ -11,7 +11,7 @@ public class PostMediaView: UIView {
   public struct Dimensions {
     public static let containerOffset: CGFloat = 10
     public static let totalOffset: CGFloat = 20
-    public static let height: CGFloat = (UIScreen.mainScreen().bounds.width - 20) / 1.295
+    public static let height: CGFloat = ceil((UIScreen.mainScreen().bounds.width - 20) / 1.295)
   }
 
   public lazy var firstImageView = UIImageView()
@@ -36,8 +36,8 @@ public class PostMediaView: UIView {
   public lazy var playButton: UIImageView = {
     let imageView = UIImageView()
     imageView.image = UIImage(named: ImageList.Basis.playButton)
-    imageView.frame = CGRect(x: (UIScreen.mainScreen().bounds.width - 64 - Dimensions.totalOffset) / 2,
-      y: (274 - 64) / 2, width: 64, height: 64)
+    imageView.frame = CGRectIntegral(CGRect(x: (UIScreen.mainScreen().bounds.width - 64 - Dimensions.totalOffset) / 2,
+      y: (274 - 64) / 2, width: 64, height: 64))
 
     return imageView
     }()
@@ -109,33 +109,33 @@ public class PostMediaView: UIView {
 
     switch media.count {
     case 1:
-      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
-        width: totalWitdh - Dimensions.totalOffset, height: Dimensions.height)
+      firstImageView.frame = CGRectIntegral(CGRect(x: Dimensions.containerOffset, y: 0,
+        width: totalWitdh - Dimensions.totalOffset, height: Dimensions.height))
 
       if let firstMedia = media.first where firstMedia.kind == .Video {
         playButton.alpha = 1
       }
     case 2:
-      let imageSize = (totalWitdh - Dimensions.totalOffset) / 2
+      let imageSize = ceil((totalWitdh - Dimensions.totalOffset) / 2)
 
-      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
-        width: imageSize - 5, height: Dimensions.height)
+      firstImageView.frame = CGRectIntegral(CGRect(x: Dimensions.containerOffset, y: 0,
+        width: imageSize - 5, height: Dimensions.height))
 
-      secondImageView.frame = CGRect(x: imageSize + 5 + Dimensions.containerOffset, y: 0,
-        width: imageSize - 5, height: Dimensions.height)
+      secondImageView.frame = CGRectIntegral(CGRect(x: imageSize + 5 + Dimensions.containerOffset, y: 0,
+        width: imageSize - 5, height: Dimensions.height))
     default:
-      let smallImageSize = (totalWitdh - Dimensions.totalOffset) / 3
-      let bigImageSize = smallImageSize * 2
-      let smallOffset = bigImageSize + 5 + Dimensions.containerOffset
+      let smallImageSize = ceil((totalWitdh - Dimensions.totalOffset) / 3)
+      let bigImageSize = ceil(smallImageSize * 2)
+      let smallOffset = ceil(bigImageSize + 5 + Dimensions.containerOffset)
 
-      firstImageView.frame = CGRect(x: Dimensions.containerOffset, y: 0,
-        width: bigImageSize - 5, height: Dimensions.height)
+      firstImageView.frame = CGRectIntegral(CGRect(x: Dimensions.containerOffset, y: 0,
+        width: bigImageSize - 5, height: Dimensions.height))
 
-      secondImageView.frame = CGRect(x: smallOffset, y: 0,
-        width: smallImageSize - 5, height: Dimensions.height / 2 - 5)
+      secondImageView.frame = CGRectIntegral(CGRect(x: smallOffset, y: 0,
+        width: smallImageSize - 5, height: Dimensions.height / 2 - 5))
 
-      thirdImageView.frame = CGRect(x: smallOffset, y: Dimensions.height / 2 + 5,
-        width: smallImageSize - 5, height: Dimensions.height / 2 - 5)
+      thirdImageView.frame = CGRectIntegral(CGRect(x: smallOffset, y: Dimensions.height / 2 + 5,
+        width: smallImageSize - 5, height: Dimensions.height / 2 - 5))
 
       imagesCountLabel.frame = thirdImageView.bounds
       imagesCountLabel.text = "+\(media.count - 3)"
