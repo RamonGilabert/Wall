@@ -14,7 +14,7 @@ public class CommentTableViewCell: WallTableViewCell {
       height: CGFloat.max), options: .UsesLineFragmentOrigin,
       attributes: [ NSFontAttributeName : FontList.Comment.text ], context: nil)
 
-    return 70.5 + textFrame.height
+    return ceil(70.5 + textFrame.height)
   }
 
   public static let reusableIdentifier = "CommentTableViewCell"
@@ -119,26 +119,26 @@ public class CommentTableViewCell: WallTableViewCell {
     guard let author = post.author else { return }
     let totalWidth = UIScreen.mainScreen().bounds.width
 
-    avatarImageView.frame = CGRect(x: Dimensions.sideOffset, y: Dimensions.sideOffset,
-      width: Dimensions.avatarSize, height: Dimensions.avatarSize)
+    avatarImageView.frame = CGRectIntegral(CGRect(x: Dimensions.sideOffset, y: Dimensions.sideOffset,
+      width: Dimensions.avatarSize, height: Dimensions.avatarSize))
     if let avatarURL = author.avatar {
       avatarImageView.sd_setImageWithURL(avatarURL,
         placeholderImage: UIImage(named: ImageList.Basis.placeholder))
     }
 
-    authorLabel.frame = CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,
-      width: totalWidth - 70, height: 20)
+    authorLabel.frame = CGRectIntegral(CGRect(x: Dimensions.textOffset, y: Dimensions.nameTopOffset,
+      width: totalWidth - 70, height: 20))
     authorLabel.text = author.name
 
     textView.text = post.text
-    textView.frame.size.width = totalWidth - Dimensions.textOffset - Dimensions.sideOffset
+    textView.frame.size.width = ceil(totalWidth - Dimensions.textOffset - Dimensions.sideOffset)
     textView.sizeToFit()
-    textView.frame = CGRect(x: Dimensions.textOffset, y: 36,
-      width: textView.frame.width, height: textView.frame.height)
+    textView.frame = CGRectIntegral(CGRect(x: Dimensions.textOffset, y: 36,
+      width: textView.frame.width, height: textView.frame.height))
 
     updateDate(post)
 
-    bottomSeparator.frame = CGRect(x: 8, y: dateLabel.frame.maxY + 8, width: totalWidth - 16, height: 0.5)
+    bottomSeparator.frame = CGRectIntegral(CGRect(x: 8, y: dateLabel.frame.maxY + 8, width: totalWidth - 16, height: 0.5))
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -155,8 +155,8 @@ public class CommentTableViewCell: WallTableViewCell {
   // MARK: - Setup
 
   public func updateDate(post: Post) {
-    dateLabel.frame = CGRect(x: Dimensions.textOffset, y: textView.frame.maxY + 9,
-      width: UIScreen.mainScreen().bounds.width, height: 17)
+    dateLabel.frame = CGRectIntegral(CGRect(x: Dimensions.textOffset, y: textView.frame.maxY + 9,
+      width: UIScreen.mainScreen().bounds.width, height: 17))
     dateLabel.text = post.publishDate
 
     if post.publishDate == "1 Jan 01:00" || post.publishDate == "1 jan. 01:00" {
