@@ -54,6 +54,8 @@ public class PostAuthorView: UIView {
     let button = UIButton()
     button.setImage(UIImage(named: ImageList.Basis.reportButton), forState: .Normal)
     button.addTarget(self, action: "reportButtonDidPress", forControlEvents: .TouchUpInside)
+    button.subviews.first?.opaque = true
+    button.subviews.first?.backgroundColor = UIColor.whiteColor()
 
     return button
     }()
@@ -154,7 +156,7 @@ public class PostAuthorView: UIView {
         width: ceil(totalWidth - 100), height: 17))
     }
 
-    reportButton.frame = CGRectIntegral(CGRect(x: totalWidth - 32, y: 10, width: 44, height: 44))
+    reportButton.frame = CGRectIntegral(CGRect(x: totalWidth - 32, y: 10, width: 24, height: 24))
   }
 
   public func updateDate(date: String) {
