@@ -67,12 +67,12 @@ public class PostActionBarView: UIView {
 
     let totalWidth = UIScreen.mainScreen().bounds.width
 
-    topSeparator.frame = CGRect(x: Dimensions.generalOffset, y: 0,
-      width: totalWidth - Dimensions.generalOffset * 2, height: Dimensions.separatorHeight)
-    likeButton.frame = CGRect(x: Dimensions.generalOffset, y: Dimensions.separatorHeight,
-      width: totalWidth / 2 - Dimensions.generalOffset, height: 43)
-    commentButton.frame = CGRect(x: totalWidth / 2, y: Dimensions.separatorHeight,
-      width: totalWidth / 2 - Dimensions.generalOffset, height: 43)
+    topSeparator.frame = CGRectIntegral(CGRect(x: Dimensions.generalOffset, y: 0,
+      width: totalWidth - Dimensions.generalOffset * 2, height: Dimensions.separatorHeight))
+    likeButton.frame = CGRectIntegral(CGRect(x: Dimensions.generalOffset, y: Dimensions.separatorHeight,
+      width: totalWidth / 2 - Dimensions.generalOffset, height: 43))
+    commentButton.frame = CGRectIntegral(CGRect(x: totalWidth / 2, y: Dimensions.separatorHeight,
+      width: totalWidth / 2 - Dimensions.generalOffset, height: 43))
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -102,7 +102,7 @@ public class PostActionBarView: UIView {
       value: color, range: NSMakeRange(0, attributedString.length))
 
     if let image = textAttachment.image {
-      textAttachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height)
+      textAttachment.bounds = CGRectIntegral(CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height))
     }
 
     return attributedString

@@ -13,7 +13,7 @@ public class PostAuthorView: UIView {
   public struct Dimensions {
     public static let avatarOffset: CGFloat = 10
     public static let avatarSize: CGFloat = 40
-    public static let nameOffset: CGFloat = Dimensions.avatarOffset * 2 + Dimensions.avatarSize
+    public static let nameOffset: CGFloat = ceil(Dimensions.avatarOffset * 2 + Dimensions.avatarSize)
     public static let nameTopOffset: CGFloat = 12
     public static let dateTopOffset: CGFloat = 30
   }
@@ -138,23 +138,23 @@ public class PostAuthorView: UIView {
 
     [authorLabel, groupLabel].forEach { $0.sizeToFit() }
 
-    avatarImageView.frame = CGRect(x: Dimensions.avatarOffset, y: Dimensions.avatarOffset,
-      width: Dimensions.avatarSize, height: Dimensions.avatarSize)
-    authorLabel.frame.origin = CGPoint(x: Dimensions.nameOffset, y: Dimensions.nameTopOffset)
-    disclosureImageView.frame = CGRect(x: CGRectGetMaxX(authorLabel.frame) + 5, y: 20, width: 3, height: 5.88)
+    avatarImageView.frame = CGRectIntegral(CGRect(x: Dimensions.avatarOffset, y: Dimensions.avatarOffset,
+      width: Dimensions.avatarSize, height: Dimensions.avatarSize))
+    authorLabel.frame.origin = CGPoint(x: ceil(Dimensions.nameOffset), y: ceil(Dimensions.nameTopOffset))
+    disclosureImageView.frame = CGRect(x: ceil(CGRectGetMaxX(authorLabel.frame) + 5), y: 20, width: 3, height: ceil(5.88))
 
     if CGRectGetMaxX(disclosureImageView.frame) + 41 + groupLabel.frame.width < totalWidth || !shouldDisplayGroup {
-      groupLabel.frame.origin = CGPoint(x: CGRectGetMaxX(disclosureImageView.frame) + 5,
+      groupLabel.frame.origin = CGPoint(x: ceil(CGRectGetMaxX(disclosureImageView.frame) + 5),
         y: Dimensions.nameTopOffset)
       dateLabel.frame = CGRect(x: Dimensions.nameOffset, y: Dimensions.dateTopOffset,
-        width: totalWidth - 70, height: 17)
+        width: ceil(totalWidth - 70), height: 17)
     } else {
       groupLabel.frame.origin = CGPoint(x: Dimensions.nameOffset, y: Dimensions.dateTopOffset)
-      dateLabel.frame = CGRect(x: CGRectGetMaxX(groupLabel.frame) + 10, y: Dimensions.dateTopOffset,
-        width: totalWidth - 100, height: 17)
+      dateLabel.frame = CGRectIntegral(CGRect(x: ceil(CGRectGetMaxX(groupLabel.frame) + 10), y: Dimensions.dateTopOffset,
+        width: ceil(totalWidth - 100), height: 17))
     }
 
-    reportButton.frame = CGRect(x: totalWidth - 32, y: 10, width: 24, height: 24)
+    reportButton.frame = CGRectIntegral(CGRect(x: totalWidth - 32, y: 10, width: 24, height: 24))
   }
 
   public func updateDate(date: String) {

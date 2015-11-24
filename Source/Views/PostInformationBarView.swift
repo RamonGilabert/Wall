@@ -90,14 +90,14 @@ public class PostInformationBarView: UIView {
 
     commentButton.setTitle(title, forState: .Normal)
     commentButton.sizeToFit()
-    commentButton.frame.origin = CGPoint(x: positionOffset,
+    commentButton.frame.origin = CGPoint(x: ceil(positionOffset),
       y: Dimensions.topOffset)
   }
 
   public func configureSeen(seen: Int) {
     seenButton.setTitle("Seen by \(seen)", forState: .Normal)
     seenButton.sizeToFit()
-    seenButton.frame.origin = CGPoint(x: UIScreen.mainScreen().bounds.width - seenButton.frame.width - Dimensions.offset,
+    seenButton.frame.origin = CGPoint(x: ceil(UIScreen.mainScreen().bounds.width - seenButton.frame.width - Dimensions.offset),
       y: Dimensions.topOffset)
   }
 
