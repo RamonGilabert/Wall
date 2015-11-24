@@ -48,7 +48,7 @@ public class WallController: UIViewController {
   public weak var commentDelegate: CommentTableViewCellDelegate?
   public var posts = [Post]()
   public var fetching = true
-  public var verticalOffset: CGFloat = 20
+  public var verticalOffset: CGFloat = 14
   public var cachedHeights = [Int : CGFloat]()
   public var shouldDisplayGroup = false
 
