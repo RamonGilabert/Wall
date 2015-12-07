@@ -1,25 +1,40 @@
 PODS:
-  - Fakery (1.0.0):
-    - SwiftyJSON (~> 2.3.0)
-  - SDWebImage (3.7.3):
-    - SDWebImage/Core (= 3.7.3)
-  - SDWebImage/Core (3.7.3)
-  - SwiftyJSON (2.3.0)
+  - Cache (0.1.0)
+  - Fakery (1.1.0):
+    - SwiftyJSON
+  - Imaginary (0.1.0):
+    - Cache
+  - SwiftyJSON (2.3.2)
   - Wall (0.1.0):
-    - SDWebImage
+    - Imaginary
 
 DEPENDENCIES:
+  - Cache (from `https://github.com/hyperoslo/Cache`)
   - Fakery
+  - Imaginary (from `https://github.com/hyperoslo/Imaginary`)
   - Wall (from `../../`)
 
 EXTERNAL SOURCES:
+  Cache:
+    :git: https://github.com/hyperoslo/Cache
+  Imaginary:
+    :git: https://github.com/hyperoslo/Imaginary
   Wall:
     :path: ../../
 
-SPEC CHECKSUMS:
-  Fakery: a8c99f35643a6fe396ee30a14fbcd466dbd098dd
-  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
-  SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
-  Wall: deae0b7c2077d83cb191e2cf52a4593bd149f4dd
+CHECKOUT OPTIONS:
+  Cache:
+    :commit: d30fb21cf1ac136b876dc09976b54125d1ae364b
+    :git: https://github.com/hyperoslo/Cache
+  Imaginary:
+    :commit: 1bc0d4536d827ffb6053585c68c4e694ce9d2d2e
+    :git: https://github.com/hyperoslo/Imaginary
 
-COCOAPODS: 0.39.0.beta.4
+SPEC CHECKSUMS:
+  Cache: 59ea9dbb71dfa1ba68a6efe295e907603b3066da
+  Fakery: 593389814fb7c42fe7f0801e76c8ae55b95505e7
+  Imaginary: feaea646440c68a9b6ed66a46597d548b9a44207
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  Wall: 4d08aa17be5c31d1cd1a1e86fefe20dc7d57f076
+
+COCOAPODS: 0.39.0
