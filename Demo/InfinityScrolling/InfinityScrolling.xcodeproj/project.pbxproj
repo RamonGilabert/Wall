@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29918F381C15C263006E5F6D /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29918F371C15C263006E5F6D /* Pods.framework */; };
 		29B7E3701BDE18B20034040B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B7E36F1BDE18B20034040B /* AppDelegate.swift */; };
 		29B7E3771BDE18B20034040B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B7E3761BDE18B20034040B /* Assets.xcassets */; };
 		29B7E37A1BDE18B20034040B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B7E3781BDE18B20034040B /* LaunchScreen.storyboard */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		29918F371C15C263006E5F6D /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
 		29B7E36C1BDE18B20034040B /* InfinityScrolling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinityScrolling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B7E36F1BDE18B20034040B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29B7E3761BDE18B20034040B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -30,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29918F381C15C263006E5F6D /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +72,7 @@
 		562C6EE9BDBA2BCA7172163C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				29918F371C15C263006E5F6D /* Pods.framework */,
 				68D01968941926BD9397C49A /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -310,6 +314,10 @@
 			baseConfigurationReference = 37644995665A8EAEF1804386 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = InfinityScrolling/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -323,6 +331,10 @@
 			baseConfigurationReference = 697D3A0395C366012CE47679 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = InfinityScrolling/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
