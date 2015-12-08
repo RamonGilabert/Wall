@@ -1,5 +1,5 @@
 import UIKit
-import SDWebImage
+import Imaginary
 
 public protocol PostAuthorViewDelegate: class {
 
@@ -121,8 +121,8 @@ public class PostAuthorView: UIView {
     let totalWidth = UIScreen.mainScreen().bounds.width
 
     if let avatarURL = author.avatar {
-      avatarImageView.sd_setImageWithURL(avatarURL,
-        placeholderImage: UIImage(named: ImageList.Basis.placeholder))
+      avatarImageView.setImage(avatarURL,
+        placeholder: UIImage(named: ImageList.Basis.placeholder))
     }
 
     if group == "" || !shouldDisplayGroup {

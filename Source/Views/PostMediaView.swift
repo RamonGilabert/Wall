@@ -1,5 +1,5 @@
 import UIKit
-import SDWebImage
+import Imaginary
 
 public protocol PostMediaViewDelegate: class {
 
@@ -103,8 +103,8 @@ public class PostMediaView: UIView {
 
     for (index, element) in media.enumerate() where index < 3 {
       addSubview(viewsArray[index])
-      viewsArray[index].sd_setImageWithURL(element.thumbnail,
-        placeholderImage: UIImage(named: ImageList.Basis.placeholder))
+      viewsArray[index].setImage(element.thumbnail,
+        placeholder: UIImage(named: ImageList.Basis.placeholder))
     }
 
     switch media.count {
