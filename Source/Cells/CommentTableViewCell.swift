@@ -1,8 +1,9 @@
 import UIKit
 
-public protocol CommentTableViewCellDelegate: class {
+public protocol CommentInformationDelegate: class {
 
   func commentAuthorDidTap(commentID: Int)
+  func commentReportButtonDidPress(commentID: Int)
 }
 
 public class CommentTableViewCell: WallTableViewCell {
@@ -46,6 +47,16 @@ public class CommentTableViewCell: WallTableViewCell {
 
     return label
     }()
+
+  public lazy var reportButton: UIButton = {
+    let button = UIButton()
+    button.setImage(UIImage(named: ImageList.Basis.reportButton), forState: .Normal)
+    button.addTarget(self, action: "reportButtonDidPress", forControlEvents: .TouchUpInside)
+    button.subviews.first?.opaque = true
+    button.subviews.first?.backgroundColor = UIColor.whiteColor()
+
+    return button
+  }()
 
   public lazy var dateLabel: UILabel = {
     let label = UILabel()
@@ -92,14 +103,14 @@ public class CommentTableViewCell: WallTableViewCell {
     return gesture
     }()
 
-  public weak var commentDelegate: CommentTableViewCellDelegate?
+  public weak var informationDelegate: CommentInformationDelegate?
 
   // MARK: - Initialization
 
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    [avatarImageView, authorLabel, textView, dateLabel, bottomSeparator].forEach {
+    [avatarImageView, authorLabel, reportButton, textView, dateLabel, bottomSeparator].forEach {
       addSubview($0)
       $0.opaque = true
       $0.backgroundColor = ColorList.Comment.background
@@ -139,6 +150,8 @@ public class CommentTableViewCell: WallTableViewCell {
     updateDate(post)
 
     bottomSeparator.frame = CGRectIntegral(CGRect(x: 8, y: dateLabel.frame.maxY + 8, width: totalWidth - 16, height: 0.5))
+
+    reportButton.frame = CGRectIntegral(CGRect(x: totalWidth - 32, y: 10, width: 24, height: 24))
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -149,7 +162,12 @@ public class CommentTableViewCell: WallTableViewCell {
 
   public func handleAuthorGestureRecognizer() {
     guard let post = post else { return }
-    commentDelegate?.commentAuthorDidTap(post.id)
+    informationDelegate?.commentAuthorDidTap(post.id)
+  }
+
+  public func reportButtonDidPress() {
+    guard let post = post else { return }
+    informationDelegate?.commentReportButtonDidPress(post.id)
   }
 
   // MARK: - Setup
