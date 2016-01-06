@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controller.delegate = self
     controller.actionDelegate = self
     controller.informationDelegate = self
-    controller.commentDelegate = self
+    controller.commentInformationDelegate = self
 
     return controller
     }()
@@ -47,7 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
-    
+
+    ImageList.Basis.reportButton = "reportButton"
+
     return true
   }
 
@@ -113,7 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         posts.append(post)
       })
     }
-    
+
     return posts
   }
 }
@@ -158,10 +160,14 @@ extension AppDelegate: PostActionDelegate {
   }
 }
 
-extension AppDelegate: CommentTableViewCellDelegate {
+extension AppDelegate: CommentInformationDelegate {
 
   func commentAuthorDidTap(commentID: Int) {
     print("Comment's author")
+  }
+
+  func commentReportButtonDidPress(commentID: Int) {
+    print("Comment's report")
   }
 }
 
