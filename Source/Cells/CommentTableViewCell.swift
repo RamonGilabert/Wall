@@ -127,6 +127,8 @@ public class CommentTableViewCell: WallTableViewCell {
   }
 
   public override func configureCell(post: Post) {
+    super.configureCell(post)
+
     guard let author = post.author else { return }
     let totalWidth = UIScreen.mainScreen().bounds.width
 
