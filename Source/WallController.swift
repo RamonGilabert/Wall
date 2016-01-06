@@ -45,7 +45,7 @@ public class WallController: UIViewController {
   public weak var delegate: WallControllerDelegate?
   public weak var actionDelegate: PostActionDelegate?
   public weak var informationDelegate: PostInformationDelegate?
-  public weak var commentDelegate: CommentTableViewCellDelegate?
+  public weak var commentInformationDelegate: CommentInformationDelegate?
   public var posts = [Post]()
   public var fetching = true
   public var verticalOffset: CGFloat = 14
@@ -196,7 +196,7 @@ extension WallController: UITableViewDataSource {
       }
 
       if let commentCell = wallCell as? CommentTableViewCell {
-        commentCell.commentDelegate = commentDelegate
+        commentCell.informationDelegate = commentInformationDelegate
       }
     }
 
