@@ -112,13 +112,21 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		D5DF75B41C439CE300BF1AB6 = {
+		D523B0771C43A01E001AD1EC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				D523B0731C439FE7001AD1EC /* Imaginary.framework */,
 				D523B0741C439FE7001AD1EC /* Cache.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D5DF75B41C439CE300BF1AB6 = {
+			isa = PBXGroup;
+			children = (
 				D523B0521C439E24001AD1EC /* Source */,
 				D5DF75C01C439CE300BF1AB6 /* Wall */,
+				D523B0771C43A01E001AD1EC /* Frameworks */,
 				D5DF75BF1C439CE300BF1AB6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -160,6 +168,7 @@
 				D5DF75BA1C439CE300BF1AB6 /* Frameworks */,
 				D5DF75BB1C439CE300BF1AB6 /* Headers */,
 				D5DF75BC1C439CE300BF1AB6 /* Resources */,
+				D523B0781C43A031001AD1EC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -210,6 +219,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D523B0781C43A031001AD1EC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Imaginary.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Cache.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D5DF75B91C439CE300BF1AB6 /* Sources */ = {
