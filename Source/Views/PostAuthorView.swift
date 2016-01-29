@@ -142,7 +142,9 @@ public class PostAuthorView: UIView {
 
     [authorLabel, groupLabel].forEach { $0.sizeToFit() }
 
-    groupLabel.frame.size = CGSize(width: 160, height: 30)
+    if groupLabel.frame.width > 160 {
+      groupLabel.frame.size.width = 160
+    }
 
     avatarImageView.frame = CGRectIntegral(CGRect(x: Dimensions.avatarOffset, y: Dimensions.avatarOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize))
