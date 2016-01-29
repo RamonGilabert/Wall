@@ -27,28 +27,30 @@ public class PostAuthorView: UIView {
     imageView.backgroundColor = UIColor.whiteColor()
 
     return imageView
-    }()
+  }()
 
   public lazy var authorLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Post.author
 
     return label
-    }()
+  }()
 
   public lazy var disclosureImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.image = UIImage(named: ImageList.Basis.disclosure)
 
     return imageView
-    }()
+  }()
 
   public lazy var groupLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Post.author
+    label.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+    label.numberOfLines = 1
 
     return label
-    }()
+  }()
 
   public lazy var reportButton: UIButton = {
     let button = UIButton()
@@ -58,7 +60,7 @@ public class PostAuthorView: UIView {
     button.subviews.first?.backgroundColor = UIColor.whiteColor()
 
     return button
-    }()
+  }()
 
   public lazy var dateLabel: UILabel = {
     let label = UILabel()
@@ -66,7 +68,7 @@ public class PostAuthorView: UIView {
     label.font = FontList.Post.date
 
     return label
-    }()
+  }()
 
   public lazy var tapAuthorGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
@@ -140,6 +142,8 @@ public class PostAuthorView: UIView {
 
     [authorLabel, groupLabel].forEach { $0.sizeToFit() }
 
+    groupLabel.frame.size = CGSize(width: 160, height: 30)
+
     avatarImageView.frame = CGRectIntegral(CGRect(x: Dimensions.avatarOffset, y: Dimensions.avatarOffset,
       width: Dimensions.avatarSize, height: Dimensions.avatarSize))
     authorLabel.frame.origin = CGPoint(x: ceil(Dimensions.nameOffset), y: ceil(Dimensions.nameTopOffset))
@@ -172,7 +176,7 @@ public class PostAuthorView: UIView {
   public func handleGroupGestureRecognizer() {
     delegate?.groupDidTap()
   }
-  
+
   public func reportButtonDidPress() {
     delegate?.reportButtonDidPress()
   }
